@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AppData.h"
 
 @interface AppDelegate ()
 
@@ -16,10 +17,43 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Override point for customization after application
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:128.0/255.0 green:186.0/255.0 blue:36.0/255.0 alpha:1.0]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    if(![AppData isLoggedIn]) {
+        [self showLoginScreen:NO];
+    }
+    
     return YES;
 }
 
+-(void) showLoginScreen:(BOOL)animated
+{
+    
+    // Get login screen from storyboard and present it
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *LoginViewController = [storyboard instantiateViewControllerWithIdentifier:@"loginScreen"];
+    [self.window makeKeyAndVisible];
+    [self.window.rootViewController presentViewController:LoginViewController
+                                                 animated:animated
+                                               completion:nil];
+}
+
+-(void) logout
+{
+    // Remove data from singleton (where all my app data is stored)
+    [AppData clearData];
+    
+    // Reset view controller (this will quickly clear all the views)
+    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    //MainTabControllerViewController *viewController = (MainTabControllerViewController *)[storyboard instantiateViewControllerWithIdentifier:@"mainView"];
+    //[self.window setRootViewController:;
+    
+    // Show login screen
+    [self showLoginScreen:NO];
+    
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
