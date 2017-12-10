@@ -44,12 +44,21 @@
 }
 
 - (IBAction)signIn:(id)sender {
+    NSURL *url = [NSURL URLWithString:@"https://cas.thm.de:443/cas/"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString *search = @"LT-";
+    NSString *sub = [ret substringFromIndex:NSMaxRange([ret rangeOfString:search])];
+    NSString *sub2 = [sub substringToIndex:37];
+    
+    NSLog(@"lt=LT-%@", sub2);
 }
 
 - (IBAction)uName:(id)sender {
 }
 
 - (IBAction)pWord:(id)sender {
+    
 }
 
 - (void) loginCAS {
