@@ -1,13 +1,11 @@
 #import <foundation/Foundation.h>
 
 @interface AppData : NSObject {
-    NSString *someProperty;
+    BOOL *sLogged;
 }
 
-@property (nonatomic, retain) NSString *someProperty;
+@property (nonatomic, assign) BOOL *sLogged;
 
-+ (id)SharedAppData;
-+ (BOOL) isLoggedIn;
-+ (void) clearData;
++ (AppData *)SharedAppData;
 
 @end

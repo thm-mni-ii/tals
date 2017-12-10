@@ -21,7 +21,9 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:128.0/255.0 green:186.0/255.0 blue:36.0/255.0 alpha:1.0]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    if(![AppData isLoggedIn]) {
+    AppData *tmp = [AppData SharedAppData];
+    BOOL *new = tmp.sLogged;
+    if(!new) {
         [self showLoginScreen:NO];
     }
     
@@ -43,7 +45,8 @@
 -(void) logout
 {
     // Remove data from singleton (where all my app data is stored)
-    [AppData clearData];
+    AppData *tmp = [AppData SharedAppData];
+    tmp.sLogged = NO;
     
     // Reset view controller (this will quickly clear all the views)
     //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];

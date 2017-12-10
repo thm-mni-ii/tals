@@ -34,4 +34,25 @@
 }
 */
 
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+    if (theTextField == self.Password) {
+        [theTextField resignFirstResponder];
+    } else if (theTextField == self.UserName) {
+        [self.Password becomeFirstResponder];
+    }
+    return YES;
+}
+
+- (IBAction)signIn:(id)sender {
+}
+
+- (IBAction)uName:(id)sender {
+}
+
+- (IBAction)pWord:(id)sender {
+}
+
+- (void) loginCAS {
+    
+}
 @end

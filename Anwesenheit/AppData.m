@@ -2,11 +2,13 @@
 
 @implementation AppData : NSObject
 
-@synthesize someProperty;
+static AppData *shared = NULL;
+
+@synthesize sLogged;
 
 #pragma mark Singleton Methods
 
-+ (id)sharedAppData {
++ (AppData *)SharedAppData {
     static AppData *sharedAppData = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -17,17 +19,9 @@
 
 - (id)init {
     if (self = [super init]) {
-        someProperty = @"Default Property Value";
+        sLogged = NO;
     }
     return self;
-}
-
-+ (BOOL) isLoggedIn {
-    return NO;
-}
-
-+ (void) clearData {
-    return;
 }
 
 - (void)dealloc {
