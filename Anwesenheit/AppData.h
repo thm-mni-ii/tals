@@ -11,5 +11,10 @@
 + (void) setCookies;
 + (NSString *)getLT;
 + ( NSURLSession * )getURLSession;
++ (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+willPerformHTTPRedirection:(NSHTTPURLResponse *)redirectResponse
+        newRequest:(NSURLRequest *)request
+ completionHandler:(void (^)(NSURLRequest *))completionHandler;
 
 @end

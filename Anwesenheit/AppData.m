@@ -25,7 +25,7 @@ static AppData *shared = NULL;
 }
 
 + (NSString *)getLT{
-    NSURL *url = [NSURL URLWithString:@"https://cas.thm.de:443/cas/"];
+    NSURL *url = [NSURL URLWithString:@"https://cas.thm.de:443/cas/login?service=https://moodle.herwegh.me/login/index.php"];
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSString *search = @"LT-";
@@ -49,7 +49,7 @@ static AppData *shared = NULL;
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     // insert whatever URL you would like to connect to
-    [request setURL:[NSURL URLWithString:@"https://cas.thm.de:443/cas/login?service=https://moodle.herwegh.me/"]];
+    [request setURL:[NSURL URLWithString:@"https://cas.thm.de:443/cas/login?service=https://moodle.herwegh.me/login/index.php"]];
     
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -63,8 +63,20 @@ static AppData *shared = NULL;
                                                          NSData *cookieData = [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
                                                          [[NSUserDefaults standardUserDefaults] setObject:cookieData forKey:@"ApplicationCookie"];
                                                          [[NSUserDefaults standardUserDefaults] synchronize];
+                                                         /*for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+                                                         {
+                                                             NSLog(@"name: '%@'\n",   [cookie name]);
+                                                             NSLog(@"value: '%@'\n",  [cookie value]);
+                                                             NSLog(@"domain: '%@'\n", [cookie domain]);
+                                                             NSLog(@"path: '%@'\n",   [cookie path]);
+                                                         }
                                                          NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                                                          NSLog( @"%@", result );
+                                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+                                                         if ([response respondsToSelector:@selector(allHeaderFields)]) {
+                                                             NSDictionary *dictionary = [httpResponse allHeaderFields];
+                                                             NSLog([dictionary description]);
+                                                         }*/
                                                      } );
                                   }];
     
@@ -89,16 +101,16 @@ static AppData *shared = NULL;
                                   {
                                       dispatch_async( dispatch_get_main_queue(),
                                                      ^{
-                                                         // parse returned data
+                                                         //parse returned data
                                                          NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                                                          
-                                                         for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
-                                                         {
-                                                             NSLog(@"name: '%@'\n",   [cookie name]);
-                                                             NSLog(@"value: '%@'\n",  [cookie value]);
-                                                             NSLog(@"domain: '%@'\n", [cookie domain]);
-                                                             NSLog(@"path: '%@'\n",   [cookie path]);
-                                                         }
+                                                         //for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+                                                         //{
+                                                         //    NSLog(@"name: '%@'\n",   [cookie name]);
+                                                         //    NSLog(@"value: '%@'\n",  [cookie value]);
+                                                         //    NSLog(@"domain: '%@'\n", [cookie domain]);
+                                                         //    NSLog(@"path: '%@'\n",   [cookie path]);
+                                                         //}
                                                          NSLog( @"%@", result );
                                                      } );
                                   }];
