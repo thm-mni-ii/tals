@@ -24,6 +24,103 @@ static AppData *shared = NULL;
     return self;
 }
 
++ (NSString *)getLT{
+    NSURL *url = [NSURL URLWithString:@"https://cas.thm.de:443/cas/"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSString *search = @"LT-";
+    NSString *sub = [ret substringFromIndex:NSMaxRange([ret rangeOfString:search])];
+    NSString *sub2 = [sub substringToIndex:37];
+    NSString *lt = [NSString stringWithFormat:@"LT-%@", sub2];
+    return lt;
+}
+
+
++ (void) loginCAS {
+    //extraction of Login Ticket
+    NSString *lt = self.getLT;
+    
+    //LoginProcess
+    NSString *post = [NSString stringWithFormat:@"username=jnmm29&password=mMIw1965g!&lt=%@&execution=e1s1&gateway=true&_eventId=submit&submit=Anmelden", lt];
+    
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSString *postLength = [NSString stringWithFormat:@"%lu", ( unsigned long )[postData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    // insert whatever URL you would like to connect to
+    [request setURL:[NSURL URLWithString:@"https://cas.thm.de:443/cas/login?service=https://moodle.herwegh.me/"]];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    NSURLSessionDataTask *task = [[self getURLSession] dataTaskWithRequest:request completionHandler:^( NSData *data, NSURLResponse *response, NSError *error )
+                                  {
+                                      dispatch_async( dispatch_get_main_queue(),
+                                                     ^{
+                                                         // parse returned data
+                                                         NSData *cookieData = [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
+                                                         [[NSUserDefaults standardUserDefaults] setObject:cookieData forKey:@"ApplicationCookie"];
+                                                         [[NSUserDefaults standardUserDefaults] synchronize];
+                                                         NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                                                         NSLog( @"%@", result );
+                                                     } );
+                                  }];
+    
+    
+    [task resume];
+    
+}
+
++ (void) setCookies {
+    NSData *cookieData = [[NSUserDefaults standardUserDefaults] objectForKey:@"ApplicationCookie"];
+    if ([cookieData length] > 0) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookieData];
+        for (NSHTTPCookie *cookie in cookies) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        }
+    }
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    // insert whatever URL you would like to connect to
+    [request setURL:[NSURL URLWithString:@"https://moodle.herwegh.me/mod/tals/token.php"]];    
+    [request setHTTPMethod:@"POST"];
+    NSURLSessionDataTask *task = [[self getURLSession] dataTaskWithRequest:request completionHandler:^( NSData *data, NSURLResponse *response, NSError *error )
+                                  {
+                                      dispatch_async( dispatch_get_main_queue(),
+                                                     ^{
+                                                         // parse returned data
+                                                         NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                                                         
+                                                         for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+                                                         {
+                                                             NSLog(@"name: '%@'\n",   [cookie name]);
+                                                             NSLog(@"value: '%@'\n",  [cookie value]);
+                                                             NSLog(@"domain: '%@'\n", [cookie domain]);
+                                                             NSLog(@"path: '%@'\n",   [cookie path]);
+                                                         }
+                                                         NSLog( @"%@", result );
+                                                     } );
+                                  }];
+    
+    
+    [task resume];
+    
+}
+
++ ( NSURLSession * )getURLSession
+{
+    static NSURLSession *session = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once( &onceToken,
+                  ^{
+                      NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+                      session = [NSURLSession sessionWithConfiguration:configuration];
+                  } );
+    
+    return session;
+}
+
 - (void)dealloc {
     // Should never be called, but just here for clarity really.
 }

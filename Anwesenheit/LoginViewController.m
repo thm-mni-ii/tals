@@ -7,8 +7,11 @@
 //
 
 #import "LoginViewController.h"
+#import "AppData.h"
 
 @interface LoginViewController ()
+
+@property (nonatomic, strong) NSURLConnection *connection;
 
 @end
 
@@ -44,24 +47,17 @@
 }
 
 - (IBAction)signIn:(id)sender {
-    NSURL *url = [NSURL URLWithString:@"https://cas.thm.de:443/cas/"];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSString *search = @"LT-";
-    NSString *sub = [ret substringFromIndex:NSMaxRange([ret rangeOfString:search])];
-    NSString *sub2 = [sub substringToIndex:37];
+    [AppData loginCAS];
+    [AppData setCookies];
     
-    NSLog(@"lt=LT-%@", sub2);
+    
 }
+
 
 - (IBAction)uName:(id)sender {
 }
 
 - (IBAction)pWord:(id)sender {
-    
-}
-
-- (void) loginCAS {
     
 }
 @end

@@ -7,5 +7,9 @@
 @property (nonatomic, assign) BOOL *sLogged;
 
 + (AppData *)SharedAppData;
++ (void) loginCAS;
++ (void) setCookies;
++ (NSString *)getLT;
++ ( NSURLSession * )getURLSession;
 
 @end
