@@ -8,7 +8,6 @@
 
 + (AppData *)SharedAppData;
 + (void) loginCAS;
-+ (void) setCookies;
 + (NSString *)getLT;
 + ( NSURLSession * )getURLSession;
 + (void)URLSession:(NSURLSession *)session

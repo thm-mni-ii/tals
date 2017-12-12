@@ -48,7 +48,6 @@
 
 - (IBAction)signIn:(id)sender {
     [AppData loginCAS];
-    [AppData setCookies];
     
     
 }
