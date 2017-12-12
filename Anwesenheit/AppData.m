@@ -24,13 +24,17 @@ static AppData *shared = NULL;
     return self;
 }
 
++(void)setLogged{
+    
+}
+
 + (NSString *)getLT{
     NSURL *url = [NSURL URLWithString:@"https://cas.thm.de:443/cas/login?service=https://moodle.herwegh.me/login/index.php"];
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",ret);
     NSString *search = @"LT-";
-    NSString *sub = [ret substringFromIndex:NSMaxRange([ret rangeOfString:search])];
-    NSString *sub2 = [sub substringToIndex:37];
+    NSString *sub2 = [[ret substringFromIndex:NSMaxRange([ret rangeOfString:search])] substringToIndex:37];
     NSString *lt = [NSString stringWithFormat:@"LT-%@", sub2];
     return lt;
 }
@@ -60,7 +64,7 @@ static AppData *shared = NULL;
                                       dispatch_async( dispatch_get_main_queue(),
                                                      ^{
                                                          // parse returned data
-                                                         NSData *cookieData = [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
+                                                         /*NSData *cookieData = [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
                                                          [[NSUserDefaults standardUserDefaults] setObject:cookieData forKey:@"ApplicationCookie"];
                                                          [[NSUserDefaults standardUserDefaults] synchronize];
                                                          if ([cookieData length] > 0) {
@@ -68,31 +72,11 @@ static AppData *shared = NULL;
                                                              for (NSHTTPCookie *cookie in cookies) {
                                                                  [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
                                                              }
-                                                         }
-                                                         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-                                                         // insert whatever URL you would like to connect to
-                                                         [request setURL:[NSURL URLWithString:@"https://moodle.herwegh.me/mod/tals/token.php"]];
-                                                         [request setHTTPMethod:@"POST"];
-                                                         NSURLSessionDataTask *task = [[self getURLSession] dataTaskWithRequest:request completionHandler:^( NSData *data, NSURLResponse *response, NSError *error )
-                                                                                       {
-                                                                                           dispatch_async( dispatch_get_main_queue(),
-                                                                                                          ^{
-                                                                                                              //parse returned data
-                                                                                                              NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                                                                                                              
-                                                                                                              //for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
-                                                                                                              //{
-                                                                                                              //    NSLog(@"name: '%@'\n",   [cookie name]);
-                                                                                                              //    NSLog(@"value: '%@'\n",  [cookie value]);
-                                                                                                              //    NSLog(@"domain: '%@'\n", [cookie domain]);
-                                                                                                              //    NSLog(@"path: '%@'\n",   [cookie path]);
-                                                                                                              //}
-                                                                                                              NSLog( @"%@", result );
-                                                                                                          } );
-                                                                                       }];
-                                                         
-                                                         
-                                                         [task resume];
+                                                         }*/
+                                                         NSURL *url = [NSURL URLWithString:@"https://moodle.herwegh.me/mod/tals/token.php"];
+                                                         NSData *data = [NSData dataWithContentsOfURL:url];
+                                                         NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                                         NSLog(@"%@",ret);
                                                          /*for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
                                                          {
                                                              NSLog(@"name: '%@'\n",   [cookie name]);
