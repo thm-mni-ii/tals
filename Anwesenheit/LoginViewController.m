@@ -47,7 +47,9 @@
 }
 
 - (IBAction)signIn:(id)sender {
-    [AppData loginCAS];
+    username = self.UserName.text;
+    password = self.Password.text;
+    [AppData loginCAS:username Password:password];
     
     
 }
@@ -57,6 +59,8 @@
 }
 
 - (IBAction)pWord:(id)sender {
-    
+    username = self.UserName.text;
+    password = self.Password.text;
+    [AppData loginCAS:username Password:password];
 }
 @end

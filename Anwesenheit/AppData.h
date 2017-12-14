@@ -8,7 +8,7 @@
 
 + (AppData *)SharedAppData;
 + (void) setLogged;
-+ (void) loginCAS;
++ (void) loginCAS:(NSString *)username Password:(NSString *)currentPassword;
 + (NSString *)getLT;
 + ( NSURLSession * )getURLSession;
 

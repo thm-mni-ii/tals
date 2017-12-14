@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController 
+@interface LoginViewController : UIViewController{
+    NSString *username;
+    NSString *password;
+}
 @property (weak, nonatomic) IBOutlet UITextField *UserName;
 @property (weak, nonatomic) IBOutlet UITextField *Password;
 - (IBAction)signIn:(id)sender;

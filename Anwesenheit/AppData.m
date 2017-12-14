@@ -40,12 +40,12 @@ static AppData *shared = NULL;
 }
 
 
-+ (void) loginCAS {
++ (void) loginCAS:(NSString *)username Password:(NSString *)currentPassword {
     //extraction of Login Ticket
     NSString *lt = self.getLT;
     
     //LoginProcess
-    NSString *post = [NSString stringWithFormat:@"username=crbr02&password=5WOVxq8B2lj5XZ6W6NyX&lt=%@&execution=e1s1&gateway=true&_eventId=submit&submit=Anmelden", lt];
+    NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&lt=%@&execution=e1s1&gateway=true&_eventId=submit&submit=Anmelden", username, currentPassword, lt];
     
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
@@ -64,15 +64,6 @@ static AppData *shared = NULL;
                                       dispatch_async( dispatch_get_main_queue(),
                                                      ^{
                                                          // parse returned data
-                                                         /*NSData *cookieData = [NSKeyedArchiver archivedDataWithRootObject:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
-                                                         [[NSUserDefaults standardUserDefaults] setObject:cookieData forKey:@"ApplicationCookie"];
-                                                         [[NSUserDefaults standardUserDefaults] synchronize];
-                                                         if ([cookieData length] > 0) {
-                                                             NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookieData];
-                                                             for (NSHTTPCookie *cookie in cookies) {
-                                                                 [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-                                                             }
-                                                         }*/
                                                          //Token Abfrage
                                                          NSURL *url = [NSURL URLWithString:@"https://moodle.herwegh.me/mod/tals/token.php"];
                                                          NSData *data = [NSData dataWithContentsOfURL:url];
