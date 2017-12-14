@@ -19,6 +19,7 @@
 		7C4595761FC7506C00BBCE6E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4595751FC7506C00BBCE6E /* DetailViewController.m */; };
 		7C8A44F81FD7319900CBCECA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A44F71FD7319900CBCECA /* LoginViewController.m */; };
 		7C8A44FB1FD735A700CBCECA /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A44FA1FD735A700CBCECA /* AppData.m */; };
+		7CAB2F4D1FE2EFBB00C74CF5 /* TokenObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB2F4C1FE2EFBB00C74CF5 /* TokenObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		7C8A44F71FD7319900CBCECA /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		7C8A44F91FD735A700CBCECA /* AppData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		7C8A44FA1FD735A700CBCECA /* AppData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
+		7CAB2F4B1FE2EFBB00C74CF5 /* TokenObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TokenObject.h; sourceTree = "<group>"; };
+		7CAB2F4C1FE2EFBB00C74CF5 /* TokenObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TokenObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +133,8 @@
 				7C8A44F71FD7319900CBCECA /* LoginViewController.m */,
 				7C8A44F91FD735A700CBCECA /* AppData.h */,
 				7C8A44FA1FD735A700CBCECA /* AppData.m */,
+				7CAB2F4B1FE2EFBB00C74CF5 /* TokenObject.h */,
+				7CAB2F4C1FE2EFBB00C74CF5 /* TokenObject.m */,
 			);
 			path = Anwesenheit;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CAB2F4D1FE2EFBB00C74CF5 /* TokenObject.m in Sources */,
 				7C4595761FC7506C00BBCE6E /* DetailViewController.m in Sources */,
 				7C45954C1FC716C900BBCE6E /* main.m in Sources */,
 				7C8A44FB1FD735A700CBCECA /* AppData.m in Sources */,
