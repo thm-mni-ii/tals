@@ -49,9 +49,14 @@
 - (IBAction)signIn:(id)sender {
     username = self.UserName.text;
     password = self.Password.text;
-    [AppData loginCAS:username Password:password];
-    
-    
+    [AppData getToken:username password:password token:^(TokenObject *token){
+        NSLog(@"Look at this: %i", token.checkLogged);
+        if(token.checkLogged){
+            NSString * storyboardName = @"Main";
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+            UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"initialScreen"];
+            [self presentViewController:vc animated:YES completion:nil];}
+    }];
 }
 
 
@@ -61,6 +66,13 @@
 - (IBAction)pWord:(id)sender {
     username = self.UserName.text;
     password = self.Password.text;
-    [AppData loginCAS:username Password:password];
+    [AppData getToken:username password:password token:^(TokenObject *token){
+        NSLog(@"Look at this: %i", token.checkLogged);
+        if(token.checkLogged){
+        NSString * storyboardName = @"Main";
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+        UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"initialScreen"];
+            [self presentViewController:vc animated:YES completion:nil];}
+    }];
 }
 @end

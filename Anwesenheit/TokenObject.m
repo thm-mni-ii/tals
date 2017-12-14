@@ -10,7 +10,7 @@
 
 @implementation TokenObject
 -(instancetype)initWithId:(int)Id Token:(NSString *)currentToken UserID:(NSString
-                                                                         *)givenUserID ExternalService:(NSString *)givenExternalService ValidUntil:(NSString *)givenValidTime{
+                                                                         *)givenUserID ExternalService:(NSString *)givenExternalService ValidUntil:(NSString *)givenValidTime CheckLogged:(BOOL)givenLogged{
     self = [super init];
     if(self){
         self.Id = Id;
@@ -18,6 +18,7 @@
         self.userID = givenUserID;
         self.externalService = givenExternalService;
         self.validTime = givenValidTime;
+        self.checkLogged = givenLogged;
     }
     return self;
 }

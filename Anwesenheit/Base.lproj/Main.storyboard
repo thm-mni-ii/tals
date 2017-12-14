@@ -226,10 +226,10 @@
             </objects>
             <point key="canvasLocation" x="89" y="858"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--InitialScreen-->
         <scene sceneID="DVX-oC-C04">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sGj-Ce-9hF" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="initialScreen" title="InitialScreen" automaticallyAdjustsScrollViewInsets="NO" id="sGj-Ce-9hF" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Iur-3x-0Er">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

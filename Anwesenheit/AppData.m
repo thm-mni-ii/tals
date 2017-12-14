@@ -5,7 +5,6 @@
 
 static AppData *shared = NULL;
 
-@synthesize sLogged;
 
 #pragma mark Singleton Methods
 
@@ -20,13 +19,8 @@ static AppData *shared = NULL;
 
 - (id)init {
     if (self = [super init]) {
-        sLogged = NO;
     }
     return self;
-}
-
-+(void)setLogged{
-    
 }
 
 + (NSString *)getLT{
@@ -40,7 +34,12 @@ static AppData *shared = NULL;
 }
 
 
-+ (void) loginCAS:(NSString *)username Password:(NSString *)currentPassword {
++ (void) loginCAS:(NSString *)username Password:(NSString *)currentPassword success:(void (^)(TokenObject *responseDict))success failure:(void(^)(NSError* error))failure {
+    
+    TokenObject *currentToken = nil;
+    if (!currentToken) {
+        [self clearAllCookies];
+    }
     //extraction of Login Ticket
     NSString *lt = self.getLT;
     
@@ -68,17 +67,26 @@ static AppData *shared = NULL;
                                                          NSURL *url = [NSURL URLWithString:@"https://moodle.herwegh.me/mod/tals/token.php"];
                                                          NSData *data = [NSData dataWithContentsOfURL:url];
                                                          NSError *error = nil;
+                                                         BOOL result = NO;
                                                          //NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                                                          NSDictionary *dataDictionary = [NSJSONSerialization
                                                                                          JSONObjectWithData:data options:0 error:&error];
                                                          TokenObject *currentToken =[[TokenObject alloc]initWithId:[[dataDictionary
                                                                                                                      objectForKey:@"id"]integerValue] Token:[dataDictionary objectForKey:@"token"]
-                                                                                                              UserID:[dataDictionary objectForKey:@"userid"] ExternalService:[dataDictionary
-                                                                                                                                                                objectForKey:@"externalserviceid"] ValidUntil:[dataDictionary objectForKey:@"validuntil"]];
+                                                                                                              UserID:[dataDictionary objectForKey:@"userid"] ExternalService:[dataDictionary                                                                                                                                                                objectForKey:@"externalserviceid"] ValidUntil:[dataDictionary objectForKey:@"validuntil"] CheckLogged:result];
+                                                         if (currentToken.token != nil) {
+                                                             currentToken.checkLogged = YES;
+                                                         }
                                                          NSLog(@"Token:%@", currentToken.token);
                                                          NSLog(@"User ID:%@", currentToken.userID);
                                                          NSLog(@"External Service:%@", currentToken.externalService);
                                                          NSLog(@"Valid Until:%@", currentToken.validTime);
+                                                         NSLog(@"Check Logged:%i", currentToken.checkLogged);
+                                                         if (error)
+                                                             failure(error);
+                                                         else {
+                                                             success(currentToken);
+                                                         }
                                                          //NSLog(@"%@",ret);
                                                          /*for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
                                                          {
@@ -99,7 +107,16 @@ static AppData *shared = NULL;
     
     
     [task resume];
-    
+}
+
++(void)getToken:(NSString *)username password:(NSString *)password token:(void (^)(TokenObject *token))completionHandler{
+    [self loginCAS:username Password:password success:^(TokenObject *tokenObj){
+        if(completionHandler){
+            completionHandler(tokenObj);
+        }
+    } failure:^(NSError *error){
+
+    }];
 }
 
 + ( NSURLSession * )getURLSession
@@ -113,6 +130,13 @@ static AppData *shared = NULL;
                   } );
     
     return session;
+}
+
++(void)clearAllCookies {
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *each in cookieStorage.cookies) {
+        [cookieStorage deleteCookie:each];
+    }
 }
 
 - (void)dealloc {

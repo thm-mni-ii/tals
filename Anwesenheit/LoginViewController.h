@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TokenObject.h"
 
 @interface LoginViewController : UIViewController{
     NSString *username;
     NSString *password;
+    TokenObject *loginToken;
 }
 @property (weak, nonatomic) IBOutlet UITextField *UserName;
 @property (weak, nonatomic) IBOutlet UITextField *Password;
