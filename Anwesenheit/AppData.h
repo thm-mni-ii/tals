@@ -11,6 +11,11 @@
 + (NSString *)getLT;
 + ( NSURLSession * )getURLSession;
 + (void) clearAllCookies;
++ (NSArray * )getClasses;
++ (BOOL) checkToken;
++ (BOOL) getPinActive:(int) appointmentID;
++ (BOOL) sendPIN:(int) appointmentID pin:(NSString *) pin;
++ (int) getDaysAbsent:(int) appointmentID;
 
 
 @end

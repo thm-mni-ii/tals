@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface TableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *cellButton;
 @property (weak, nonatomic) IBOutlet UILabel *cellTitel;
 @property (weak, nonatomic) IBOutlet UILabel *cellDescription;
 

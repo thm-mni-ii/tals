@@ -21,9 +21,18 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:128.0/255.0 green:186.0/255.0 blue:36.0/255.0 alpha:1.0]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    AppData *tmp = [AppData SharedAppData];
-    BOOL *new = tmp.sLogged;
-    if(!new) {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL stayLogged = [defaults boolForKey:@"checkLogged"];
+    if(!stayLogged){
+        [defaults setValue:0 forKey:@"userID"];
+        [defaults setValue:0 forKey:@"token"];
+        [defaults setValue:0 forKey:@"externalService"];
+        [defaults setValue:0 forKey:@"validTime"];
+        [defaults synchronize];
+    }
+    BOOL logged = [AppData checkToken];
+    //AppData *tmp = [AppData SharedAppData];
+    if(!logged) {
         [self showLoginScreen:NO];
     }
     
@@ -45,8 +54,8 @@
 -(void) logout
 {
     // Remove data from singleton (where all my app data is stored)
-    AppData *tmp = [AppData SharedAppData];
-    tmp.sLogged = NO;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:NO forKey:@"checkLogged"];
     
     // Reset view controller (this will quickly clear all the views)
     //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
@@ -54,7 +63,7 @@
     //[self.window setRootViewController:;
     
     // Show login screen
-    [self showLoginScreen:NO];
+    [self showLoginScreen:YES];
     
 }
 

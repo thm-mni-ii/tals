@@ -1,5 +1,6 @@
 #import "AppData.h"
 #import "TokenObject.h"
+#import "ClassObject.h"
 
 @implementation AppData : NSObject
 
@@ -28,7 +29,9 @@ static AppData *shared = NULL;
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSString *search = @"LT-";
-    NSString *sub2 = [[ret substringFromIndex:NSMaxRange([ret rangeOfString:search])] substringToIndex:37];
+    NSArray *sub23 = [ret componentsSeparatedByString:search];
+    NSArray *sub24 = [sub23[1] componentsSeparatedByString:@"\""];
+    NSString *sub2 = sub24.firstObject;
     NSString *lt = [NSString stringWithFormat:@"LT-%@", sub2];
     return lt;
 }
@@ -77,6 +80,12 @@ static AppData *shared = NULL;
                                                          if (currentToken.token != nil) {
                                                              currentToken.checkLogged = YES;
                                                          }
+                                                         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                                         [defaults setValue:currentToken.userID forKey:@"userID"];
+                                                         [defaults setValue:currentToken.token forKey:@"token"];
+                                                         [defaults setValue:currentToken.externalService forKey:@"externalService"];
+                                                         [defaults setValue:currentToken.validTime forKey:@"validTime"];
+                                                         [defaults synchronize];
                                                          NSLog(@"Token:%@", currentToken.token);
                                                          NSLog(@"User ID:%@", currentToken.userID);
                                                          NSLog(@"External Service:%@", currentToken.externalService);
@@ -94,9 +103,9 @@ static AppData *shared = NULL;
                                                              NSLog(@"value: '%@'\n",  [cookie value]);
                                                              NSLog(@"domain: '%@'\n", [cookie domain]);
                                                              NSLog(@"path: '%@'\n",   [cookie path]);
-                                                         }
-                                                         NSString *result = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                                                         NSLog( @"%@", result );
+                                                         }*/
+                                                         /*NSString *resulte = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                                                         NSLog( @"%@", resulte );
                                                          NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
                                                          if ([response respondsToSelector:@selector(allHeaderFields)]) {
                                                              NSDictionary *dictionary = [httpResponse allHeaderFields];
@@ -119,6 +128,93 @@ static AppData *shared = NULL;
     }];
 }
 
++(BOOL) checkToken{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults valueForKey:@"token"];
+    NSString *userID = [defaults valueForKey:@"userID"];
+    NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_get_todays_appointments&userid=%@&moodlewsrestformat=json", token, userID];
+    NSURL *url = [NSURL URLWithString:post];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if([ret containsString:@"exception"]){
+        return NO;
+    }
+    return YES;
+}
+
++(NSArray * )getClasses{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults valueForKey:@"token"];
+    NSString *userID = [defaults valueForKey:@"userID"];
+    NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_get_todays_appointments&userid=%@&moodlewsrestformat=json", token, userID];
+    NSURL *url = [NSURL URLWithString:post];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(ret);
+    NSError *error = nil;
+    NSDictionary *dataDictionary = [NSJSONSerialization
+                                    JSONObjectWithData:data options:0 error:&error];
+    if(error){
+        NSLog(@"Error!");
+    }
+    
+    NSInteger length = [dataDictionary count];
+    NSMutableArray *classesArray = [[NSMutableArray alloc] initWithCapacity:length];
+    for (NSDictionary *class in dataDictionary)
+    {
+        ClassObject *currentClass =[[ClassObject alloc]initWithId:[[class
+                                                                    objectForKey:@"id"]integerValue] Shortname:[class objectForKey:@"shortname"]
+                                                         Fullname:[class objectForKey:@"fullname"] Startdate:[[class                                                                                                                                                                objectForKey:@"startdate"]integerValue]];
+        [classesArray addObject:currentClass];
+    }
+    return classesArray;
+}
+
++ (BOOL) getPinActive:(int) appointmentID{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults valueForKey:@"token"];
+    NSString *userID = [defaults valueForKey:@"userID"];
+    NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_check_for_enabled_pin&appointmentid=%i&userid=%@&moodlewsrestformat=json", token, appointmentID, userID];
+    NSURL *url = [NSURL URLWithString:post];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(post);
+    NSLog(ret);
+    NSLog(@"%i",appointmentID);
+    if([ret containsString:@"true"]){
+        return YES;
+    }
+    return NO;
+}
++ (BOOL) sendPIN:(int) appointmentID pin:(NSString *) pin{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults valueForKey:@"token"];
+    NSString *userID = [defaults valueForKey:@"userID"];
+    NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_insert_attendance&appointmentid=%i&userid=%@&pinum=%i&moodlewsrestformat=json", token, appointmentID, userID, pin];
+    NSURL *url = [NSURL URLWithString:post];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(post);
+    NSLog(ret);
+    if([ret containsString:@"success"]){
+        return YES;}
+    return NO;
+}
+
++ (int) getDaysAbsent:(int) appointmentID{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults valueForKey:@"token"];
+    NSString *userID = [defaults valueForKey:@"userID"];
+    NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_get_days_absent&appointmentid=%i&userid=%@&moodlewsrestformat=json", token, appointmentID, userID];
+    NSURL *url = [NSURL URLWithString:post];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(post);
+    NSLog(ret);
+    if([ret containsString:@"success"]){
+        return 1;}
+    return 0;
+}
 + ( NSURLSession * )getURLSession
 {
     static NSURLSession *session = nil;

@@ -19,3 +19,4 @@
 @property (nonatomic,assign) BOOL checkLogged;
 @end
 
+

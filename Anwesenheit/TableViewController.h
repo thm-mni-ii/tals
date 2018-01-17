@@ -11,10 +11,11 @@
 
 @interface TableViewController : UITableViewController {
     
+    NSArray *classes;
     NSArray *title;
     NSArray *description;
     NSArray *active;
-    BOOL *data;
+    BOOL data;
 
     
 }

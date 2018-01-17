@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "AppData.h"
 
 @interface DetailViewController ()
 
@@ -25,6 +26,7 @@
     if([self.detailActive.text isEqualToString: @"Nächster Termin: Beispieldatum"]){
         self.detailPIN.hidden = YES;
         self.detailPinEntry.hidden = YES;
+        self.detailSend.hidden = YES;
     }
 }
 
@@ -43,7 +45,16 @@
 }
 */
 
-- (IBAction)enterPIN:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+
+- (IBAction)sendPin:(id)sender {
+    if([AppData sendPIN:2 pin:self.detailPIN.text]){
+        [self.navigationController popToRootViewControllerAnimated:YES];}
+    else{
+        UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Die PIN ist falsch oder der Termin abeglaufen."  preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 @end

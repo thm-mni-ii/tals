@@ -15,9 +15,11 @@
     TokenObject *loginToken;
 }
 @property (weak, nonatomic) IBOutlet UITextField *UserName;
+@property (weak, nonatomic) IBOutlet UISwitch *switchWay;
 @property (weak, nonatomic) IBOutlet UITextField *Password;
 - (IBAction)signIn:(id)sender;
 - (IBAction)uName:(id)sender;
 - (IBAction)pWord:(id)sender;
+- (IBAction)stayLoggedIn:(id)sender;
 
 @end

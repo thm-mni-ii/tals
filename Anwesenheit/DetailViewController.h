@@ -15,7 +15,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *detailActive;
 @property (weak, nonatomic) IBOutlet UITextField *detailPinEntry;
 @property (weak, nonatomic) IBOutlet UILabel *detailTitel;
+@property (weak, nonatomic) IBOutlet UIButton *detailSend;
 @property (weak, nonatomic) IBOutlet UILabel *detailPIN;
-- (IBAction)enterPIN:(id)sender;
+- (IBAction)sendPin:(id)sender;
 
 @end

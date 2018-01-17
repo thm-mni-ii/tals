@@ -8,6 +8,10 @@
 
 #import "TableViewController.h"
 #import "DetailViewController.h"
+#import "TokenObject.h"
+#import "AppDelegate.h"
+#import "AppData.h"
+#import "ClassObject.h"
 
 @interface TableViewController ()
 
@@ -17,7 +21,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
+    UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Logout"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector((buttonTapped:))];
+    self.navigationItem.rightBarButtonItem = logoutButton;
     
+    if([AppData checkToken]){
+        classes = [AppData getClasses];
+        long classesA = [classes count];
+        NSLog(@"%lui",classesA);
+        if(classesA != 0){
+            data = YES;
+        }
+        else {
+            data = NO;
+        }
+    }
+
     title = @[@"Praktische Informatik",
               @"Software Praktikum",
               @"Theoretische Informatik",
@@ -25,12 +50,12 @@
               @"KSP",
               @"Compilerbau"];
     
-    description = @[@"Mo 11:15-12:30 Uhr, A19.2.07",
-                    @"Di 11:15-12:30 Uhr, A20.2.07",
-                    @"Mi 11:15-12:30 Uhr, A21.2.07",
-                    @"Do 11:15-12:30 Uhr, A22.2.07",
-                    @"Fr 11:15-12:30 Uhr, A23.2.07",
-                    @"Sa 11:15-12:30 Uhr, A24.2.07"];
+    description = @[@"Aktiv",
+                    @"Start: x",
+                    @"Aktiv",
+                    @"Start: x",
+                    @"Aktiv",
+                    @"Start: x"];
     
     active = @[@"Aktiv, bitte geben Sie den PIN ein.",
                @"Nächster Termin: Beispieldatum",
@@ -40,12 +65,6 @@
                @"Nächster Termin: Beispieldatum"];
     
     [[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
-    
-    if ([title count] != 0) {
-        data = YES;
-    } else {
-        data = NO;
-    }
 
 }
 
@@ -53,27 +72,40 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void) buttonTapped: (UIButton*) sender
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:0 forKey:@"userID"];
+    [defaults setValue:0 forKey:@"token"];
+    [defaults setValue:0 forKey:@"externalService"];
+    [defaults setValue:0 forKey:@"validTime"];
+    [defaults synchronize];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *LoginViewController = [storyboard instantiateViewControllerWithIdentifier:@"loginScreen"];
+    [self presentViewController:LoginViewController animated:YES completion:nil];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    
+    messageLabel.text = @"No classes found. Please pull down to refresh.";
+    messageLabel.numberOfLines = 0;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:20];
+    [messageLabel sizeToFit];
+    
     if (data) {
-        
+        messageLabel.textColor = [UIColor whiteColor];
+        self.tableView.backgroundView = messageLabel;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         return 1;
         
     } else {
         
         // Display a message when the table is empty
-        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         
-        messageLabel.text = @"No data is currently available. Please pull down to refresh.";
         messageLabel.textColor = [UIColor blackColor];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:20];
-        [messageLabel sizeToFit];
-        
         self.tableView.backgroundView = messageLabel;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
@@ -84,6 +116,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return title.count;
+    //return classes.count;
 }
 
 
@@ -91,7 +124,21 @@
     
     
     TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
+    /*ClassObject *currentCell = classes[indexPath.row];
+    cell.cellTitel.text = currentCell.fullname;
+    BOOL active = [AppData getPinActive:currentCell.Id];
+    if(!active){
+        cell.cellDescription.text = @"Aktiv";
+    }
+    else{
+        NSDate *retrievedDateItem = [[NSDate alloc] initWithTimeIntervalSince1970:currentCell.startdate];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        NSString *convertedDate = [dateFormatter stringFromDate:retrievedDateItem];
+        NSString * result = [NSString stringWithFormat:@"Aktiv ab:%@", convertedDate];
+        cell.cellDescription.text = result;
+    }*/
     cell.cellTitel.text = title[indexPath.row];
     cell.cellDescription.text = description[indexPath.row];
     
@@ -100,6 +147,12 @@
     return cell;
 }
 
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    // Do your job, when done:
+    data = YES;
+    [self.tableView reloadData];
+    [refreshControl endRefreshing];
+}
 
 /*
 // Override to support conditional editing of the table view.
