@@ -149,6 +149,9 @@ static AppData *shared = NULL;
     NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_get_todays_appointments&userid=%@&moodlewsrestformat=json", token, userID];
     NSURL *url = [NSURL URLWithString:post];
     NSData *data = [NSData dataWithContentsOfURL:url];
+    if(data == nil){
+        return nil;
+    }
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(ret);
     NSError *error = nil;
@@ -162,9 +165,10 @@ static AppData *shared = NULL;
     NSMutableArray *classesArray = [[NSMutableArray alloc] initWithCapacity:length];
     for (NSDictionary *class in dataDictionary)
     {
+        int success = [[class valueForKey:@"pin"] intValue];
         ClassObject *currentClass =[[ClassObject alloc]initWithId:[[class
-                                                                    objectForKey:@"id"]integerValue] Shortname:[class objectForKey:@"shortname"]
-                                                         Fullname:[class objectForKey:@"fullname"] Startdate:[[class                                                                                                                                                                objectForKey:@"startdate"]integerValue]];
+                                                                    objectForKey:@"id"]integerValue] title:[class objectForKey:@"title"]
+                                                        startdate:[class objectForKey:@"start"] enddate:[class                                                                                                                                                                objectForKey:@"end"] currentdescription:[class objectForKey:@"description"] courseid:[class objectForKey:@"courseid"] type:[class objectForKey:@"type"] pin:success];
         [classesArray addObject:currentClass];
     }
     return classesArray;
@@ -186,17 +190,17 @@ static AppData *shared = NULL;
     }
     return NO;
 }
-+ (BOOL) sendPIN:(int) appointmentID pin:(NSString *) pin{
++ (BOOL) sendPIN:(NSString *) appointmentID pin:(NSString *) pin{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *token = [defaults valueForKey:@"token"];
     NSString *userID = [defaults valueForKey:@"userID"];
-    NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_insert_attendance&appointmentid=%i&userid=%@&pinum=%i&moodlewsrestformat=json", token, appointmentID, userID, pin];
+    NSString *post = [NSString stringWithFormat:@"https://moodle.herwegh.me/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_insert_attendance&appointmentid=%@&userid=%@&pinum=%@&moodlewsrestformat=json", token, appointmentID, userID, pin];
     NSURL *url = [NSURL URLWithString:post];
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(post);
     NSLog(ret);
-    if([ret containsString:@"success"]){
+    if([ret containsString:@"Success"]){
         return YES;}
     return NO;
 }

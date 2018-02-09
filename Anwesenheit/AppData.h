@@ -14,7 +14,7 @@
 + (NSArray * )getClasses;
 + (BOOL) checkToken;
 + (BOOL) getPinActive:(int) appointmentID;
-+ (BOOL) sendPIN:(int) appointmentID pin:(NSString *) pin;
++ (BOOL) sendPIN:(NSString *) appointmentID pin:(NSString *) pin;
 + (int) getDaysAbsent:(int) appointmentID;
 
 

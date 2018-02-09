@@ -12,9 +12,12 @@
 @interface TableViewController : UITableViewController {
     
     NSArray *classes;
-    NSArray *title;
-    NSArray *description;
-    NSArray *active;
+    NSMutableArray *title;
+    NSMutableArray *description;
+    NSMutableArray *active;
+    NSMutableArray *courseid;
+    NSMutableArray *start;
+    NSMutableArray *end;
     BOOL data;
 
     

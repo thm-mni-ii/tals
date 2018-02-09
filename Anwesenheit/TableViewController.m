@@ -31,39 +31,27 @@
                                    action:@selector((buttonTapped:))];
     self.navigationItem.rightBarButtonItem = logoutButton;
     
+    title = [NSMutableArray array];
+    description = [NSMutableArray array];
+    active = [NSMutableArray array];
+    courseid = [NSMutableArray array];
+    start = [NSMutableArray array];
+    end = [NSMutableArray array];
+    
     if([AppData checkToken]){
         classes = [AppData getClasses];
         long classesA = [classes count];
         NSLog(@"%lui",classesA);
         if(classesA != 0){
             data = YES;
+            [self updateClasses:classes];
+            NSLog(@"%@", description[0]);
+            NSLog(@"%lui",[description count]);
         }
         else {
             data = NO;
         }
     }
-
-    title = @[@"Praktische Informatik",
-              @"Software Praktikum",
-              @"Theoretische Informatik",
-              @"Recht für Informatiker",
-              @"KSP",
-              @"Compilerbau"];
-    
-    description = @[@"Aktiv",
-                    @"Start: x",
-                    @"Aktiv",
-                    @"Start: x",
-                    @"Aktiv",
-                    @"Start: x"];
-    
-    active = @[@"Aktiv, bitte geben Sie den PIN ein.",
-               @"Nächster Termin: Beispieldatum",
-               @"Aktiv, bitte geben Sie den PIN ein.",
-               @"Nächster Termin: Beispieldatum",
-               @"Aktiv, bitte geben Sie den PIN ein.",
-               @"Nächster Termin: Beispieldatum"];
-    
     [[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
 
 }
@@ -115,8 +103,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return title.count;
-    //return classes.count;
+    return classes.count;
 }
 
 
@@ -139,7 +126,7 @@
         NSString * result = [NSString stringWithFormat:@"Aktiv ab:%@", convertedDate];
         cell.cellDescription.text = result;
     }*/
-    cell.cellTitel.text = title[indexPath.row];
+    cell.cellTitle.text = title[indexPath.row];
     cell.cellDescription.text = description[indexPath.row];
     
     // Configure the cell...
@@ -149,9 +136,44 @@
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
     // Do your job, when done:
-    data = YES;
+    classes = [AppData getClasses];
+    [title removeAllObjects];
+    [description removeAllObjects];
+    [active removeAllObjects];
+    [courseid removeAllObjects];
+    [start removeAllObjects];
+    [end removeAllObjects];
+    long classesA = [classes count];
+    if(classesA != 0){
+        data = YES;
+        [self updateClasses:classes];
+    }
+    else {
+        data = NO;
+    }
     [self.tableView reloadData];
     [refreshControl endRefreshing];
+}
+
+- (void)updateClasses:(NSArray *)classes{
+    for (ClassObject * class in classes) {
+        NSLog(@"%@", class.currentdescription);
+        NSLog(@"%@", class.title);
+        NSLog(@"%d", class.pin);
+        NSString * aiD = [NSString stringWithFormat:@"%d",class.Id];
+        NSString *pin= [NSString stringWithFormat:@"%d",class.pin];
+        NSString *starte = class.startdate;
+        NSString *ende = class.enddate;
+        [title addObject:class.title];
+        [description addObject:class.currentdescription];
+        [active addObject:pin];
+        [courseid addObject:aiD];
+        [start addObject:starte];
+        [end addObject:ende];
+        NSLog(@"Kurs: %@",courseid[0]);
+        NSLog(@"Start: %@",start[0]);
+        NSLog(@"End: %@",end[0]);
+    }
 }
 
 /*
@@ -200,7 +222,7 @@
         NSIndexPath *myIndexPath = [self.tableView indexPathForSelectedRow];
         
         int row = (int)[myIndexPath row];
-        detailView.detailModal = @[title[row], description[row], active[row]];
+        detailView.detailModal = @[title[row], description[row], active[row], courseid[row], start[row], end[row]];
     }
 }
 
