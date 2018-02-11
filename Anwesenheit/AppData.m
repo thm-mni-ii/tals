@@ -156,21 +156,6 @@ static AppData *shared = NULL;
     return appointmentArray;
 }
 
-// Check if a PIN is enabled
-+ (BOOL) getPinActive:(int) appointmentID{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *token = [defaults valueForKey:@"token"];
-    NSString *userID = [defaults valueForKey:@"userID"];
-    NSString *post = [NSString stringWithFormat:@"https://fk-vv.mni.thm.de/moodle/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_check_for_enabled_pin&appointmentid=%i&userid=%@&moodlewsrestformat=json", token, appointmentID, userID];
-    NSURL *url = [NSURL URLWithString:post];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([ret containsString:@"true"]){
-        return YES;
-    }
-    return NO;
-}
-
 // Get all courses for the current User
 +(NSArray *)getCourses{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -214,18 +199,22 @@ static AppData *shared = NULL;
     return NO;
 }
 
-// Get days absent for a specified appointment
-+ (int) getDaysAbsent:(int) appointmentID{
+// Get days absent for a specified appointment, not fully implemented
++ (NSString *) getDaysAbsent:(id) appointmentID{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString * aiD = [NSString stringWithFormat:@"%@",appointmentID];
     NSString *token = [defaults valueForKey:@"token"];
     NSString *userID = [defaults valueForKey:@"userID"];
-    NSString *post = [NSString stringWithFormat:@"https://fk-vv.mni.thm.de/moodle/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_get_days_absent&appointmentid=%i&userid=%@&moodlewsrestformat=json", token, appointmentID, userID];
+    NSString *post = [NSString stringWithFormat:@"https://fk-vv.mni.thm.de/moodle/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_check_for_enabled_pin&appointmentid=%@&userid=%@&moodlewsrestformat=json", token, aiD, userID];
     NSURL *url = [NSURL URLWithString:post];
     NSData *data = [NSData dataWithContentsOfURL:url];
-    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if([ret containsString:@"success"]){
-        return 1;}
-    return 0;
+    NSError *error = nil;
+    NSDictionary *dataDictionary = [NSJSONSerialization
+                                    JSONObjectWithData:data options:0 error:&error];
+    if(error){
+    }
+    NSString *ret = [dataDictionary objectForKey:@"days absent"];
+    return ret;
 }
 
 + ( NSURLSession * )getURLSession

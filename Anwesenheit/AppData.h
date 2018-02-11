@@ -16,9 +16,8 @@
 + (void) clearAllCookies;
 + (NSArray * )getAppointments;
 + (BOOL) checkToken;
-+ (BOOL) getPinActive:(int) appointmentID;
 + (BOOL) sendPIN:(NSString *) appointmentID pin:(NSString *) pin;
-+ (int) getDaysAbsent:(int) appointmentID;
++ (NSString *) getDaysAbsent:(id) appointmentID;
 + (NSArray *)getCourses;
 
 
