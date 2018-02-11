@@ -17,12 +17,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.navigationItem.title = self.detailModal[0];
+    // Setup the detailed view with the data received from the TableView
+    self.navigationItem.title = self.detailModal[6];
     self.detailTitel.text = self.detailModal[0];
     self.detailDescription.text = self.detailModal[1];
+    self.detailType.text = self.detailModal[7];
     NSString * active = self.detailModal[2];
-    NSLog(@"Aktiv: %@", self.detailModal[2]);
     if([active isEqualToString:@"1"]){
         self.detailActive.text = @"Momentan aktiv";}
     else{
@@ -38,18 +38,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
-- (IBAction)sendPin:(id)sender {
+// Send PIN and display appropriate Alerts depending on the result
+- (void) pinHandover{
     if([AppData sendPIN:self.detailModal[3] pin:self.detailPinEntry.text]){
         self.detailActive.text = @"Erfolgreich eingetragen.";
         self.detailPIN.hidden = YES;
@@ -58,17 +49,27 @@
         [self.view endEditing:YES];
         UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Erfolg"  message:@"Sie sind erfolgreich in den Kurs eingetragen."  preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
-        }]];
-        [self presentViewController:alertController animated:YES completion:nil];
-        }
-    else{
-        UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Die PIN ist falsch oder der Termin abeglaufen."  preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+    else{
+        UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Die PIN ist falsch oder der Termin abeglaufen."  preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder]; // Dismiss the keyboard.
+    [self pinHandover];
+    return YES;
+}
+
+
+- (IBAction)sendPin:(id)sender {
+    [self pinHandover];
 }
 @end

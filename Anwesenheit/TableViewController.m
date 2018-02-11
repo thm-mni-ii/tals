@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "AppData.h"
 #import "ClassObject.h"
+#import "CourseObject.h"
 
 @interface TableViewController ()
 
@@ -24,6 +25,8 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+    
+    // Creates Logout Button
     UIBarButtonItem *logoutButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Logout"
                                    style:UIBarButtonItemStylePlain
@@ -31,22 +34,24 @@
                                    action:@selector((buttonTapped:))];
     self.navigationItem.rightBarButtonItem = logoutButton;
     
+    // Initialize Mutable Arrays
     title = [NSMutableArray array];
     description = [NSMutableArray array];
+    type = [NSMutableArray array];
     active = [NSMutableArray array];
     courseid = [NSMutableArray array];
     start = [NSMutableArray array];
     end = [NSMutableArray array];
+    course = [NSMutableArray array];
     
+    //Check if Token is valid, if yes fill table with data
     if([AppData checkToken]){
-        classes = [AppData getClasses];
+        classes = [AppData getAppointments];
+        courses = [AppData getCourses];
         long classesA = [classes count];
-        NSLog(@"%lui",classesA);
         if(classesA != 0){
             data = YES;
-            [self updateClasses:classes];
-            NSLog(@"%@", description[0]);
-            NSLog(@"%lui",[description count]);
+            [self updateClasses:classes courses:courses];
         }
         else {
             data = NO;
@@ -60,6 +65,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+// Logout Button, returns User to Login Screen
 - (void) buttonTapped: (UIButton*) sender
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -109,25 +116,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
+    // Fill each cell of the Table with proper values
     TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    /*ClassObject *currentCell = classes[indexPath.row];
-    cell.cellTitel.text = currentCell.fullname;
-    BOOL active = [AppData getPinActive:currentCell.Id];
-    if(!active){
-        cell.cellDescription.text = @"Aktiv";
+    cell.cellTitle.text = course[indexPath.row];
+    cell.cellDescription.text = [NSString stringWithFormat:@"%@(%@)",description[indexPath.row],type[indexPath.row]];
+    cell.cellTimes.text = [NSString stringWithFormat:@"%@-%@",start[indexPath.row],end[indexPath.row]];
+    if([active[indexPath.row] isEqualToString:@"1"]){
+        cell.cellLocked.image = [UIImage imageNamed:@"lock_open.png"];
     }
     else{
-        NSDate *retrievedDateItem = [[NSDate alloc] initWithTimeIntervalSince1970:currentCell.startdate];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        NSString *convertedDate = [dateFormatter stringFromDate:retrievedDateItem];
-        NSString * result = [NSString stringWithFormat:@"Aktiv ab:%@", convertedDate];
-        cell.cellDescription.text = result;
-    }*/
-    cell.cellTitle.text = title[indexPath.row];
-    cell.cellDescription.text = description[indexPath.row];
+        cell.cellLocked.image = [UIImage imageNamed:@"lock.png"];
+    }
     
     // Configure the cell...
     
@@ -135,18 +134,19 @@
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    // Do your job, when done:
-    classes = [AppData getClasses];
+    // Refresh the List of currently active classes and courses
+    classes = [AppData getAppointments];
     [title removeAllObjects];
     [description removeAllObjects];
     [active removeAllObjects];
     [courseid removeAllObjects];
     [start removeAllObjects];
     [end removeAllObjects];
+    [course removeAllObjects];
     long classesA = [classes count];
     if(classesA != 0){
         data = YES;
-        [self updateClasses:classes];
+        [self updateClasses:classes courses:courses];
     }
     else {
         data = NO;
@@ -155,61 +155,28 @@
     [refreshControl endRefreshing];
 }
 
-- (void)updateClasses:(NSArray *)classes{
+- (void)updateClasses:(NSArray *)classes courses:(NSArray *)courses{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for (CourseObject * course in courses){
+        NSString * test = [NSString stringWithFormat:@"%i", course.Id];
+        [defaults setValue:[NSString stringWithFormat:@"%@",course.fullname] forKey:test];
+    }
     for (ClassObject * class in classes) {
-        NSLog(@"%@", class.currentdescription);
-        NSLog(@"%@", class.title);
-        NSLog(@"%d", class.pin);
+
         NSString * aiD = [NSString stringWithFormat:@"%d",class.Id];
         NSString *pin= [NSString stringWithFormat:@"%d",class.pin];
         NSString *starte = class.startdate;
         NSString *ende = class.enddate;
+        [course addObject:[defaults valueForKey:[NSString stringWithFormat:@"%@",class.courseid]]];
         [title addObject:class.title];
         [description addObject:class.currentdescription];
+        [type addObject:class.type];
         [active addObject:pin];
         [courseid addObject:aiD];
         [start addObject:starte];
         [end addObject:ende];
-        NSLog(@"Kurs: %@",courseid[0]);
-        NSLog(@"Start: %@",start[0]);
-        NSLog(@"End: %@",end[0]);
     }
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 
 #pragma mark - Navigation
@@ -222,7 +189,7 @@
         NSIndexPath *myIndexPath = [self.tableView indexPathForSelectedRow];
         
         int row = (int)[myIndexPath row];
-        detailView.detailModal = @[title[row], description[row], active[row], courseid[row], start[row], end[row]];
+        detailView.detailModal = @[title[row], description[row], active[row], courseid[row], start[row], end[row], course[row], type[row]];
     }
 }
 

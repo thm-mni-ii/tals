@@ -5,6 +5,9 @@
 //  Created by Sarah B on 14.12.17.
 //  Copyright © 2017 THM Gießen. All rights reserved.
 //
+//
+// Object containing a Token used request data from the server
+//
 
 #import <Foundation/Foundation.h>
 

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Anwesenheit.xcodeproj">
+      location = "self:/Users/sarahxcellence/Documents/Anwesenheit/TALS.xcodeproj">
    </FileRef>
 </Workspace>

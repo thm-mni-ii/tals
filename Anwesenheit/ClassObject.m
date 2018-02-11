@@ -5,6 +5,9 @@
 //  Created by Sarah B on 17.01.18.
 //  Copyright © 2018 THM Gießen. All rights reserved.
 //
+//
+// Object containing a class with the proper values, to be used for entering your attendance
+//
 
 #import "ClassObject.h"
 

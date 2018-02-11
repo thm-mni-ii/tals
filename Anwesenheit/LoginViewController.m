@@ -27,6 +27,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) doLogin{
+    // Request Token from server
+    username = self.UserName.text;
+    password = self.Password.text;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(self.switchWay.isOn){
+        [defaults setBool:YES forKey:@"checkLogged"];
+    }
+    [AppData getToken:username password:password token:^(TokenObject *token){
+        if(token.checkLogged){
+            NSString * storyboardName = @"Main";
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+            UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"initialScreen"];
+            [self presentViewController:vc animated:YES completion:nil];}
+    }];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -47,21 +64,7 @@
 }
 
 - (IBAction)signIn:(id)sender {
-    //username = self.UserName.text;
-    //password = self.Password.text;
-    username = @"crbr02";
-    password = @"5WOVxq8B2lj5XZ6W6NyX";
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if(self.switchWay.isOn){
-        [defaults setBool:YES forKey:@"checkLogged"];
-    }
-    [AppData getToken:username password:password token:^(TokenObject *token){
-        if(token.checkLogged){
-            NSString * storyboardName = @"Main";
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
-            UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"initialScreen"];
-            [self presentViewController:vc animated:YES completion:nil];}
-    }];
+    [self doLogin];
 }
 
 
@@ -69,19 +72,7 @@
 }
 
 - (IBAction)pWord:(id)sender {
-    username = self.UserName.text;
-    password = self.Password.text;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if(self.switchWay.isOn){
-        [defaults setBool:YES forKey:@"checkLogged"];
-    }
-    [AppData getToken:username password:password token:^(TokenObject *token){
-        if(token.checkLogged){
-        NSString * storyboardName = @"Main";
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
-        UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"initialScreen"];
-            [self presentViewController:vc animated:YES completion:nil];}
-    }];
+    [self doLogin];
 }
 
 - (IBAction)stayLoggedIn:(id)sender {

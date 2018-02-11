@@ -17,6 +17,7 @@
 		7C4595701FC71CE100BBCE6E /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C45956F1FC71CE100BBCE6E /* TableViewController.m */; };
 		7C4595731FC71D0500BBCE6E /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4595721FC71D0500BBCE6E /* TableViewCell.m */; };
 		7C4595761FC7506C00BBCE6E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4595751FC7506C00BBCE6E /* DetailViewController.m */; };
+		7C69BB102030B0B100EB89EF /* CourseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C69BB0F2030B0B100EB89EF /* CourseObject.m */; };
 		7C8A44F81FD7319900CBCECA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A44F71FD7319900CBCECA /* LoginViewController.m */; };
 		7C8A44FB1FD735A700CBCECA /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A44FA1FD735A700CBCECA /* AppData.m */; };
 		7CAB2F4D1FE2EFBB00C74CF5 /* TokenObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB2F4C1FE2EFBB00C74CF5 /* TokenObject.m */; };
@@ -41,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7C4595391FC716C900BBCE6E /* Anwesenheit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anwesenheit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C4595391FC716C900BBCE6E /* TALS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TALS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C45953C1FC716C900BBCE6E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7C45953D1FC716C900BBCE6E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7C4595431FC716C900BBCE6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -49,10 +50,10 @@
 		7C4595481FC716C900BBCE6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C45954A1FC716C900BBCE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C45954B1FC716C900BBCE6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		7C4595511FC716C900BBCE6E /* AnwesenheitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnwesenheitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C4595511FC716C900BBCE6E /* TALSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TALSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C4595551FC716C900BBCE6E /* AnwesenheitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnwesenheitTests.m; sourceTree = "<group>"; };
 		7C4595571FC716C900BBCE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7C45955C1FC716C900BBCE6E /* AnwesenheitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnwesenheitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C45955C1FC716C900BBCE6E /* TALSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TALSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C4595601FC716C900BBCE6E /* AnwesenheitUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnwesenheitUITests.m; sourceTree = "<group>"; };
 		7C4595621FC716C900BBCE6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C45956E1FC71CE100BBCE6E /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
@@ -61,6 +62,8 @@
 		7C4595721FC71D0500BBCE6E /* TableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		7C4595741FC7506C00BBCE6E /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		7C4595751FC7506C00BBCE6E /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		7C69BB0E2030B0B100EB89EF /* CourseObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CourseObject.h; sourceTree = "<group>"; };
+		7C69BB0F2030B0B100EB89EF /* CourseObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CourseObject.m; sourceTree = "<group>"; };
 		7C8A44F61FD7319900CBCECA /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		7C8A44F71FD7319900CBCECA /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		7C8A44F91FD735A700CBCECA /* AppData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
@@ -109,9 +112,9 @@
 		7C45953A1FC716C900BBCE6E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7C4595391FC716C900BBCE6E /* Anwesenheit.app */,
-				7C4595511FC716C900BBCE6E /* AnwesenheitTests.xctest */,
-				7C45955C1FC716C900BBCE6E /* AnwesenheitUITests.xctest */,
+				7C4595391FC716C900BBCE6E /* TALS.app */,
+				7C4595511FC716C900BBCE6E /* TALSTests.xctest */,
+				7C45955C1FC716C900BBCE6E /* TALSUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,6 +143,8 @@
 				7CAB2F4C1FE2EFBB00C74CF5 /* TokenObject.m */,
 				7CD92B88200FC27300F0EAA5 /* ClassObject.h */,
 				7CD92B89200FC27300F0EAA5 /* ClassObject.m */,
+				7C69BB0E2030B0B100EB89EF /* CourseObject.h */,
+				7C69BB0F2030B0B100EB89EF /* CourseObject.m */,
 			);
 			path = Anwesenheit;
 			sourceTree = "<group>";
@@ -165,9 +170,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7C4595381FC716C900BBCE6E /* Anwesenheit */ = {
+		7C4595381FC716C900BBCE6E /* TALS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C4595651FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "Anwesenheit" */;
+			buildConfigurationList = 7C4595651FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "TALS" */;
 			buildPhases = (
 				7C4595351FC716C900BBCE6E /* Sources */,
 				7C4595361FC716C900BBCE6E /* Frameworks */,
@@ -177,14 +182,14 @@
 			);
 			dependencies = (
 			);
-			name = Anwesenheit;
+			name = TALS;
 			productName = Anwesenheit;
-			productReference = 7C4595391FC716C900BBCE6E /* Anwesenheit.app */;
+			productReference = 7C4595391FC716C900BBCE6E /* TALS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7C4595501FC716C900BBCE6E /* AnwesenheitTests */ = {
+		7C4595501FC716C900BBCE6E /* TALSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C4595681FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "AnwesenheitTests" */;
+			buildConfigurationList = 7C4595681FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "TALSTests" */;
 			buildPhases = (
 				7C45954D1FC716C900BBCE6E /* Sources */,
 				7C45954E1FC716C900BBCE6E /* Frameworks */,
@@ -195,14 +200,14 @@
 			dependencies = (
 				7C4595531FC716C900BBCE6E /* PBXTargetDependency */,
 			);
-			name = AnwesenheitTests;
+			name = TALSTests;
 			productName = AnwesenheitTests;
-			productReference = 7C4595511FC716C900BBCE6E /* AnwesenheitTests.xctest */;
+			productReference = 7C4595511FC716C900BBCE6E /* TALSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7C45955B1FC716C900BBCE6E /* AnwesenheitUITests */ = {
+		7C45955B1FC716C900BBCE6E /* TALSUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C45956B1FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "AnwesenheitUITests" */;
+			buildConfigurationList = 7C45956B1FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "TALSUITests" */;
 			buildPhases = (
 				7C4595581FC716C900BBCE6E /* Sources */,
 				7C4595591FC716C900BBCE6E /* Frameworks */,
@@ -213,9 +218,9 @@
 			dependencies = (
 				7C45955E1FC716C900BBCE6E /* PBXTargetDependency */,
 			);
-			name = AnwesenheitUITests;
+			name = TALSUITests;
 			productName = AnwesenheitUITests;
-			productReference = 7C45955C1FC716C900BBCE6E /* AnwesenheitUITests.xctest */;
+			productReference = 7C45955C1FC716C900BBCE6E /* TALSUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -243,7 +248,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7C4595341FC716C900BBCE6E /* Build configuration list for PBXProject "Anwesenheit" */;
+			buildConfigurationList = 7C4595341FC716C900BBCE6E /* Build configuration list for PBXProject "TALS" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -256,9 +261,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7C4595381FC716C900BBCE6E /* Anwesenheit */,
-				7C4595501FC716C900BBCE6E /* AnwesenheitTests */,
-				7C45955B1FC716C900BBCE6E /* AnwesenheitUITests */,
+				7C4595381FC716C900BBCE6E /* TALS */,
+				7C4595501FC716C900BBCE6E /* TALSTests */,
+				7C45955B1FC716C900BBCE6E /* TALSUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -300,6 +305,7 @@
 				7C45954C1FC716C900BBCE6E /* main.m in Sources */,
 				7C8A44FB1FD735A700CBCECA /* AppData.m in Sources */,
 				7CD92B8A200FC27300F0EAA5 /* ClassObject.m in Sources */,
+				7C69BB102030B0B100EB89EF /* CourseObject.m in Sources */,
 				7C8A44F81FD7319900CBCECA /* LoginViewController.m in Sources */,
 				7C4595731FC71D0500BBCE6E /* TableViewCell.m in Sources */,
 				7C4595701FC71CE100BBCE6E /* TableViewController.m in Sources */,
@@ -328,12 +334,12 @@
 /* Begin PBXTargetDependency section */
 		7C4595531FC716C900BBCE6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7C4595381FC716C900BBCE6E /* Anwesenheit */;
+			target = 7C4595381FC716C900BBCE6E /* TALS */;
 			targetProxy = 7C4595521FC716C900BBCE6E /* PBXContainerItemProxy */;
 		};
 		7C45955E1FC716C900BBCE6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7C4595381FC716C900BBCE6E /* Anwesenheit */;
+			target = 7C4595381FC716C900BBCE6E /* TALS */;
 			targetProxy = 7C45955D1FC716C900BBCE6E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -467,6 +473,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = T58NDL8Q59;
 				INFOPLIST_FILE = Anwesenheit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = THM.Anwesenheit;
@@ -480,6 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = T58NDL8Q59;
 				INFOPLIST_FILE = Anwesenheit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = THM.Anwesenheit;
@@ -498,7 +506,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = THM.AnwesenheitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Anwesenheit.app/Anwesenheit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TALS.app/TALS";
 			};
 			name = Debug;
 		};
@@ -512,7 +520,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = THM.AnwesenheitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Anwesenheit.app/Anwesenheit";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TALS.app/TALS";
 			};
 			name = Release;
 		};
@@ -545,7 +553,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7C4595341FC716C900BBCE6E /* Build configuration list for PBXProject "Anwesenheit" */ = {
+		7C4595341FC716C900BBCE6E /* Build configuration list for PBXProject "TALS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7C4595631FC716C900BBCE6E /* Debug */,
@@ -554,7 +562,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C4595651FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "Anwesenheit" */ = {
+		7C4595651FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "TALS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7C4595661FC716C900BBCE6E /* Debug */,
@@ -563,7 +571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C4595681FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "AnwesenheitTests" */ = {
+		7C4595681FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "TALSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7C4595691FC716C900BBCE6E /* Debug */,
@@ -572,7 +580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C45956B1FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "AnwesenheitUITests" */ = {
+		7C45956B1FC716C900BBCE6E /* Build configuration list for PBXNativeTarget "TALSUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7C45956C1FC716C900BBCE6E /* Debug */,
