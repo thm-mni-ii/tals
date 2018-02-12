@@ -35,13 +35,26 @@
     if(self.switchWay.isOn){
         [defaults setBool:YES forKey:@"checkLogged"];
     }
+    if([AppData checkConnection]){
     [AppData getToken:username password:password token:^(TokenObject *token){
         if(token.checkLogged){
             NSString * storyboardName = @"Main";
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
             UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"initialScreen"];
             [self presentViewController:vc animated:YES completion:nil];}
-    }];
+        else{
+            UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Passwort oder Nutzername falsch"  preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    }];}
+    else{
+        UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Es kann keine Verbindung zum Server aufgebaut werden."  preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 /*

@@ -50,7 +50,7 @@
         UIAlertController *alertController2 = [UIAlertController  alertControllerWithTitle:@"Erfolg"  message:@"Sie sind erfolgreich in den Kurs eingetragen."   preferredStyle:UIAlertControllerStyleAlert];
         [alertController2 addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }]];
-        UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehltage"  message:[NSString stringWithFormat:@"Sie haben: %@ Fehltage", [NSString stringWithFormat:@"%@", [AppData getDaysAbsent:self.detailModal[3]]]] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehltage"  message:[NSString stringWithFormat:@"Sie haben: %@ Fehltag(e)", [NSString stringWithFormat:@"%@", [AppData getDaysAbsent:self.detailModal[3]]]] preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
              [self presentViewController:alertController2 animated:YES completion:nil];
         }]];

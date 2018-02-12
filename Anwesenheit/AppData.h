@@ -19,6 +19,7 @@
 + (BOOL) sendPIN:(NSString *) appointmentID pin:(NSString *) pin;
 + (NSString *) getDaysAbsent:(id) appointmentID;
 + (NSArray *)getCourses;
++ (BOOL) checkConnection;
 
 
 @end

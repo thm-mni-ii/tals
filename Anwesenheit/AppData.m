@@ -71,7 +71,7 @@ static AppData *shared = NULL;
                                                          // parse returned data
                                                          //Token Abfrage
                                                          NSURL *url = [NSURL URLWithString:@"https://fk-vv.mni.thm.de/moodle/mod/tals/token.php"];
-                                                         NSData *data = [NSData dataWithContentsOfURL:url];
+                                                         NSData *data = [NSData dataWithContentsOfURL:url];                                                        
                                                          NSError *error = nil;
                                                          BOOL result = NO;
                                                          NSDictionary *dataDictionary = [NSJSONSerialization
@@ -215,6 +215,16 @@ static AppData *shared = NULL;
     }
     NSString *ret = [dataDictionary objectForKey:@"days absent"];
     return ret;
+}
+
++ (BOOL) checkConnection{
+    NSURL *scriptUrl = [NSURL URLWithString:@"https://cas.thm.de:443/cas/login?service=https://fk-vv.mni.thm.de/moodle/login/index.php"];
+    NSData *data = [NSData dataWithContentsOfURL:scriptUrl];
+    NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (![ret containsString:@"HTTP Status 404"] && [ret containsString:@"fordert eine Authentifizierung"])
+        return YES;
+    else
+        return NO;
 }
 
 + ( NSURLSession * )getURLSession

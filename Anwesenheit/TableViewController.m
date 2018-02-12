@@ -119,7 +119,7 @@
     // Fill each cell of the Table with proper values
     TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.cellTitle.text = course[indexPath.row];
-    cell.cellDescription.text = [NSString stringWithFormat:@"%@(%@)",description[indexPath.row],type[indexPath.row]];
+    cell.cellDescription.text = [NSString stringWithFormat:@"%@(%@)",title[indexPath.row],type[indexPath.row]];
     cell.cellTimes.text = [NSString stringWithFormat:@"%@-%@",start[indexPath.row],end[indexPath.row]];
     if([active[indexPath.row] isEqualToString:@"1"]){
         cell.cellLocked.image = [UIImage imageNamed:@"lock_open.png"];
