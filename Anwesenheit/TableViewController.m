@@ -22,6 +22,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL stayLogged = [defaults boolForKey:@"checkLogged"];
+    if(!stayLogged){
+        [defaults setValue:0 forKey:@"userID"];
+        [defaults setValue:0 forKey:@"token"];
+        [defaults setValue:0 forKey:@"externalService"];
+        [defaults setValue:0 forKey:@"validTime"];
+        [defaults synchronize];
+    }
+    BOOL logged = [AppData checkToken];
+    if(!logged) {
+        [self showLoginScreen:NO];
+    }
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
@@ -61,6 +74,16 @@
 
 }
 
+-(void) showLoginScreen:(BOOL)animated
+{
+    
+    // Get login screen from storyboard and present it
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *LoginViewController = [storyboard instantiateViewControllerWithIdentifier:@"loginScreen"];
+    [self presentViewController:LoginViewController animated:YES completion:nil];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -84,7 +107,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     
-    messageLabel.text = @"No classes found. Please pull down to refresh.";
+    messageLabel.text = @"Zum Abfragen der aktuellen Klassen oder Aktualisieren herunterziehen.";
     messageLabel.numberOfLines = 0;
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:20];

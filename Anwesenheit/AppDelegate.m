@@ -22,7 +22,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     // Remove UserData from the UserDefaults in Case the User does not wish to stay logged in
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    /*NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL stayLogged = [defaults boolForKey:@"checkLogged"];
     if(!stayLogged){
         [defaults setValue:0 forKey:@"userID"];
@@ -34,12 +34,12 @@
     BOOL logged = [AppData checkToken];
     if(!logged) {
         [self showLoginScreen:NO];
-    }
+    }*/
     
     return YES;
 }
 
--(void) showLoginScreen:(BOOL)animated
+/*-(void) showLoginScreen:(BOOL)animated
 {
     
     // Get login screen from storyboard and present it
@@ -49,7 +49,7 @@
     [self.window.rootViewController presentViewController:LoginViewController
                                                  animated:animated
                                                completion:nil];
-}
+}*/
 
 -(void) logout
 {
@@ -63,7 +63,7 @@
     //[self.window setRootViewController:;
     
     // Show login screen
-    [self showLoginScreen:YES];
+    //[self showLoginScreen:YES];
     
 }
 

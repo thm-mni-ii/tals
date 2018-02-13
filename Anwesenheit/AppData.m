@@ -38,6 +38,7 @@ static AppData *shared = NULL;
     return lt;
 }
 
+
 // Login to the appropriate service with CAS
 + (void) loginCAS:(NSString *)username Password:(NSString *)currentPassword success:(void (^)(TokenObject *responseDict))success failure:(void(^)(NSError* error))failure {
     
@@ -71,14 +72,14 @@ static AppData *shared = NULL;
                                                          // parse returned data
                                                          //Token Abfrage
                                                          NSURL *url = [NSURL URLWithString:@"https://fk-vv.mni.thm.de/moodle/mod/tals/token.php"];
-                                                         NSData *data = [NSData dataWithContentsOfURL:url];                                                        
+                                                         NSData *data = [NSData dataWithContentsOfURL:url];
                                                          NSError *error = nil;
                                                          BOOL result = NO;
                                                          NSDictionary *dataDictionary = [NSJSONSerialization
                                                                                          JSONObjectWithData:data options:0 error:&error];
                                                          TokenObject *currentToken =[[TokenObject alloc]initWithId:[[dataDictionary
                                                                                                                      objectForKey:@"id"]integerValue] Token:[dataDictionary objectForKey:@"token"]
-                                                                                                              UserID:[dataDictionary objectForKey:@"userid"] ExternalService:[dataDictionary                                                                                                                                                                objectForKey:@"externalserviceid"] ValidUntil:[dataDictionary objectForKey:@"validuntil"] CheckLogged:result];
+                                                                                                            UserID:[dataDictionary objectForKey:@"userid"] ExternalService:[dataDictionary                                                                                                                                                                objectForKey:@"externalserviceid"] ValidUntil:[dataDictionary objectForKey:@"validuntil"] CheckLogged:result];
                                                          if (currentToken.token != nil) {
                                                              currentToken.checkLogged = YES;
                                                          }
@@ -107,7 +108,7 @@ static AppData *shared = NULL;
             completionHandler(tokenObj);
         }
     } failure:^(NSError *error){
-
+        
     }];
 }
 
@@ -149,8 +150,8 @@ static AppData *shared = NULL;
     {
         int success = [[appointment valueForKey:@"pin"] intValue];
         ClassObject *currentAppointment =[[ClassObject alloc]initWithId:[[appointment
-                                                                    objectForKey:@"id"]integerValue] title:[appointment objectForKey:@"title"]
-                                                        startdate:[appointment objectForKey:@"start"] enddate:[appointment                                                                                                                                                                objectForKey:@"end"] currentdescription:[appointment objectForKey:@"description"] courseid:[appointment objectForKey:@"courseid"] type:[appointment objectForKey:@"type"] pin:success];
+                                                                          objectForKey:@"id"]integerValue] title:[appointment objectForKey:@"title"]
+                                                              startdate:[appointment objectForKey:@"start"] enddate:[appointment                                                                                                                                                                objectForKey:@"end"] currentdescription:[appointment objectForKey:@"description"] courseid:[appointment objectForKey:@"courseid"] type:[appointment objectForKey:@"type"] pin:success];
         [appointmentArray addObject:currentAppointment];
     }
     return appointmentArray;
@@ -179,7 +180,7 @@ static AppData *shared = NULL;
     {
         CourseObject *currentCourse =[[CourseObject alloc]initWithId:[[course
                                                                        objectForKey:@"id"]integerValue] shortname:[course objectForKey:@"shortname"] fullname:[course objectForKey:@"fullname"]
-                                                        startdate:[course objectForKey:@"startdate"]];
+                                                           startdate:[course objectForKey:@"startdate"]];
         [coursesArray addObject:currentCourse];
     }
     return coursesArray;
@@ -221,7 +222,7 @@ static AppData *shared = NULL;
     NSURL *scriptUrl = [NSURL URLWithString:@"https://cas.thm.de:443/cas/login?service=https://fk-vv.mni.thm.de/moodle/login/index.php"];
     NSData *data = [NSData dataWithContentsOfURL:scriptUrl];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if (![ret containsString:@"HTTP Status 404"] && [ret containsString:@"fordert eine Authentifizierung"])
+    if (![ret containsString:@"HTTP Status"])
         return YES;
     else
         return NO;
@@ -252,3 +253,4 @@ static AppData *shared = NULL;
 }
 
 @end
+

@@ -21,10 +21,10 @@
     self.navigationItem.title = self.detailModal[6];
     self.detailTitel.text = self.detailModal[0];
     self.detailDescription.text = self.detailModal[1];
-    self.detailType.text = self.detailModal[7];
+    self.detailType.text = [NSString stringWithFormat:@"Typ: %@", self.detailModal[7]];
     NSString * active = self.detailModal[2];
     if([active isEqualToString:@"1"]){
-        self.detailActive.text = @"Momentan aktiv";}
+        self.detailActive.text = @"Status: Momentan aktiv";}
     else{
         self.detailActive.text = [NSString stringWithFormat:@"Kurs aktiv von %@ Uhr bis %@ Uhr.", self.detailModal[4], self.detailModal[5]];
         self.detailPIN.hidden = YES;

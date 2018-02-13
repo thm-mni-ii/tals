@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *detailSend;
 @property (weak, nonatomic) IBOutlet UILabel *detailPIN;
 @property (weak, nonatomic) IBOutlet UILabel *detailActive;
-@property (weak, nonatomic) IBOutlet UILabel *detailDescription;
+@property (weak, nonatomic) IBOutlet UITextView *detailDescription;
 @property (weak, nonatomic) IBOutlet UILabel *detailType;
 - (IBAction)sendPin:(id)sender;
 
