@@ -58,6 +58,20 @@
     course = [NSMutableArray array];
     
     //Check if Token is valid, if yes fill table with data
+    [self reloadData];
+    [[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
+
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self reloadData];
+}
+
+// reloads table data
+-(void) reloadData{
     if([AppData checkToken]){
         classes = [AppData getAppointments];
         courses = [AppData getCourses];
@@ -70,8 +84,7 @@
             data = NO;
         }
     }
-    [[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil]];
-
+    [self.tableView reloadData];
 }
 
 -(void) showLoginScreen:(BOOL)animated
@@ -107,7 +120,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     
-    messageLabel.text = @"Zum Abfragen der aktuellen Klassen oder Aktualisieren herunterziehen.";
+    messageLabel.text = @"Keine Daten gefunden. Zum Aktualisieren herunterziehen.";
     messageLabel.numberOfLines = 0;
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:20];
