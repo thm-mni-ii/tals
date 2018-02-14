@@ -23,13 +23,21 @@
     self.detailDescription.text = self.detailModal[1];
     self.detailType.text = [NSString stringWithFormat:@"Typ: %@", self.detailModal[7]];
     NSString * active = self.detailModal[2];
-    if([active isEqualToString:@"1"]){
-        self.detailActive.text = @"Status: Momentan aktiv";}
-    else{
-        self.detailActive.text = [NSString stringWithFormat:@"Kurs aktiv von %@ Uhr bis %@ Uhr.", self.detailModal[4], self.detailModal[5]];
+    if([AppData sendPIN:self.detailModal[3] pin:@"123456"]){
+        self.detailActive.text = @"Erfolgreich eingetragen.";
         self.detailPIN.hidden = YES;
         self.detailPinEntry.hidden = YES;
         self.detailSend.hidden = YES;
+    }
+    else{
+        if([active isEqualToString:@"1"]){
+            self.detailActive.text = @"Status: Momentan aktiv";}
+        else{
+            self.detailActive.text = [NSString stringWithFormat:@"Kurs aktiv von %@ Uhr bis %@ Uhr.", self.detailModal[4], self.detailModal[5]];
+            self.detailPIN.hidden = YES;
+            self.detailPinEntry.hidden = YES;
+            self.detailSend.hidden = YES;
+        }
     }
 }
 
