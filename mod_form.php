@@ -18,7 +18,7 @@
  * The main mod_tals configuration form.
  *
  * @package     mod_tals
- * @copyright   2017 Lars Herwegh <lars.herwegh@mni.thm.de>
+ * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
  * Module instance settings form.
  *
  * @package    mod_tals
- * @copyright  2017 Lars Herwegh <lars.herwegh@mni.thm.de>
+ * @copyright  2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_tals_mod_form extends moodleform_mod {

@@ -18,7 +18,7 @@
  * Externallib.php file for tals plugin.
  *
  * @package     mod_tals
- * @copyright   2017 Lars Herwegh <lars.herwegh@mni.thm.de>
+ * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,7 +30,7 @@ require_once(dirname(__FILE__).'/locallib.php');
 
 /**
  * Class mod_ws_tals_external
- * @copyright   2017 Lars Herwegh <lars.herwegh@mni.thm.de>
+ * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_wstals_external extends external_api {

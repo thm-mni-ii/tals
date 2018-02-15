@@ -18,7 +18,7 @@
  * Code to be executed after the plugin's database scheme has been installed is defined here.
  *
  * @package     mod_tals
- * @copyright   2017 Lars Herwegh <lars.herwegh@mni.thm.de>
+ * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

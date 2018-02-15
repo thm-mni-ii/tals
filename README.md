@@ -8,7 +8,7 @@ The teacher can create multiple appointments of different types (e.g. 'Lecture' 
 
 ## License ##
 
-2018 Lars Herwegh <lars.herwegh@mni.thm.de>
+2018 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
