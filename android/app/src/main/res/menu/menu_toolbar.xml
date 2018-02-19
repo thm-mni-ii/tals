@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuItemLogout"
+        android:title="@string/menu_item_logout"
+        android:orderInCategory="1"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuItemFeedback"
+        android:title="@string/menu_item_feedback"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuItemHelp"
+        android:title="@string/menu_item_help"
+        android:orderInCategory="3"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuItemAbout"
+        android:title="@string/menu_item_about"
+        android:orderInCategory="4"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuItemExit"
+        android:title="@string/menu_item_exit"
+        android:orderInCategory="5"
+        app:showAsAction="never" />
+
+</menu>
