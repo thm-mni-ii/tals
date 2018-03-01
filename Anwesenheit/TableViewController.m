@@ -172,13 +172,14 @@
 - (void)refresh:(UIRefreshControl *)refreshControl {
     // Refresh the List of currently active classes and courses
     classes = [AppData getAppointments];
-    [title removeAllObjects];
-    [description removeAllObjects];
-    [active removeAllObjects];
-    [courseid removeAllObjects];
-    [start removeAllObjects];
-    [end removeAllObjects];
-    [course removeAllObjects];
+    if (title != nil) {
+        [title removeAllObjects];
+        [description removeAllObjects];
+        [active removeAllObjects];
+        [courseid removeAllObjects];
+        [start removeAllObjects];
+        [end removeAllObjects];
+        [course removeAllObjects];}
     long classesA = [classes count];
     if(classesA != 0){
         data = YES;

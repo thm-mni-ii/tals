@@ -474,7 +474,7 @@
 				DEVELOPMENT_TEAM = T58NDL8Q59;
 				INFOPLIST_FILE = Anwesenheit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = THM.Anwesenheit;
+				PRODUCT_BUNDLE_IDENTIFIER = THM.TALS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -488,7 +488,7 @@
 				DEVELOPMENT_TEAM = T58NDL8Q59;
 				INFOPLIST_FILE = Anwesenheit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = THM.Anwesenheit;
+				PRODUCT_BUNDLE_IDENTIFIER = THM.TALS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

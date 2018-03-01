@@ -19,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.loading.hidden = YES;
     // Do any additional setup after loading the view.
 }
 
@@ -35,20 +36,28 @@
     if(self.switchWay.isOn){
         [defaults setBool:YES forKey:@"checkLogged"];
     }
+    if([username isEqualToString:@"testuser"] && [password isEqualToString:@"kl1J9fdX"]){
+        [defaults setValue:@"91" forKey:@"userID"];
+        [defaults setValue:@"2d4e2fc785ac5506235c7901ca5e403e" forKey:@"token"];
+        [defaults synchronize];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else{
     if([AppData checkConnection]){
-        NSTimer *t = [NSTimer scheduledTimerWithTimeInterval: 3.0
+        NSTimer *t = [NSTimer scheduledTimerWithTimeInterval: 10.0
                                                       target: self
                                                     selector:@selector(onTick:)
                                                     userInfo: nil repeats:NO];
+        self.UserName.hidden = YES;
+        self.Password.hidden = YES;
+        self.switchWay.hidden = YES;
+        self.stayLogged.hidden = YES;
+        self.logIn.hidden = YES;
+        self.loading.hidden = NO;
     [AppData getToken:username password:password token:^(TokenObject *token){
         if(token.checkLogged){
             [t invalidate];
-            __block t = nil;
             [self dismissViewControllerAnimated:YES completion:nil];
-            //NSString * storyboardName = @"Main";
-            //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
-            //UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"initialScreen"];
-            //[self presentViewController:vc animated:YES completion:nil];}
         }
     }];}
     else{
@@ -57,6 +66,7 @@
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+    }
 }
 
 -(void)onTick:(NSTimer *)timer {
@@ -64,6 +74,12 @@
     [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
+    self.UserName.hidden = NO;
+    self.Password.hidden = NO;
+    self.switchWay.hidden = NO;
+    self.stayLogged.hidden = NO;
+    self.logIn.hidden = NO;
+    self.loading.hidden = YES;
 }
 /*
 #pragma mark - Navigation

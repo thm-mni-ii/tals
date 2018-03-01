@@ -13,6 +13,7 @@
     <customFonts key="customFonts">
         <array key="AvenirNext.ttc">
             <string>AvenirNext-Bold</string>
+            <string>AvenirNext-DemiBold</string>
             <string>AvenirNext-Medium</string>
             <string>AvenirNext-Regular</string>
         </array>
@@ -269,6 +270,12 @@
                                 <color key="textColor" red="0.37254901960784315" green="0.43529411764705883" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lädt..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ugr-kl-4Qi">
+                                <rect key="frame" x="134.5" y="228" width="51" height="25"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                                <color key="textColor" red="0.41577231884002686" green="0.52958232164382935" blue="0.39225199818611145" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.50196078431372548" green="0.72941176470588232" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                         <accessibility key="accessibilityConfiguration" identifier="loginScreen"/>
@@ -283,10 +290,12 @@
                             <constraint firstItem="82R-Bv-br7" firstAttribute="leading" secondItem="O8n-lz-fT3" secondAttribute="leading" constant="50" id="VMe-yk-hg6"/>
                             <constraint firstItem="kpj-dA-uAr" firstAttribute="leading" secondItem="O8n-lz-fT3" secondAttribute="leading" constant="50" id="VxG-Pg-cnG"/>
                             <constraint firstItem="O8n-lz-fT3" firstAttribute="trailing" secondItem="rh5-cS-qgb" secondAttribute="trailing" constant="50" id="cjC-mF-ejv"/>
+                            <constraint firstItem="ugr-kl-4Qi" firstAttribute="centerY" secondItem="OYC-Pi-Eb9" secondAttribute="centerY" id="e7t-os-awg"/>
                             <constraint firstItem="RWq-za-eIF" firstAttribute="top" secondItem="Log-QC-ECC" secondAttribute="bottom" constant="100" id="lF9-Hq-vrn"/>
                             <constraint firstItem="746-SV-aMS" firstAttribute="leading" secondItem="82R-Bv-br7" secondAttribute="trailing" constant="8" id="p3j-hZ-8MK"/>
                             <constraint firstItem="rh5-cS-qgb" firstAttribute="top" secondItem="82R-Bv-br7" secondAttribute="bottom" constant="20" id="pBu-ea-u1D"/>
                             <constraint firstItem="O8n-lz-fT3" firstAttribute="trailing" secondItem="746-SV-aMS" secondAttribute="trailing" constant="50" id="q5t-2M-xHG"/>
+                            <constraint firstItem="ugr-kl-4Qi" firstAttribute="centerX" secondItem="OYC-Pi-Eb9" secondAttribute="centerX" id="vVC-d4-TV9"/>
                             <constraint firstItem="kpj-dA-uAr" firstAttribute="top" secondItem="RWq-za-eIF" secondAttribute="bottom" constant="5" id="zht-XY-kXG"/>
                             <constraint firstItem="Log-QC-ECC" firstAttribute="top" secondItem="O8n-lz-fT3" secondAttribute="top" constant="50" id="zuy-2Z-N1J"/>
                         </constraints>
@@ -295,12 +304,15 @@
                     <connections>
                         <outlet property="Password" destination="kpj-dA-uAr" id="50w-D9-7XI"/>
                         <outlet property="UserName" destination="RWq-za-eIF" id="jv2-gM-eJz"/>
+                        <outlet property="loading" destination="ugr-kl-4Qi" id="T3c-0e-Q6y"/>
+                        <outlet property="logIn" destination="rh5-cS-qgb" id="ZQT-n8-Hhq"/>
+                        <outlet property="stayLogged" destination="746-SV-aMS" id="kiT-zM-2dy"/>
                         <outlet property="switchWay" destination="82R-Bv-br7" id="qRg-og-EOy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQ0-HZ-k6k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="89.855072463768124" y="946.46739130434787"/>
+            <point key="canvasLocation" x="88.125" y="946.25"/>
         </scene>
         <!--InitialScreen-->
         <scene sceneID="DVX-oC-C04">
