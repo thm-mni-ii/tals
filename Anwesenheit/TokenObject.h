@@ -7,6 +7,12 @@
 //
 //
 // Object containing a Token used request data from the server
+// +Id Token ID
+// +Token The user token
+// +UserID The user ID
+// +ExternalService The requested service
+// +ValidTime Time the token is valid for
+// +CheckLogged BOOL if token is valid or not
 //
 
 #import <Foundation/Foundation.h>

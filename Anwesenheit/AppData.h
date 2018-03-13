@@ -21,6 +21,7 @@
 + (NSString *) getDaysAbsent:(id) appointmentID;
 + (NSArray *)getCourses;
 + (BOOL) checkConnection;
++ (NSData *)getData:(NSString *)function;
 
 
 @end

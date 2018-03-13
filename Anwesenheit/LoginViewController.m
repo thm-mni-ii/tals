@@ -28,14 +28,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Login Process
 -(void) doLogin{
     // Request Token from server
     username = self.UserName.text;
     password = self.Password.text;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // If the Switch is set, stay logged in
     if(self.switchWay.isOn){
         [defaults setBool:YES forKey:@"checkLogged"];
     }
+    
+    // Testuser with test data
     if([username isEqualToString:@"testuser"] && [password isEqualToString:@"kl1J9fdX"]){
         [defaults setValue:@"91" forKey:@"userID"];
         [defaults setValue:@"2d4e2fc785ac5506235c7901ca5e403e" forKey:@"token"];
@@ -43,32 +48,35 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     else{
-    if([AppData checkConnection]){
-        NSTimer *t = [NSTimer scheduledTimerWithTimeInterval: 10.0
-                                                      target: self
-                                                    selector:@selector(onTick:)
-                                                    userInfo: nil repeats:NO];
-        self.UserName.hidden = YES;
-        self.Password.hidden = YES;
-        self.switchWay.hidden = YES;
-        self.stayLogged.hidden = YES;
-        self.logIn.hidden = YES;
-        self.loading.hidden = NO;
-    [AppData getToken:username password:password token:^(TokenObject *token){
-        if(token.checkLogged){
-            [t invalidate];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    }];}
-    else{
-        UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Es kann keine Verbindung zum Server aufgebaut werden."  preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        }]];
-        [self presentViewController:alertController animated:YES completion:nil];
+        // Check Connection
+        if([AppData checkConnection]){
+            NSTimer *t = [NSTimer scheduledTimerWithTimeInterval: 10.0
+                                                          target: self
+                                                        selector:@selector(onTick:)
+                                                        userInfo: nil repeats:NO];
+            self.UserName.hidden = YES;
+            self.Password.hidden = YES;
+            self.switchWay.hidden = YES;
+            self.stayLogged.hidden = YES;
+            self.logIn.hidden = YES;
+            self.loading.hidden = NO;
+            [AppData getToken:username password:password token:^(TokenObject *token){
+                if(token.checkLogged){
+                    [t invalidate];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
+        }];}
+        // Display Error if Connection fails
+        else{
+            UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Es kann keine Verbindung zum Server aufgebaut werden."  preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
     }
     }
 }
 
+// Timer, displays wrong Password/Username error after a while
 -(void)onTick:(NSTimer *)timer {
     UIAlertController *alertController = [UIAlertController  alertControllerWithTitle:@"Fehler"  message:@"Passwort oder Nutzername falsch."  preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -81,16 +89,9 @@
     self.logIn.hidden = NO;
     self.loading.hidden = YES;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
+// resigns Textfield
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
     if (theTextField == self.Password) {
         [theTextField resignFirstResponder];

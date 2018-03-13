@@ -7,6 +7,14 @@
 //
 //
 // Object containing a class with the proper values, to be used for entering your attendance
+// +Id Class ID
+// +Title Class title
+// +Startdate Startdate of the class
+// +Enddate Enddate of the class
+// +currentdescription Class description
+// +courseid Course ID for the class
+// +type Type of the class
+// +pin PIN Status, active/not active
 //
 
 #import <Foundation/Foundation.h>
