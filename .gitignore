@@ -1,3 +1,5 @@
 node_modules
 .DS_Store
 yarn-error.log
+tals-site/assets/material-components-web.min.css
+tals-site/assets/material-components-web.min.js

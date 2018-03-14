@@ -4,10 +4,20 @@
 <head>
     <title>TALS - THM Attendance Logging System</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+    <link rel="stylesheet" href="assets/material-components-web.min.css">
     <link rel="stylesheet" href="assets/style.css">
     <link rel="icon" sizes="16x16 32x32 48x48" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/4.11.0/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/4.11.0/firebase-auth.js"></script>
+    <script defer src="/__/firebase/4.11.0/firebase-database.js"></script>
+    <script defer src="/__/firebase/4.11.0/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/4.11.0/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
 </head>
 
 <body class="mdc-typography">
@@ -130,10 +140,32 @@
                 University of Applied Sciences</p>
         </section>
     </main>
-    <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
+    <script src="assets/material-components-web.min.js"></script>
     <script>
         mdc.autoInit()
     </script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+            // // The Firebase SDK is initialized and available here!
+            //
+            // firebase.auth().onAuthStateChanged(user => { });
+            // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+            // firebase.messaging().requestPermission().then(() => { });
+            // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+            //
+            // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    
+            try {
+              let app = firebase.app();
+              let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+              // document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+            } catch (e) {
+              console.error(e);
+              // document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+            }
+          });
+        </script>
 </body>
 
 </html>
