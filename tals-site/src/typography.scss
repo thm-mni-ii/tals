@@ -1,0 +1,35 @@
+@mixin base-font {
+    font-family: Roboto, sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+@mixin title {
+    @include base-font;
+    font-size: 2.8125rem;
+    line-height: 3rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    text-decoration: inherit;
+    text-transform: inherit;
+}
+
+@mixin heading {
+    @include base-font;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: inherit;
+    text-transform: inherit;
+}
+
+@mixin body {
+    @include base-font;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-decoration: inherit;
+    text-transform: inherit;
+}

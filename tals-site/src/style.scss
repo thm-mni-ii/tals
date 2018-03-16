@@ -1,0 +1,142 @@
+$color-main: #2B3A42;
+$color-second: white;
+$color-black: rgba(0, 0, 0, 0.925);
+$color-gray: rgba(0, 0, 0, 0.05);
+$color-white: white;
+
+$padding: 20px;
+
+@import "typography.scss";
+
+@mixin flex-row {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-column {
+    @include flex-row;
+    flex-flow: column nowrap;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    @include base-font;
+}
+
+h1 { @include title;}
+h2 {
+    @include heading;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+h3 { @include heading;}
+p { @include body; }
+
+.top-menu {
+
+}
+
+.header {
+    #app-logo {
+        background-position:center;
+        height: 200px; 
+        width: 200px;
+        background-size:contain;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-image: url("./tals-logo.png");
+    }
+    h1 {
+        margin-top: 20px;
+    }
+    background-color: $color-main;
+    color:white;
+    @include flex-column;
+    text-align: center;
+    height: 400px;
+    min-height: 360px;
+}
+
+.description {
+    h2 { text-align: center; }
+    text-align: justify;
+    padding: $padding;
+    background-color: $color-gray;
+    .getapp {
+        @include flex-row;
+        padding: 20px;
+        min-height: 80px;
+        img {
+            width: 130px;
+            height: 40px;
+        }
+    }
+}
+
+.content {
+    @include flex-column;
+    padding: $padding;
+    max-width: 800px;
+    margin: 0 auto;
+    div {
+        text-align: justify;
+        box-sizing: border-box;
+        max-width: 800px;
+        padding: $padding;
+        img {
+            float: left;
+            margin-right: $padding;
+        }
+        @media (max-width: 600px) {
+            img {
+                float: none;
+            }
+        }
+    }
+}
+
+.contribution {
+    text-align: center;
+    padding: $padding;
+    background-color: $color-gray;
+    .buttons {
+        @include flex-row;
+        margin: $padding;
+        a {
+            margin-right: $padding;
+            margin-left: $padding;
+            img {
+                height: 30px;
+            }
+            span {
+                color: black;
+                font-size: 20px;
+                font-weight: 700;
+                text-decoration: none;
+            }
+            box-sizing: border-box;
+            @include flex-row;
+            text-decoration: none;
+            border-color: black;
+            border: 2px solid black;
+            border-radius: 1px;
+            padding: 5px;
+            width: 120px;
+            height: 40px;
+        }
+        a:hover {
+            background-color: white;
+        }
+    }
+}
+
+.footer {
+    @include flex-row;
+    padding: 20px;
+    height: 160px;
+    background-color: $color-black;
+    color: gainsboro;
+}

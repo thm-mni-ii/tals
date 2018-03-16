@@ -8,10 +8,11 @@ cache:
     - $TRAVIS_BUILD_DIR/tals-site/node_modules/
 install:
   - cd $TRAVIS_BUILD_DIR/tals-site
-  - npm install
+  - gem install slim
+  - gem install sass
   - npm install -g firebase-tools
+  - slimrb src/index.slim >| index.html
+  - sass src/style.scss:assets/style.css 
 after_success:
   - cd $TRAVIS_BUILD_DIR/tals-site
-  - cp -R $TRAVIS_BUILD_DIR/tals-site/node_modules/material-components-web/dist/*.min.* $TRAVIS_BUILD_DIR/tals-site/assets/
-  - ls $TRAVIS_BUILD_DIR/tals-site/assets/
   - firebase deploy --project tals-app --token $FIREBASE_TOKEN
