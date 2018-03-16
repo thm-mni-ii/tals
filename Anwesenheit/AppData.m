@@ -203,7 +203,12 @@ static AppData *shared = NULL;
 // +Pin The PIN
 // returns BOOL
 + (BOOL) sendPIN:(NSString *) appointmentID pin:(NSString *) pin{
-    NSData *data = [self getData:@"mod_wstals_insert_attendance"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token = [defaults valueForKey:@"token"];
+    NSString *userID = [defaults valueForKey:@"userID"];
+    NSString *post = [NSString stringWithFormat:@"https://fk-vv.mni.thm.de/moodle/webservice/rest/server.php?wstoken=%@&wsfunction=mod_wstals_insert_attendance&appointmentid=%@&userid=%@&pinum=%@&moodlewsrestformat=json", token, appointmentID, userID, pin];
+    NSURL *url = [NSURL URLWithString:post];
+    NSData *data = [NSData dataWithContentsOfURL:url];
     NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if([ret containsString:@"Erfolgreich"]){
         return YES;}
