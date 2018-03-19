@@ -26,7 +26,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.50196078430000002" green="0.72941176470000002" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="jny-FE-ymh" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Rb2-6U-uns"/>
                             <constraint firstItem="jny-FE-ymh" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="sht-CC-Jwn"/>
@@ -42,5 +42,5 @@
     <resources>
         <image name="THMLogo" width="2382" height="1214"/>
     </resources>
-    <color key="tintColor" red="0.2492231509159365" green="1" blue="0.33268186799041433" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

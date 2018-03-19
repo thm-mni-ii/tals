@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface AsyncPost : NSObject {
-    NSMutableData* httpResponse;
+  NSMutableData *httpResponse;
 }
 
 @end

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -217,41 +218,40 @@
         <scene sceneID="5dZ-4K-03z">
             <objects>
                 <viewController storyboardIdentifier="loginScreen" title="LoginViewController" id="o4e-8o-8Hh" customClass="LoginViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="OYC-Pi-Eb9">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="OYC-Pi-Eb9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Benutzername" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="RWq-za-eIF">
-                                <rect key="frame" x="50" y="270" width="220" height="30"/>
+                                <rect key="frame" x="50" y="195" width="220" height="30"/>
                                 <color key="textColor" red="0.37254901960784315" green="0.43529411764705883" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                 <connections>
-                                    <action selector="uName:" destination="o4e-8o-8Hh" eventType="editingDidEnd" id="0ZB-Ng-ima"/>
                                     <outlet property="delegate" destination="o4e-8o-8Hh" id="SbQ-jB-Qgn"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Passwort" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="kpj-dA-uAr">
-                                <rect key="frame" x="50" y="305" width="220" height="30"/>
+                                <rect key="frame" x="50" y="230" width="220" height="30"/>
                                 <color key="textColor" red="0.37254901960784315" green="0.43529411764705883" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                 <connections>
-                                    <action selector="pWord:" destination="o4e-8o-8Hh" eventType="editingDidEnd" id="RkA-wC-5dh"/>
+                                    <action selector="signIn:" destination="o4e-8o-8Hh" eventType="primaryActionTriggered" id="ypo-oO-Q95"/>
                                     <outlet property="delegate" destination="o4e-8o-8Hh" id="CyD-mg-2qS"/>
                                 </connections>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="THMLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Log-QC-ECC">
-                                <rect key="frame" x="70" y="70" width="180" height="100"/>
+                                <rect key="frame" x="70" y="35" width="180" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Log-QC-ECC" secondAttribute="height" multiplier="232:129" id="qBJ-Au-unE"/>
                                     <constraint firstAttribute="height" constant="100" id="rxJ-Uq-g7L"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rh5-cS-qgb">
-                                <rect key="frame" x="50" y="391" width="220" height="36"/>
+                                <rect key="frame" x="50" y="316" width="220" height="36"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                <state key="normal" title="Login">
+                                <state key="normal" title="Anmelden">
                                     <color key="titleColor" red="0.37254901960784315" green="0.43529411764705883" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
@@ -259,25 +259,25 @@
                                 </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82R-Bv-br7">
-                                <rect key="frame" x="50" y="340" width="51" height="31"/>
+                                <rect key="frame" x="50" y="265" width="51" height="31"/>
                                 <connections>
                                     <action selector="stayLoggedIn:" destination="o4e-8o-8Hh" eventType="valueChanged" id="HeU-Pw-soo"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eingeloggt bleiben" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="746-SV-aMS">
-                                <rect key="frame" x="107" y="345" width="163" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Angemeldet bleiben" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="746-SV-aMS">
+                                <rect key="frame" x="107" y="270" width="163" height="24"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="0.37254901960784315" green="0.43529411764705883" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lädt..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ugr-kl-4Qi">
-                                <rect key="frame" x="134.5" y="228" width="51" height="25"/>
+                                <rect key="frame" x="135" y="157.5" width="51" height="25"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                 <color key="textColor" red="0.41577231884002686" green="0.52958232164382935" blue="0.39225199818611145" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.50196078431372548" green="0.72941176470588232" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <accessibility key="accessibilityConfiguration" identifier="loginScreen"/>
                         <constraints>
                             <constraint firstItem="82R-Bv-br7" firstAttribute="top" secondItem="kpj-dA-uAr" secondAttribute="bottom" constant="5" id="AkO-EJ-n3D"/>
@@ -290,14 +290,14 @@
                             <constraint firstItem="82R-Bv-br7" firstAttribute="leading" secondItem="O8n-lz-fT3" secondAttribute="leading" constant="50" id="VMe-yk-hg6"/>
                             <constraint firstItem="kpj-dA-uAr" firstAttribute="leading" secondItem="O8n-lz-fT3" secondAttribute="leading" constant="50" id="VxG-Pg-cnG"/>
                             <constraint firstItem="O8n-lz-fT3" firstAttribute="trailing" secondItem="rh5-cS-qgb" secondAttribute="trailing" constant="50" id="cjC-mF-ejv"/>
-                            <constraint firstItem="ugr-kl-4Qi" firstAttribute="centerY" secondItem="OYC-Pi-Eb9" secondAttribute="centerY" id="e7t-os-awg"/>
-                            <constraint firstItem="RWq-za-eIF" firstAttribute="top" secondItem="Log-QC-ECC" secondAttribute="bottom" constant="100" id="lF9-Hq-vrn"/>
+                            <constraint firstItem="ugr-kl-4Qi" firstAttribute="centerY" secondItem="Log-QC-ECC" secondAttribute="centerY" constant="85" id="e7t-os-awg"/>
+                            <constraint firstItem="RWq-za-eIF" firstAttribute="top" secondItem="Log-QC-ECC" secondAttribute="centerY" constant="110" id="lF9-Hq-vrn"/>
                             <constraint firstItem="746-SV-aMS" firstAttribute="leading" secondItem="82R-Bv-br7" secondAttribute="trailing" constant="8" id="p3j-hZ-8MK"/>
                             <constraint firstItem="rh5-cS-qgb" firstAttribute="top" secondItem="82R-Bv-br7" secondAttribute="bottom" constant="20" id="pBu-ea-u1D"/>
                             <constraint firstItem="O8n-lz-fT3" firstAttribute="trailing" secondItem="746-SV-aMS" secondAttribute="trailing" constant="50" id="q5t-2M-xHG"/>
                             <constraint firstItem="ugr-kl-4Qi" firstAttribute="centerX" secondItem="OYC-Pi-Eb9" secondAttribute="centerX" id="vVC-d4-TV9"/>
                             <constraint firstItem="kpj-dA-uAr" firstAttribute="top" secondItem="RWq-za-eIF" secondAttribute="bottom" constant="5" id="zht-XY-kXG"/>
-                            <constraint firstItem="Log-QC-ECC" firstAttribute="top" secondItem="O8n-lz-fT3" secondAttribute="top" constant="50" id="zuy-2Z-N1J"/>
+                            <constraint firstItem="Log-QC-ECC" firstAttribute="top" secondItem="O8n-lz-fT3" secondAttribute="top" constant="15" id="zuy-2Z-N1J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O8n-lz-fT3"/>
                     </view>
