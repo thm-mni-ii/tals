@@ -884,27 +884,27 @@ function tals_get_report_for_export($courseid) {
   $where = 'courseid = '.$course->id.' AND fk_pin_id IS NOT NULL';
   $countcompulsory = $DB->count_records_select('tals_appointment', $where);
 
-  // create header with info about the course
+  // Create header with info about the course
   $tmp = array($course->fullname);
   array_push($result, $tmp);
 
-  // current date to know, if its up to date or not
+  // Current date to know, if its up to date or not
   $tmp = array(date('d.m.Y, H:i', time()));
   array_push($result, $tmp);
 
-  // count of all appointments of this course
+  // Count of all appointments of this course
   $tmp = array(get_string('label_countappointments', 'tals'), $countappointments);
   array_push($result, $tmp);
 
-  // count how many of them are compulsory
+  // Count how many of them are compulsory
   $tmp = array(get_string('label_compulsory', 'tals'), $countcompulsory);
   array_push($result, $tmp);
 
-  // headline
+  // Headline
   $tmp = array(get_string('label_name', 'tals'), get_string('Present_full', 'tals'), get_string('Absent_full', 'tals'), get_string('Excused_full', 'tals'));
   array_push($result, $tmp);
 
-  // everything about the users
+  // Everything about the users
   foreach ($users as $user) {
     $fullname = $user->firstname.' '.$user->lastname;
     $status = tals_get_attendance_count_for_user($user->id, $course->id);
