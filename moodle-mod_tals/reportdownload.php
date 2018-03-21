@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides service to download integrated report for all appointments of single course.
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany

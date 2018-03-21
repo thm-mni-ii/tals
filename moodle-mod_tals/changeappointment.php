@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides service to check and update an appointment
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -80,12 +80,7 @@ if (!$DB->record_exists('tals_appointment', array('id' => $appid))) {
 
 $appointment = $DB->get_record('tals_appointment', array('id' => $appid));
 
-if (!$DB->record_exists('tals_appointment', array('id' => $appid))) {
-    print_error(get_string('noappointment', 'tals'));
-}
-
-$appointment = $DB->get_record('tals_appointment', array('id' => $appid));
-
 tals_update_appointment($appointment->id, $title, strtotime($date.$start), strtotime($date.$end), $description, $appointment->courseid, $appointment->groupid, $type, $pin, $pindur);
 
+// After execution redirect to manage-view
 redirect(new moodle_url('/mod/tals/manage.php', array('id' => $id)));

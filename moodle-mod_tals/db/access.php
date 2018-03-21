@@ -19,7 +19,7 @@
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

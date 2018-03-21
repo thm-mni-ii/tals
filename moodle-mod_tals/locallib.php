@@ -19,7 +19,7 @@
 // in programming.
 
 /**
- * local functions and constants for module tals
+ * Provides functionality used by local applications.
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -183,9 +183,10 @@ function tals_insert_pin($pindur) {
 
   return $pin->id;
 }
+
 /**
  * Updates a pin in the database.
- * @param pinid - id of the pin to be updated
+ * @param pinid - id of the pin to be updated (if null, a new PIN is generated)
  * @param duration - how many minutes pin will be active
  * @return id of the pin
  */
@@ -495,9 +496,9 @@ function tals_format_appointment($appointment) {
 }
 
 /**
- * Returns a single appointment in well formated style
+ * Returns a single appointment in well-formated style
  * @param appid - the appointments id
- * @return stdClass-Object
+ * @return stdClass-Object of NULL if appid not existent
  */
 function tals_get_single_appointment($appid) {
   global $DB;
@@ -539,7 +540,7 @@ function tals_get_appointments($courseid=null, $start, $end) {
 
 /**
  * Returns a set of appointments happen now.
- * @param courseid - course which hosts these appointments (optional)
+ * @param courseid - course which hosts these appointments
  * @return a set of appointments, might be empty if no matching appointments found
  */
 function tals_get_current_appointments($courseid) {

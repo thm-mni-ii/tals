@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Return token
+ * Provides user-token. Generates one, if user doesn't have any token yet.
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany

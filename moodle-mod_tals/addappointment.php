@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides service to check and insert an appointment into the database.
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -126,11 +126,13 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
+// Step along the list of appointments as long as $weekcount defines
 for ($i = 0; $i < $weekcount; $i++) {
     $gid = $DB->get_record_sql('SELECT MAX(groupid) AS "max" FROM {tals_appointment}');
     $groupid = $gid->max + 1;
     $k = $i + 1;
 
+    // Check and insert appointment into database
     foreach ($group as $entry) {
         if (empty($entry['date']) || empty($entry['start']) || empty($entry['end'])) {
             continue;
@@ -148,4 +150,5 @@ for ($i = 0; $i < $weekcount; $i++) {
     }
 }
 
+// After execution redirect to manage-view
 redirect(new moodle_url('/mod/tals/manage.php', array('id' => $id)));

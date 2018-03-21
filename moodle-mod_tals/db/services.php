@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Web service local plugin attendance external functions and service definitions.
+ * Web service definition
  *
  * @package    mod_tals
- * @copyright  2015 Caio Bressan Doneda
+ * @copyright  2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

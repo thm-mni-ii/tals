@@ -16,6 +16,7 @@
 
 /**
  * Externallib.php file for tals plugin.
+ * Provides functionality used by remote applications (Android, iOS)
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -29,7 +30,7 @@ require_once($CFG->libdir.'/enrollib.php');
 require_once(dirname(__FILE__).'/locallib.php');
 
 /**
- * Class mod_ws_tals_external
+ * Class mod_wstals_external
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -49,8 +50,9 @@ class mod_wstals_external extends external_api {
   }
 
   /**
-   * Returns a list of all appointments of a user of current day. 
-   * @param appointments - see get_todays_appointments_parameters()
+   * Returns a list of all appointments of a user of current day (0:00h 'til 23:59h).
+   * @param userid - id of user
+   * @param courseid - id of course
    * @return array - see get_todays_apoointsments_return()
    */
   public static function get_todays_appointments($userid, $courseid) {
@@ -67,6 +69,7 @@ class mod_wstals_external extends external_api {
 
     $courses = tals_get_courses($userid, $courseid);
 
+    // build well-formed array of today's appointments
     foreach ($courses as $course) {
       $tmpAppointment = array();
       $tmpAppointment = tals_get_appointments($course->id, $start, $end);
@@ -127,7 +130,9 @@ class mod_wstals_external extends external_api {
 
   /**
    * Inserts attendance of user, if pin is correct.
-   * @param attendance - see insert_attendance_parameters
+   * @param userid - id of user
+   * @param appointmentid - id of appointment
+   * @param pinum - PIN provided by user
    * @return string - see insert_attendance_return
    */
   public static function insert_attendance($userid, $appointmentid, $pinum) {
@@ -211,7 +216,8 @@ class mod_wstals_external extends external_api {
 
   /**
    * Check if Appointment has enabled PIN.
-   * @param appointmentid - see check_for_enabled_pin_parameters
+   * @param userid - id of user
+   * @param appointmentid - id of appointment
    * @return see check_for_enabled_pin_return
    */
   public static function check_for_enabled_pin($userid, $appointmentid) {
@@ -266,7 +272,8 @@ class mod_wstals_external extends external_api {
   /**
    * @deprecated This function can still be used, but is no longer maintained (2018-01-15).
    * Returns count of appointments a user missed.
-   * @param attendance - see get_days_absent_parameters
+   * @param userid - id of user
+   * @param courseid - id of course
    * @return see get_days_absent_return
    */
   public static function get_days_absent($userid, $courseid) {
@@ -293,6 +300,10 @@ class mod_wstals_external extends external_api {
               );
   }
 
+  /**
+   * Returns description of get_courses parameters.
+   * @return external_function_parameters
+   */
   public static function get_courses_parameters() {
     return new external_function_parameters(
                 array(
@@ -301,6 +312,11 @@ class mod_wstals_external extends external_api {
               );
   }
 
+  /**
+   * Returns list of courses a given user is enrolled in.
+   * @param userid - id of user
+   * @return see get_courses_returns
+   */
   public static function get_courses($userid) {
     $params = self::validate_parameters(self::get_courses_parameters(), array('userid' => $userid));
 
@@ -309,6 +325,10 @@ class mod_wstals_external extends external_api {
     return tals_get_courses($userid);
   }
 
+  /**
+   * Returns description of get_courses return values.
+   * @return external_single_structure
+   */
   public static function get_courses_returns() {
     return new external_multiple_structure(
                 new external_single_structure(

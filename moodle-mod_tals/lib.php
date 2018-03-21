@@ -23,12 +23,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-// require_once(dirname(__FILE__) . '/classes/calendar_helpers.php'); <= Problem, keine Ahnung warum
 
 /**
- * Return if the plugin supports $feature.
+ * Return if the plugin supports given feature.
  *
- * @param string $feature Constant representing the feature.
+ * @param feature - Constant representing the feature.
  * @return true | null True if the feature is supported, null otherwise.
  */
 function tals_supports($feature) {
@@ -53,9 +52,9 @@ function tals_supports($feature) {
  * in mod_form.php) this function will create a new instance and return the id
  * number of the instance.
  *
- * @param object $tals An object from the form.
- * @param moodleform $mform form
- * @return int The id of the newly inserted record.
+ * @param tals - an object from the form.
+ * @param mform - form
+ * @return id of the newly inserted record.
  */
 function tals_add_instance($tals, $mform = null) {
     global $DB;
@@ -73,9 +72,9 @@ function tals_add_instance($tals, $mform = null) {
  * Given an object containing all the necessary data (defined in mod_form.php),
  * this function will update an existing instance with new data.
  *
- * @param object $moduleinstance An object from the form in mod_form.php.
- * @param mod_tals_mod_form $mform The form.
- * @return bool True if successful, false otherwise.
+ * @param moduleinstance - an object from the form in mod_form.php.
+ * @param mform - form.
+ * @return true if successful, false otherwise.
  */
 function tals_update_instance($moduleinstance, $mform = null) {
     global $DB;
@@ -89,8 +88,8 @@ function tals_update_instance($moduleinstance, $mform = null) {
 /**
  * Removes an instance of the mod_tals from the database.
  *
- * @param int $id Id of the module instance.
- * @return bool True if successful, false on failure.
+ * @param id - id of the module instance.
+ * @return true if successful, false on failure.
  */
 function tals_delete_instance($id) {
     global $DB;
@@ -103,8 +102,4 @@ function tals_delete_instance($id) {
     $DB->delete_records('tals', array('id' => $id));
 
     return true;
-}
-
-function tals_instance_allow_multiple() {
-    return false;
 }

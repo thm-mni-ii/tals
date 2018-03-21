@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides service to delete a given appointment
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -67,9 +67,11 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
+// Check if user has already confirmend deletion
 if ($issure) {
     tals_delete_appointment($appid);
     
+    // After execution redirect to manage-view
     redirect(new moodle_url('/mod/tals/manage.php', array('id' => $id)));
 } else {
     echo $OUTPUT->header();

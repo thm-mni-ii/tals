@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides form to add a new (set of) appointment(s)
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -179,8 +179,7 @@ echo '<ul id="liste">
 echo '<div id="TerminHinzu" class="tabcontent">
     <p><h3>'.get_string('label_header_add', 'tals').'</h3></p>
     <form action="'.new moodle_url('/mod/tals/addappointment.php', array('id' => $id, 'courseid' => $course->id)).'" method="post" id="formular">
-      
-      <!-- UEBERSICHT -->
+
       <div class="rahmen">
         <b>'.get_string('label_newdate', 'tals').'</b>
           <table>
@@ -193,6 +192,7 @@ echo '<div id="TerminHinzu" class="tabcontent">
               <td>
               <select name="ART_type">';
 
+// Get all types of appointment to list them
 $types = $DB->get_records('tals_type_appointment');
 
 foreach ($types as $entry) {
@@ -203,7 +203,6 @@ echo '</select>
             </td>
             </tr>
 
-            <!--ZEILE 2-->
             <tr>
               <td class="description_cell">
                 <p class="description">'.get_string('label_name', 'tals').' *</p>
@@ -213,7 +212,6 @@ echo '</select>
               </td>
             </tr>
             
-            <!--ZEILE 3-->
             <tr>
               <td class="description_cell">
                 <p class="description">'.get_string('label_description', 'tals').'</p>
@@ -225,11 +223,9 @@ echo '</select>
           </table>
         </div>
 
-      <!-- GRUPPIERTE TERMINE -->
       <div class="rahmen">
         <b>'.get_string('label_occurrence', 'tals').'</b>
         <table>
-          <!-- ZEILE 1 -->
           <tr>
             <td class="description_cell"> 
               <p class="description">'.get_string('label_header_date', 'tals').' *</p>
@@ -248,21 +244,21 @@ echo '</select>
           </tr>
         </table>';
 
+// Generate hidden list of possible appointments
 for ($i = 1; $i < 10; $i++) { // Don't change this count unless you know what you do.
     $j = $i + 1;
-echo '<div id="hiddenField'.$i.'" style="display: none;">
-        <p class="description">'.get_string('label_header_date', 'tals').' '.$j.' </p>
-        <p class="description" style="padding-left: 4.7em;"> '.get_string('label_at', 'tals').' </p>
-          <input type="date" id="groupDate'.$i.'" name="GROUP_date_'.$i.'">
-        <p class="description"> '.get_string('label_from', 'tals').' </p>
-          <input type="time" id="groupTimeBegin'.$i.'" name="GROUP_time_begin_'.$i.'">
-        <p class="description"> '.get_string('label_until', 'tals').' </p>
-          <input type="time" id="groupTimeEnd'.$i.'" name="GROUP_time_end_'.$i.'">
-      </div>';
+    echo '<div id="hiddenField'.$i.'" style="display: none;">
+            <p class="description">'.get_string('label_header_date', 'tals').' '.$j.' </p>
+            <p class="description" style="padding-left: 4.7em;"> '.get_string('label_at', 'tals').' </p>
+              <input type="date" id="groupDate'.$i.'" name="GROUP_date_'.$i.'">
+            <p class="description"> '.get_string('label_from', 'tals').' </p>
+              <input type="time" id="groupTimeBegin'.$i.'" name="GROUP_time_begin_'.$i.'">
+            <p class="description"> '.get_string('label_until', 'tals').' </p>
+              <input type="time" id="groupTimeEnd'.$i.'" name="GROUP_time_end_'.$i.'">
+          </div>';
 }
 
 echo '<table>
-         <!-- ZEILE (11) 3 -->
         <tr>
         <td class="description_cell">
           <p class="description">'.get_string('label_repeat', 'tals').'</p>
@@ -270,6 +266,7 @@ echo '<table>
         <td>
         <select id="repeatWeek" name="REPEAT_week">';
 
+// Generate list of weekly repeat count
 for ($i = 1; $i <= 20; $i++) { 
   echo '<option value="'.$i.'">'.$i.'</option>';
 }
@@ -287,7 +284,6 @@ echo '</select>
 echo '<div class="rahmen">
         <b>'.get_string('label_pin', 'tals').'</b>
         <table>
-          <!-- ZEILE 1 -->
           <tr>
             <td class="description_cell"> 
             </td>
@@ -297,7 +293,6 @@ echo '<div class="rahmen">
           </tr>
           
           
-          <!-- ZEILE 2 -->
           <tr>
             <td class="description_cell"> 
               <p class="description">'.get_string('label_duration', 'tals').'</p>
@@ -305,11 +300,13 @@ echo '<div class="rahmen">
             <td>
               <select id="duration" name="PIN_duration" disabled="true">';
 
+// Generate list of possible durations for PIN
 $begin = 1;
 $stop = 90;
 $width = 5;
-$selected = 15;
+$selected = 15; // pre-selected default-value
 
+// Part-list with 1-min-steps
 for ($i = $begin; $i < $width; $i++) { 
   if ($i != $selected) {
     echo '<option value="'.$i.'">'.$i.'</option>';
@@ -318,6 +315,7 @@ for ($i = $begin; $i < $width; $i++) {
   }
 }
 
+// Part-list with $width-steps
 for ($j = $width; $j <= $stop; $j = $j + $width) { 
   if ($j != $selected) {
     echo '<option value="'.$j.'">'.$j.'</option>';

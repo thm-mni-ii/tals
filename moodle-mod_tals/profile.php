@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides profile view for students with information about compulsory appointments.
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -162,6 +162,7 @@ echo '<style type="text/css">
         }
 
     </style>';
+
 if ($sudo) {
   // sudo-Header
   echo '<ul id="liste">

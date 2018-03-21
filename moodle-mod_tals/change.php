@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides form to change a given appointment
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -191,6 +191,7 @@ echo '<div id="TerminHinzu" class="tabcontent">
               <td>
               <select name="ART_type">';
 
+// Get all types of appointment to list them
 $types = $DB->get_records('tals_type_appointment');
 
 foreach ($types as $entry) {
@@ -250,6 +251,7 @@ echo '<div class="rahmen">
             </td>
             <td>';
 
+// Check if appointment has PIN and print matching HTML
 if (is_null($appointment->fk_pin_id)) {
   $duration = true;
   echo '<input type="checkbox" name="PIN_true" value="true" onchange="toggleDisabled_pin(this.checked)"> '.get_string('label_iscompulsory', 'tals').' ('.get_string('label_pininfo', 'tals').')';
@@ -276,6 +278,7 @@ if ($duration) {
   echo '<select id="duration" name="PIN_duration">';
 }
 
+// Generate list of possible durations for PIN
 $begin = 1;
 $stop = 60;
 $width = 5;
@@ -286,6 +289,7 @@ if ($duration) {
   $selected = $pin->duration;
 }
 
+// Part-list with 1-min-steps
 for ($i = $begin; $i < $width; $i++) { 
   if ($i != $selected) {
     echo '<option value="'.$i.'">'.$i.'</option>';
@@ -294,6 +298,7 @@ for ($i = $begin; $i < $width; $i++) {
   }
 }
 
+// Part-list with $width-steps
 for ($j = $width; $j <= $stop; $j = $j + $width) { 
   if ($j != $selected) {
     echo '<option value="'.$j.'">'.$j.'</option>';

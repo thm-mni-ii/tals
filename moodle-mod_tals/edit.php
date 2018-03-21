@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Enables management of tals-appointments.
+ * Provides form to edit students attendance
  *
  * @package     mod_tals
  * @copyright   2017 Technische Hochschule Mittelhessen - University of Applied Sciences - Giessen, Germany
@@ -65,6 +65,7 @@ if (!has_any_capability($capabilities, $modulecontext)) {
   print_error(get_string('nopermission', 'tals'));
 }
 
+// Get the users data for given appointment
 $appointment = $DB->get_record('tals_appointment', array('id' => $appid, 'courseid' => $courseid));
 $userlog = $DB->get_record('tals_log', array('userid' => $userid, 'courseid' => $courseid, 'fk_appointment_id' => $appid));
 $user = $DB->get_record('user', array('id' => $userid), 'id, username, firstname, lastname, email');
@@ -196,7 +197,7 @@ echo '<th style="text-align: center;">'.get_string('Present_full', 'tals').'</th
       <tr>
       <td><b>'.get_string('label_status', 'tals').'</b></td>';
 
-$check = 2;
+$check = 2; // default value absent
 $comment = "";
 $out = "";
 
