@@ -7,8 +7,11 @@
 //
 //
 // Object containing a course with the proper values, to be used for showing
-// information about said course +Id Course ID +Shortname Short name for the
-// course +Fullname Fullname for the course +Startdate Startdate of the course
+// information about said course
+// +Id Course ID
+// +Shortname Short name for the course
+// +Fullname Fullname for the course
+// +Startdate Startdate of the course
 //
 
 #import <Foundation/Foundation.h>

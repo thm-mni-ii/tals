@@ -10,9 +10,9 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginViewController : UIViewController {
-  NSString *username;
-  NSString *password;
-  TokenObject *loginToken;
+    NSString *username;
+    NSString *password;
+    TokenObject *loginToken;
 }
 @property(weak, nonatomic) IBOutlet UITextField *UserName;
 @property(weak, nonatomic) IBOutlet UISwitch *switchWay;
@@ -22,5 +22,10 @@
 - (IBAction)signIn:(id)sender;
 - (IBAction)stayLoggedIn:(id)sender;
 @property(weak, nonatomic) IBOutlet UILabel *loading;
+@property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *textFields;
+@property (strong, nonatomic) UITextField *activeTextField;
+@property (strong, nonatomic) NSArray *inputAccessoryViews;
+
 
 @end
+

@@ -159,16 +159,17 @@ static AppData *shared = NULL;
 
 // Gets the Moodle data for a specified function
 // +Function The function
+// +AdValues Additional Values
 // returns (NSData *) data
-+ (NSData *)getData:(NSString *)function {
++ (NSData *)getData:(NSString *)function adValues:(NSString *) additionalValues {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSString *token = [defaults valueForKey:@"token"];
   NSString *userID = [defaults valueForKey:@"userID"];
   NSString *post = [NSString
       stringWithFormat:@"https://fk-vv.mni.thm.de/moodle/webservice/rest/"
-                       @"server.php?wstoken=%@&wsfunction=%@&userid=%@&"
-                       @"moodlewsrestformat=json",
-                       token, function, userID];
+                       @"server.php?wstoken=%@&wsfunction=%@&userid=%@&%@"
+                       @"&moodlewsrestformat=json",
+                       token, function, userID, additionalValues];
   NSURL *url = [NSURL URLWithString:post];
   NSData *data = [NSData dataWithContentsOfURL:url];
   return data;
@@ -178,7 +179,7 @@ static AppData *shared = NULL;
 // Reads all the required data from the Userdefaults, then tries to request a
 // page on the current Moodle. returns BOOL
 + (BOOL)checkToken {
-  NSData *data = [self getData:@"mod_wstals_get_todays_appointments"];
+  NSData *data = [self getData:@"mod_wstals_get_todays_appointments" adValues:@""];
   NSString *ret =
       [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
   if ([ret containsString:@"exception"]) {
@@ -190,7 +191,7 @@ static AppData *shared = NULL;
 // Get all appointments for the day
 // returns (NSArray *) appointmentArray containing all appointments found
 + (NSArray *)getAppointments {
-  NSData *data = [self getData:@"mod_wstals_get_todays_appointments"];
+  NSData *data = [self getData:@"mod_wstals_get_todays_appointments" adValues:@""];
   if (data == nil) {
     return nil;
   }
@@ -220,10 +221,9 @@ static AppData *shared = NULL;
 }
 
 // Get all courses for the current User
-// returns (NSArray *) coursesArray with all courses for the currently logged in
-// User
+// returns (NSArray *) coursesArray with all courses for the currently logged in User
 + (NSArray *)getCourses {
-  NSData *data = [self getData:@"mod_wstals_get_courses"];
+  NSData *data = [self getData:@"mod_wstals_get_courses" adValues:@""];
   if (data == nil) {
     return nil;
   }
@@ -252,41 +252,27 @@ static AppData *shared = NULL;
 // +Pin The PIN
 // returns BOOL
 + (BOOL)sendPIN:(NSString *)appointmentID pin:(NSString *)pin {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSString *token = [defaults valueForKey:@"token"];
-  NSString *userID = [defaults valueForKey:@"userID"];
-  NSString *post = [NSString
-      stringWithFormat:
-          @"https://fk-vv.mni.thm.de/moodle/webservice/rest/"
-          @"server.php?wstoken=%@&wsfunction=mod_wstals_insert_attendance&"
-          @"appointmentid=%@&userid=%@&pinum=%@&moodlewsrestformat=json",
-          token, appointmentID, userID, pin];
-  NSURL *url = [NSURL URLWithString:post];
-  NSData *data = [NSData dataWithContentsOfURL:url];
-  NSString *ret =
-      [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-  if ([ret containsString:@"Erfolgreich"]) {
-    return YES;
-  }
-  return NO;
+    NSString *values = [NSString
+                      stringWithFormat: @"appointmentid=%@&pinum=%@",
+                      appointmentID, pin];
+    NSData *data = [self getData:@"mod_wstals_insert_attendance" adValues:values];
+    NSString *ret =
+        [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if ([ret containsString:@"Erfolgreich"]) {
+        return YES;
+    }
+    return NO;
 }
 
-// Get days absent for a specified appointment, not fully implemented
+// Get days absent for a specified appointment, server method not fully implemented
 // +AppointmentID The appointments ID.
 // returns (NSString *) ret Number of days absent so far
 + (NSString *)getDaysAbsent:(id)appointmentID {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSString *aiD = [NSString stringWithFormat:@"%@", appointmentID];
-  NSString *token = [defaults valueForKey:@"token"];
-  NSString *userID = [defaults valueForKey:@"userID"];
-  NSString *post = [NSString
-      stringWithFormat:
-          @"https://fk-vv.mni.thm.de/moodle/webservice/rest/"
-          @"server.php?wstoken=%@&wsfunction=mod_wstals_check_for_enabled_pin&"
-          @"appointmentid=%@&userid=%@&moodlewsrestformat=json",
-          token, aiD, userID];
-  NSURL *url = [NSURL URLWithString:post];
-  NSData *data = [NSData dataWithContentsOfURL:url];
+  NSString *values = [NSString
+                        stringWithFormat: @"appointmentid=%@",
+                        aiD];
+  NSData *data = [self getData:@"mod_wstals_check_for_enabled_pin" adValues:values];
   NSError *error = nil;
   NSDictionary *dataDictionary =
       [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
