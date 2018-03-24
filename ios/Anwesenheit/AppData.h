@@ -1,3 +1,13 @@
+//
+//  AppData.h
+//  Anwesenheit
+//
+//  Created by Sarah B on 05.12.17.
+//  Copyright © 2017 THM Gießen. All rights reserved.
+//
+//  Contains all functions for communicating with Moodle and necessary helper functions.
+//
+
 #import "TokenObject.h"
 #import <foundation/Foundation.h>
 

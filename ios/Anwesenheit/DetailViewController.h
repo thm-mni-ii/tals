@@ -5,6 +5,8 @@
 //  Created by Sarah B on 23.11.17.
 //  Copyright © 2017 THM Gießen. All rights reserved.
 //
+//  Handles the detailed view coming from a table cell by showing a detailed overview over a specific date.
+//
 
 #import <UIKit/UIKit.h>
 
