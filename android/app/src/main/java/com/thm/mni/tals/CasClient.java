@@ -1,9 +1,5 @@
 package com.thm.mni.tals;
 
-/**
- * The basics of the CAS communication have been obtained from https://github.com/justindancer/android-cas-client/
- */
-
 import android.util.Log;
 
 import org.apache.http.Header;
@@ -37,6 +33,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The basics of the CAS communication have been obtained from https://github.com/justindancer/android-cas-client/
+ * CasClient functions as the basis of the cas login.
+ */
 public class CasClient {
 
 	private static final String TAG = CasClient.class.getSimpleName();
@@ -62,14 +62,24 @@ public class CasClient {
 	HttpContext context;
 	CookieStore cookieStore;
 
+	/**
+	 * Getter for the cookiestore
+	 * @return cookieStore instance
+	 */
 	public CookieStore getCookieStore(){
 		return cookieStore;
 	}
 
-	public String login(String username, String password) throws CasAuthenticationException, CasProtocolException {
-		return this.login("", username, password);
-	}
 
+	/**
+	 * Login method. Logs in using the specified login data, trying to authenticate with the service provided via serviceUrl.
+	 * @param serviceUrl Service URL as String
+	 * @param username CAS Username
+	 * @param password CAS Password
+	 * @return Service Ticket String or null if something went wrong.
+	 * @throws CasAuthenticationException
+	 * @throws CasProtocolException
+	 */
 	public String login (String serviceUrl, String username, String password) throws CasAuthenticationException, CasProtocolException
 	{
 		String serviceTicket = null;
@@ -114,7 +124,6 @@ public class CasClient {
 				nvps.add(new BasicNameValuePair ("gateway", "true"));
 				nvps.add(new BasicNameValuePair ("_eventId", "submit"));
 				nvps.add(new BasicNameValuePair ("submit", "Anmelden"));
-
 
 				cookies = cookieStore.getCookies();
 				for(Cookie c: cookies) {
@@ -174,9 +183,8 @@ public class CasClient {
 		}
 	}
 
-	protected TokenContainer getLTFromLoginForm (String serviceUrl, HttpContext context)
+	private TokenContainer getLTFromLoginForm (String serviceUrl, HttpContext context)
 	{
-
 		HttpGet httpGet = new HttpGet (casBaseURL + CAS_LOGIN_URL_PART + "?service=" + serviceUrl);
 		TokenContainer tc = null;
 		try
@@ -215,7 +223,7 @@ public class CasClient {
 		return tc;
 	}
 
-	protected String extractServiceTicket (String data)
+	private String extractServiceTicket (String data)
 	{
 		String serviceTicket = null;
 		int start = data.indexOf(CAS_TICKET_BEGIN);
@@ -227,7 +235,7 @@ public class CasClient {
 		return serviceTicket;
 	}
 
-	protected TokenContainer extractLt (InputStream dataStream)
+	private TokenContainer extractLt (InputStream dataStream)
 	{
 		BufferedReader reader = new BufferedReader (new InputStreamReader(dataStream));
 		TokenContainer tc = new TokenContainer();
@@ -259,25 +267,31 @@ public class CasClient {
 		return tc;
 	}
 
+	/**
+	 * Gets the Token and userid from the InputStream specified.
+	 * Check the usage in LoginActivity to see when it should be used
+	 * @param dataStream InputStream to be read from
+	 * @return JSONObject of the token and userid
+	 */
 	public JSONObject getTokenJSON(InputStream dataStream) {
 		if(MyDebug.DEBUG) Log.d(TAG, "In method getTokenJSON!");
 		BufferedReader reader = new BufferedReader (new InputStreamReader(dataStream));
-		String token;
 		try {
 			String line = reader.readLine();
-			JSONObject jsonObject = new JSONObject(line);
-			return jsonObject;
+			return  new JSONObject(line);
 		} catch (IOException  | JSONException e) {
 			if(MyDebug.DEBUG) Log.d(TAG, e.getMessage());
 			return null;
 		}
 	}
 
-	public void showStream(InputStream dataStream) throws IOException
+	/**
+	 * Debug/Helper method
+	 */
+	private void showStream(InputStream dataStream) throws IOException
 	{
 		if(MyDebug.DEBUG) Log.d(TAG, "In method showStream!");
 		BufferedReader reader = new BufferedReader (new InputStreamReader(dataStream));
-		String token;
 		String line = reader.readLine();
 		while (line != null)
 		{
@@ -286,6 +300,4 @@ public class CasClient {
 		}
 		if(MyDebug.DEBUG) Log.d(TAG, "Exiting method showStream!");
 	}
-
-
 }

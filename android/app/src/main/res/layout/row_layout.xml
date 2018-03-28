@@ -36,19 +36,16 @@
                     android:id="@+id/fullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ABCD"
                     android:textSize="18sp" />
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ABCD"
                     android:textSize="14sp" />
                 <TextView
                     android:id="@+id/subText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Some other text here"
                     android:textSize="12sp" />
 
                 <LinearLayout
@@ -63,8 +60,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:text="Bitte Pin eingeben!"/>
+                        android:layout_margin="6dp"/>
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
@@ -99,7 +95,6 @@
                         </android.support.design.widget.TextInputLayout>
 
                         <Button
-                            android:text="Bestätigen"
                             android:id="@+id/pinButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

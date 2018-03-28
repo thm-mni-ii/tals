@@ -53,20 +53,19 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by Johannes Meintrup on 08.12.2017.
  * LoginActivity class. This is the first Activity we see when we start the application.
- *
+ * Uses CasClient to authenticate with Cas.
  */
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    Button loginButton;
-    EditText usernameTextView;
-    EditText passwortEditText;
-    TextView errorTextView;
-    CheckBox checkBox;
-    LinearLayout loginForm;
-    ProgressBar preloadProgressBar;
-    ImageView stayLoggedInfo;
-    ImageView logo;
-    int cnt;
+    private Button loginButton;
+    private EditText usernameTextView;
+    private EditText passwortEditText;
+    private TextView errorTextView;
+    private CheckBox checkBox;
+    private LinearLayout loginForm;
+    private ProgressBar preloadProgressBar;
+    private ImageView stayLoggedInfo;
+    private ImageView logo;
 
     public static final String TOKEN_ID = "token";
     public static final String USER_ID = "userid";
@@ -103,17 +102,8 @@ public class LoginActivity extends AppCompatActivity {
         usernameTextView.setText(getString(R.string.blank));
         passwortEditText.setText(getString(R.string.blank));
         stayLoggedInfo = this.findViewById(R.id.safety_hint);
-
-        cnt = 0;
         logo = this.findViewById(R.id.logo);
-        logo.setOnClickListener((view) -> {
-            if(cnt++ > 7) {
-                cnt = 0;
-                Uri uri = Uri.parse("https://en.wikipedia.org/wiki/Nineteen_Eighty-Four");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        });
+
         stayLoggedInfo.setOnClickListener((view) -> stayLoggedInHelp());
         loginButton.setOnClickListener(view -> onSubmit());
         passwortEditText.setOnEditorActionListener((v, actionId, event) -> {
@@ -123,8 +113,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             return false;
         });
-
-
     }
 
     private void onSubmit() {
@@ -181,7 +169,6 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // TODO: 09.12.2017
     private void about() {
         Dialog dialog = new Dialog(this);
         dialog.setTitle(R.string.menu_item_help);
@@ -224,6 +211,10 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * Disables the onBackPressed functionality of this activity
+     */
     @Override
     public void onBackPressed() {
     }
@@ -233,7 +224,6 @@ public class LoginActivity extends AppCompatActivity {
      * This task is being executed in an extra Thread when we submit our login information.
      *
      */
-
     private class CasLoginTask extends AsyncTask<String, Void, CasAuthenticationResult> {
         private final String TAG = CasLoginTask.class.getSimpleName();
 
@@ -254,7 +244,6 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected CasAuthenticationResult doInBackground(String... strings) {
             final CasAuthenticationResult casAuthenticationResult = new CasAuthenticationResult();
-            assert strings.length == 2;
 
             String username = strings[0];
             String password = strings[1];

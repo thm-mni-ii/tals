@@ -21,20 +21,26 @@ import java.util.ArrayList;
 
 /**
  * Created by Johannes Meintrup on 08.12.2017.
+ * Adapter class for the RecyclerView of the CourseListActivity.
+ * This class describes the way each entry in the RecyclerView is to be displayed and it's functionalities.
  */
-
-
 public class CourseListAdapter extends RecyclerView.Adapter implements View.OnClickListener{
-    ArrayList<AppointmentData> dataList;
-    Context context;
-    String expandedPosition = "";
-    String userid;
-    String token;
-    Intent intent;
-    public static final String APPOINTMENT_DATA = "AppointmentData";
+    private ArrayList<AppointmentData> dataList;
+    private Context context;
+    private String expandedPosition = "";
+    private String userid;
+    private String token;
+    private Intent intent;
 
+    public static final String APPOINTMENT_DATA = "AppointmentData";
     private static String TAG = CourseListAdapter.class.getSimpleName();
 
+    /**
+     * Constructor for the CourseListAdapter
+     * @param context context of parent activity
+     * @param dataList datalist which is to be updated after a swiperefresh. this adapter should be notified when it changes.
+     * @param intent intent of the action when an appointment is selected. should be pininputactivity.
+     */
     public CourseListAdapter(Context context, ArrayList<AppointmentData> dataList, Intent intent) {
         this.dataList = dataList;
         this.context = context;
@@ -71,6 +77,10 @@ public class CourseListAdapter extends RecyclerView.Adapter implements View.OnCl
         }
     }
 
+    /**
+     * Getter for the amount of items in the datalist.
+     * @return size of datalist
+     */
     @Override
     public int getItemCount() {
         return dataList.size();
@@ -81,59 +91,26 @@ public class CourseListAdapter extends RecyclerView.Adapter implements View.OnCl
         MyViewHolder viewHolder = (MyViewHolder) v.getTag();
         String data = dataList.get(viewHolder.getPosition()).getTitle();
         if(MyDebug.DEBUG) Log.d(TAG, data + "   " + dataList.get(viewHolder.getPosition()).getAppointmentid());
-        /*
-            if(expandedPosition != "") {
-            if(MyDebug.DEBUG) Log.d(TAG, expandedPosition);
-            int prev = dataList.indexOf(expandedPosition);
-            notifyItemChanged(prev);
-        }
-        if(expandedPosition != data) {
-            expandedPosition = dataList.get(viewHolder.getPosition()).getTitle();
-        } else {
-            expandedPosition = "";
-        }
-        notifyItemChanged(viewHolder.getPosition());
-        Toast.makeText(context, "Clicked: " + data, Toast.LENGTH_SHORT).show();*/
+
         intent.putExtra(APPOINTMENT_DATA, dataList.get(viewHolder.getPosition()));
         context.startActivity(intent);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView fullName;
-        TextView name;
-        TextView time;
-        LinearLayout expandedLayout;
-        Button pinButton;
-        CheckBox pinCheckBox;
-        EditText pinEditText;
-        ImageView imageView;
+    /**
+     * Class to describe each entry in the recyclerview.
+     */
+    protected static class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView fullName;
+        private TextView name;
+        private TextView time;
+        private ImageView imageView;
 
-        public MyViewHolder(final View itemView) {
+        protected MyViewHolder(final View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             time = itemView.findViewById(R.id.subText);
-            expandedLayout = itemView.findViewById(R.id.llExpandArea);
-            pinButton = itemView.findViewById(R.id.pinButton);
-            pinCheckBox = itemView.findViewById(R.id.pinCheckBox);
-            pinEditText = itemView.findViewById(R.id.pinEditText);
             imageView = itemView.findViewById(R.id.image);
             fullName = itemView.findViewById(R.id.fullName);
-
-            pinButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(itemView.getContext()).create();
-                    alertDialog.setMessage("STUFF");
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    alertDialog.show();
-                }
-            });
         }
     }
 }

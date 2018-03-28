@@ -30,19 +30,16 @@ import java.util.Map;
  * In this Activity the user sees all his daily appointments, and can click on an appointment to switch to the PinInputActivity
  *
  */
-
 public class CourseListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-    SwipeRefreshLayout swipeRefreshLayout;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<AppointmentData> myDataList;
     private static String TAG = CourseListActivity.class.getSimpleName();
     private CourseListAdapter courseListAdapter;
     private String token;
     private String userid;
     private Map<Integer, String> courseMap;
-    //private Toolbar toolbar;
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,9 +141,11 @@ public class CourseListActivity extends AppCompatActivity implements SwipeRefres
         });
     }
 
+    /**
+     * Disable onbackpressed functionality.
+     */
     @Override
     public void onBackPressed() {
-
     }
 
     @Override
@@ -234,13 +233,9 @@ public class CourseListActivity extends AppCompatActivity implements SwipeRefres
             courseMap = new HashMap<>();
             String url = MyUrls.getCourseListRequestUrl(token, userid);
             Log.d(TAG, url);
-            //String url = "https://moodle.herwegh.me/webservice/rest/server.php?wstoken=" + token + "&wsfunction=mod_wstals_get_courses&userid=" + userid + "&moodlewsrestformat=json";
             final JsonArrayRequest request = new JsonArrayRequest(url, response -> {
                 if(MyDebug.DEBUG) Log.d(TAG, response.toString());
 
-                    //noCourses.setVisibility(View.VISIBLE);
-
-                //myDataList.add(new AppointmentData(0,"asdasd", "asdasd", "asdkjalsdjk", "asd", 0, true));
                 courseMap = new HashMap<>();
                 for (int i = 0; i < response.length(); i++) {
                     try {

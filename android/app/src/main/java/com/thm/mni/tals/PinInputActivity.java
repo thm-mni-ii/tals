@@ -24,6 +24,12 @@ import com.android.volley.toolbox.JsonRequest;
 
 import org.json.JSONException;
 
+/**
+ * Activity Class for the Pin Input Activity.
+ * Extends AppCompatActivity like all other Activities in this application.
+ * Uses the Moodle Webservices to check the status of the appointment, and to send the pin.
+ * Implements a SwipeRefreshlayout.
+ */
 public class PinInputActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = PinInputActivity.class.getSimpleName();
@@ -121,8 +127,6 @@ public class PinInputActivity extends AppCompatActivity implements SwipeRefreshL
         disableInput();
         pinButton.setText(R.string.sending_pin);
 
-        //String url = "https://moodle.herwegh.me/webservice/rest/server.php?wstoken="+token+"&wsfunction=mod_wstals_get_todays_appointments&userid="+userid;
-        //String url = "https://moodle.herwegh.me/webservice/rest/server.php?wstoken="+token+"&wsfunction=mod_wstals_insert_attendance&appointmentid="+appointmentData.getAppointmentid()+"&userid="+ userid +"&pinum=" + pin + "&moodlewsrestformat=json";
         String url = MyUrls.getSendPinRequestUrl(token,userid,appointmentData.getAppointmentid(),pin);
         Log.d(TAG, "URL: " + url);
         final JsonRequest request = new JsonObjectRequest(url, null, response -> {
@@ -143,11 +147,6 @@ public class PinInputActivity extends AppCompatActivity implements SwipeRefreshL
             alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK", (dialog, which) -> dialog.dismiss());
             alertDialog.show();
-           /* try {
-                response.getBoolean("pin enabled");
-            } catch (JSONException e) {
-                if(MyDebug.DEBUG) Log.e(TAG, "JSON Parsing error: " + e.getMessage());
-            }*/
 
         }, error -> {
             if(MyDebug.DEBUG) Log.e(TAG, "Server Error: " + error.getMessage());
@@ -164,9 +163,7 @@ public class PinInputActivity extends AppCompatActivity implements SwipeRefreshL
         }
         swipeRefreshLayout.setRefreshing(true);
         pinArea.setVisibility(View.GONE);
-        //String url = "https://moodle.herwegh.me/webservice/rest/server.php?wstoken="+token+"&wsfunction=mod_wstals_get_todays_appointments&userid="+userid;
         if(MyDebug.DEBUG) Log.d(TAG, "THE APPOINTMENT ID IS" + appointmentData.getAppointmentid());
-        //String url = "https://moodle.herwegh.me/webservice/rest/server.php?wstoken="+token+"&wsfunction=mod_wstals_check_for_enabled_pin&userid=" + userid + "&appointmentid=" + appointmentData.getAppointmentid() + "&moodlewsrestformat=json";
         String url = MyUrls.getFetchPinInfoUrl(token, userid, appointmentData.getAppointmentid());
         final JsonRequest request = new JsonObjectRequest(url, null, response -> {
             //do stuff with the response

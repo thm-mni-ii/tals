@@ -24,6 +24,12 @@ public class MyUrls {
     private static final String MOODLE_SEND_PIN_FUNCTION = "mod_wstals_insert_attendance";
     private static final String MOODLE_FETCH_PIN_INFO_FUNCTION = "mod_wstals_check_for_enabled_pin";
 
+    /**
+     * Method to create a string for mod_wstals_get_todays_appointments webservice.
+     * @param token moodle token is needed in the request
+     * @param userid userid of the user whos appointments are to be requested
+     * @return String of the URL
+     */
     public static String getTodaysAppointmentRequestUrl(String token, String userid) {
         return MOODLE_WS_URL
                 + TOKEN_URL_PART + token
@@ -32,6 +38,12 @@ public class MyUrls {
                 + MOODLE_WS_FORMAT_JSON;
     }
 
+    /**
+     * Method to create a string for mod_wstals_get_courses webservice.
+     * @param token moodle token is needed in the request
+     * @param userid userid of the user whos courses are to be requested
+     * @return String of the URL
+     */
     public static String getCourseListRequestUrl(String token, String userid) {
         return MOODLE_WS_URL
                 + TOKEN_URL_PART + token
@@ -40,6 +52,14 @@ public class MyUrls {
                 + MOODLE_WS_FORMAT_JSON;
     }
 
+    /**
+     * Method to create a string for mod_wstals_insert_attendance webservice.
+     * @param token moodle token is needed in the request
+     * @param userid userid of the user
+     * @param appointmentid id of the appointment
+     * @param pin pin that was entered
+     * @return
+     */
     public static String getSendPinRequestUrl(String token, String userid, int appointmentid, String pin) {
         return MOODLE_WS_URL
                 + TOKEN_URL_PART + token
@@ -50,6 +70,13 @@ public class MyUrls {
                 + MOODLE_WS_FORMAT_JSON;
     }
 
+    /**
+     * Method to create a string for mod_wstals_check_for_enabled_pin webservice.
+     * @param token moodle token is needed in the request
+     * @param userid userid of the user whos appointments are to be requested
+     * @param appointmentid id of the appointment for which we want to request the information
+     * @return String of the URL
+     */
     public static String getFetchPinInfoUrl(String token, String userid, int appointmentid) {
         return MOODLE_WS_URL
                 + TOKEN_URL_PART + token

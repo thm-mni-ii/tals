@@ -24,6 +24,10 @@ public class LogShakeDelegateWrapper extends ShakeDelegate {
 
     private ShakeDelegate delegate;
 
+    /**
+     * Default Constructor
+     * @param delegate the delegate which handles shaky events.
+     */
     public LogShakeDelegateWrapper(ShakeDelegate delegate) {
         this.delegate = delegate;
     }

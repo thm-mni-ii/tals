@@ -2,7 +2,7 @@
 
     <string name="feedback_help">To send feedback or report bugs, just shake your phone! A feedback form will open on your screen, and you can send a screenshot and log of the problem you encountered.</string>
     <string name="app_name">TALS</string>
-    <string name="stay_logged_in_help">Your CAS Username/Password combination will not be saved, only a Moodle access token will be stored in the database. This token can only be used with the moodle attendence plugin.</string>
+    <string name="stay_logged_in_help">Your CAS Username/Password combination will not be saved, only a Moodle access token will be stored in the database. This token can only be used with the moodle attendance plugin.</string>
     <string name="help1">1) Login with your THM CAS Account.</string>
     <string name="help2">2) Chose an appointment in the list of appointments.</string>
     <string name="help3">3) If the pin is enabled, you can enter it and confirm your attendance</string>
@@ -40,9 +40,9 @@
     <string name="pin_disabled">Pin not enabled</string>
     <string name="generic_error">Error :(</string>
     <string name="cas_protocol_error">CAS protocol error - maybe the connection failed?</string>
-    <string name="already_attending">You sucessfully confirmed your attendance! </string>
+    <string name="already_attending">You successfully confirmed your attendance! </string>
     <string name="no_courses">You don\'t have any appointments today - maybe you should just go home? ¯\\_(ツ)_/¯</string>
     <string name="unknownCourse" />
-    <string name="course_list_title">Todays appointments</string>
+    <string name="course_list_title">Today's appointments</string>
     <string name="feedbackEmail">thmtals@gmail.com</string>
 </resources>

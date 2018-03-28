@@ -13,10 +13,7 @@ import com.linkedin.android.shaky.Shaky;
 /**
  * This Application was created for a THM SWT project for Dr. habil. Frank Kammer by Johannes Meintrup with the help of his project member Jonas Nimmerfroh who did alot of the work for the CAS communication.
  */
-
-
 public class TalsApp extends Application {
-    private Shaky shaky;
 
     public static final String TAG = TalsApp.class
             .getSimpleName();
@@ -28,15 +25,23 @@ public class TalsApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        this.shaky = Shaky.with(this, new LogShakeDelegateWrapper(new EmailShakeDelegate(getString(R.string.feedbackEmail))));
+        Shaky shaky = Shaky.with(this, new LogShakeDelegateWrapper(new EmailShakeDelegate(getString(R.string.feedbackEmail))));
         shaky.startFeedbackFlow();
         mInstance = this;
     }
 
+    /**
+     * Getter for the instance of this application.
+     * @return instance of the App
+     */
     public static synchronized TalsApp getInstance() {
         return mInstance;
     }
 
+    /**
+     * Getter for the RequestQueue for Volley.
+     * @return RequestQue for volley framework
+     */
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -45,24 +50,13 @@ public class TalsApp extends Application {
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
-        getRequestQueue().add(req);
-    }
-
+    /**
+     * Add Request to Queue
+     * @param req Request to be added
+     * @param <T>
+     */
     public <T> void addToRequestQueue(Request<T> req) {
         req.setTag(TAG);
         getRequestQueue().add(req);
-    }
-
-    public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
-    }
-
-    @NonNull
-    public Shaky getShaky() {
-        return shaky;
     }
 }

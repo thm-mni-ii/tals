@@ -7,8 +7,8 @@ import android.util.Log;
 
 /**
  * Created by Johannes Meintrup on 08.12.2017.
+ * DatabaseHelper class. Has to be implemented extending SQLiteOpenHelper to use basic Database Functionalities.
  */
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
