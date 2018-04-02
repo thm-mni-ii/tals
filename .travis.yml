@@ -15,4 +15,6 @@ install:
   - sass src/style.scss:assets/style.css 
 after_success:
   - cd $TRAVIS_BUILD_DIR/tals-site
-  - firebase deploy --project tals-app --token $FIREBASE_TOKEN
+  - if [ "$TRAVIS_REPO_SLUG" == "thm-mni-ii/tals" ] && [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+      firebase deploy --project tals-app --token $FIREBASE_TOKEN;
+    fi
