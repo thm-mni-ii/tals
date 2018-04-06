@@ -72,7 +72,7 @@ static AppData *shared = NULL;
   // LoginProcess
   // Sets up all the data required for the POST request
   NSCharacterSet *allowedCharacters =
-      [NSCharacterSet URLFragmentAllowedCharacterSet];
+      [NSCharacterSet alphanumericCharacterSet];
   NSString *pw2 = [currentPassword
       stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
   NSString *post = [NSString
