@@ -65,7 +65,7 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-$filename = get_string('label_report', 'tals').str_replace(" ", "_", $course->shortname).'-'.date('Y-m-d', time());
+$filename = get_string('label_report', 'tals').str_replace(" ", "_", $course->shortname).'-'.date('Y-m-d', time()).'.csv';
 
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header('Content-Description: File Transfer');
@@ -79,7 +79,7 @@ $outfile = @fopen('php://output', 'w');
 $content = tals_get_report_for_export($course->id);
 
 foreach ($content as $line) {
-    fputcsv($outfile, $line);
+    fputcsv($outfile, $line, ";");
 }
 
 fclose($outfile);

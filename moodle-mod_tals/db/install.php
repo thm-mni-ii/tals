@@ -56,21 +56,22 @@ function xmldb_tals_install() {
     $result = $result && $DB->insert_record('tals_type_appointment', $record);
   }
 
-  // set the default networks
-  $arr =  array(
-            array('fh-giessen.de', 1), 
-            array('its.thm.de', 2),
-            array('vpn.thm.de', 2)
-          );
+  // @deprecated
+  // // set the default networks
+  // $arr =  array(
+  //           array('fh-giessen.de', 1), 
+  //           array('its.thm.de', 2),
+  //           array('vpn.thm.de', 2)
+  //         );
 
-  foreach ($arr as $k) {
-    $record = new stdClass;
+  // foreach ($arr as $k) {
+  //   $record = new stdClass;
 
-    $record->host = $k[0];
-    $record->acceptance = $k[1];
+  //   $record->host = $k[0];
+  //   $record->acceptance = $k[1];
 
-    $result = $result && $DB->insert_record('tals_type_net', $record);
-  }
+  //   $result = $result && $DB->insert_record('tals_type_net', $record);
+  // }
 
   return $result;
 }

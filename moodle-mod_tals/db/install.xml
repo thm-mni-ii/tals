@@ -66,7 +66,8 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="tals_type_net" COMMENT="This table holds the different types of network-hosts to identify where the entry was sent from.">
+<!-- @deprecated -->
+<!--     <TABLE NAME="tals_type_net" COMMENT="This table holds the different types of network-hosts to identify where the entry was sent from.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="host" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
@@ -75,7 +76,7 @@
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
-    </TABLE>
+    </TABLE> -->
     <TABLE NAME="tals_log" COMMENT="This table holds the connection between appointment, attendance, and net to take care of the attendance of a single person.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>

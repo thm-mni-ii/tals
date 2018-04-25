@@ -42,6 +42,12 @@ define("ERROR_PIN_WRONG", -7);
 define("ERROR_PIN_DISABLED", -8);
 define("ERROR_NO_PIN", -9);
 
+/**
+ * Path to file that holds definitions for networks
+ * with IP-Adresses and acceptance count
+ */
+define("NETWORK_DEF", "db/thmnet.json");
+
 define("PRESENT", 1);
 define("ABSENT", 2);
 define("EXCUSED", 3);
@@ -75,41 +81,48 @@ function tals_get_token() {
 }
 
 /**
- * Determines the hostname of current request and returns the acceptance.
+ * Checks if the given IP is in given Network
+ * @param  ip - IP to check in IPV4 format eg. 127.0.0.1
+ * @param  range - IP/CIDR netmask eg. 127.0.0.0/24, also 127.0.0.1 is accepted and /32 assumed
+ * @return if on range true, otherwise false
+ */
+function tals_check_ip_range($ip, $range) {
+  if (!strpos($range, '/')) {
+    $range .= '/32';
+  }
+
+  list($range, $netmask) = explode('/', $range, 2);
+
+  $rangedecimal = ip2long($range);
+  $ipdecimal = ip2long($ip);
+  $wildcarddecimal = pow(2, (32 - $netmask)) - 1;
+  $netmaskdecimal = ~ $wildcarddecimal;
+
+  return (($ipdecimal & $netmaskdecimal) == ($rangedecimal & $netmaskdecimal));
+}
+
+/**
+ * Determines the IP of current request and returns the acceptance.
  * @return 1 if estimated, 2 if ok, 3 otherwise (trafficlights principle)
  */
 function tals_get_type_net() {
   global $DB;
 
   $ipaddress = $_SERVER['REMOTE_ADDR'];
-  $hostname = gethostbyaddr($ipaddress);
-  $remotereferer = null;
-  $hostacceptance = 3;
-  $refereracceptance = 3;
+  $defaultacceptance = 3;
 
-  if (isset($_SERVER['HTTP_REFERER'])) {
-    $remotereferer = $_SERVER['HTTP_REFERER'];
-  }
+  $netdeffile = file_get_contents(NETWORK_DEF);
+  $netdefjson = json_decode($thmnet, true);
 
-  /*This approach is used, because a simple $DB->get_record('tals_type_net', array('host' => $hostname), 'acceptance') throws error.
-  The given hint to fix this is using sql_compare_text(), but this function is not documented. Therefore it can't be used (I tried, really).*/
-  $list = $DB->get_records('tals_type_net');
-
-  foreach ($list as $entry) {
-    if (strpos($hostname, $entry->host) !== false) {
-      $hostacceptance = $entry->acceptance;
-    }
-
-    if (strpos($remotereferer, $entry->host) !== false) {
-      $refereracceptance = $entry->acceptance;
+  foreach ($netdefjson as $entry) {
+    foreach ($entry as $iprange => $acceptance) {
+      if (tals_check_ip_range($iprange, $ipaddress)) {
+        return $acceptance;
+      }
     }
   }
 
-  if ($hostacceptance > $refereracceptance) {
-    return $hostacceptance;
-  } else {
-    return $refereracceptance;
-  }
+  return $defaultacceptance;
 }
 
 /**
@@ -588,7 +601,7 @@ function tals_get_next_appointment($courseid) {
 
   $now = strtotime(date('d-m-Y H:i', time()));
 
-  $appointment = $DB->get_record_sql('SELECT * FROM {tals_appointment} WHERE courseid = '.$courseid.' AND start > '.$now.' LIMIT 1');
+  $appointment = $DB->get_record_sql('SELECT * FROM {tals_appointment} WHERE courseid = '.$courseid.' AND start > '.$now.' ORDER BY start LIMIT 1');
 
   if (empty($appointment)) {
     return null;
@@ -885,28 +898,33 @@ function tals_get_report_for_export($courseid) {
   $countcompulsory = $DB->count_records_select('tals_appointment', $where);
 
   // Create header with info about the course
-  $tmp = array($course->fullname);
+  $tmp = array(mb_convert_encoding($course->fullname, 'UTF-16LE', mb_detect_encoding($course->fullname)));
   array_push($result, $tmp);
 
   // Current date to know, if its up to date or not
-  $tmp = array(date('d.m.Y, H:i', time()));
+  $now = date('d.m.Y, H:i', time());
+  $tmp = array(mb_convert_encoding($now, 'UTF-16LE', mb_detect_encoding($now)));
   array_push($result, $tmp);
 
   // Count of all appointments of this course
-  $tmp = array(get_string('label_countappointments', 'tals'), $countappointments);
+  $tmp = array(mb_convert_encoding(get_string('label_countappointments', 'tals'), 'UTF-16LE', mb_detect_encoding(get_string('label_countappointments', 'tals'))), $countappointments);
   array_push($result, $tmp);
 
   // Count how many of them are compulsory
-  $tmp = array(get_string('label_compulsory', 'tals'), $countcompulsory);
+  $tmp = array(mb_convert_encoding(get_string('label_compulsory', 'tals'), 'UTF-16LE', mb_detect_encoding(get_string('label_compulsory', 'tals'))), $countcompulsory);
   array_push($result, $tmp);
 
   // Headline
-  $tmp = array(get_string('label_name', 'tals'), get_string('Present_full', 'tals'), get_string('Absent_full', 'tals'), get_string('Excused_full', 'tals'));
+  $tmp = array(mb_convert_encoding(get_string('label_name', 'tals'), 'UTF-16LE', mb_detect_encoding(get_string('label_name', 'tals'))), 
+               mb_convert_encoding(get_string('Present_full', 'tals'), 'UTF-16LE', mb_detect_encoding(get_string('Present_full', 'tals'))), 
+               mb_convert_encoding(get_string('Absent_full', 'tals'), 'UTF-16LE', mb_detect_encoding(get_string('Absent_full', 'tals'))), 
+               mb_convert_encoding(get_string('Excused_full', 'tals'), 'UTF-16LE', mb_detect_encoding(get_string('Excused_full', 'tals'))));
   array_push($result, $tmp);
 
   // Everything about the users
   foreach ($users as $user) {
     $fullname = $user->firstname.' '.$user->lastname;
+    $fullname = mb_convert_encoding($fullname, 'UTF-16LE', mb_detect_encoding($fullname));
     $status = tals_get_attendance_count_for_user($user->id, $course->id);
 
     $tmp = array($fullname, $status->present, $status->absent, $status->excused);
