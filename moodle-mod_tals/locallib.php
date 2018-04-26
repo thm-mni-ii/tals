@@ -112,11 +112,11 @@ function tals_get_type_net() {
   $defaultacceptance = 3;
 
   $netdeffile = file_get_contents(NETWORK_DEF);
-  $netdefjson = json_decode($thmnet, true);
+  $netdefjson = json_decode($netdeffile, true);
 
   foreach ($netdefjson as $entry) {
     foreach ($entry as $iprange => $acceptance) {
-      if (tals_check_ip_range($iprange, $ipaddress)) {
+      if (tals_check_ip_range($ipaddress, $iprange)) {
         return $acceptance;
       }
     }
