@@ -1,0 +1,22 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: moodle
+      POSTGRES_PASSWORD: jk3nothing
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  ws:
+    build: .
+    image: asjn/apachephp
+    volumes:
+      - ./html:/var/www/html/
+      - md_data:/var/moodledata
+    ports:
+      - 8080:80
+volumes:
+  db_data:
+    driver: local
+  md_data:
+    driver: local
