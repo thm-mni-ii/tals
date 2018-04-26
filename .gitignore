@@ -1,9 +1,12 @@
 node_modules
 .DS_Store
+.idea/
+docker/html/
 yarn-error.log
 .sass-cache
 tals-site/assets/material-components-web.min.css
 tals-site/assets/material-components-web.min.js
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
