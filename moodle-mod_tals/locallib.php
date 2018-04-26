@@ -836,8 +836,10 @@ function tals_get_user_profile_for_course($userid, $courseid) {
   $logs = $DB->get_records('tals_log', array('userid' => $user->id, 'courseid' => $courseid));
 
   $profile->countappointments = $DB->count_records('tals_appointment', array('courseid' => $courseid));
-  $where = 'courseid = '.$courseid.' AND fk_pin_id IS NOT NULL';
-  $profile->countcompulsory = $DB->count_records_select('tals_appointment', $where);
+  $profile->countcompulsory = $DB->count_records_sql("SELECT COUNT(DISTINCT groupid) 
+                                                      FROM mdl_tals_appointment 
+                                                      WHERE fk_pin_id IS NOT NULL 
+                                                      AND courseid = ?", array($courseid));
 
   $now = strtotime(date('d-m-Y H:i', time()));
   $where = 'courseid = '.$courseid.' AND end < '.$now;
