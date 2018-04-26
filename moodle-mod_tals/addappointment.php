@@ -127,7 +127,7 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
 // Step along the list of appointments as long as $weekcount defines
-for ($i = 0; $i < $weekcount; $i++) {
+for ($i = 0, $c = 'a'; $i < $weekcount; $i++, $c++) {
     $gid = $DB->get_record_sql('SELECT MAX(groupid) AS "max" FROM {tals_appointment}');
     $groupid = $gid->max + 1;
     $k = $i + 1;
@@ -143,7 +143,7 @@ for ($i = 0; $i < $weekcount; $i++) {
         $thistitle = $title;
 
         if ($weekcount > 1) {
-            $thistitle .= ' ('.$k.')';
+            $thistitle .= ' ('.$k.$c.')';
         }
 
         tals_update_appointment(null, $thistitle, $thisstart, $thisend, $description, $courseid, $groupid, $type, $pin, $pindur);
