@@ -765,6 +765,20 @@ function tals_get_logs_for_course($courseid, $appointmentid, $typeatt=null) {
 }
 
 /**
+ * Returns the greater of two objects, used comparison by attendance and lastname
+ * @param a - first object
+ * @param b - second object
+ * @return stdClass-Object
+ */
+function tals_ sort_by_attendance($a, $b) {
+  if ($a->attendance == $b->attendance) {
+    return $a->lastname > $b->lastname;
+  } else {
+    return $a->attendance > $b->attendance;
+  }
+}
+
+/**
  * Returns list of users of given course which attended on given appointment.
  * @param courseid - id of course the users are enrolled in
  * @param appointmentid - id of appointment you wish the logs for
@@ -809,6 +823,9 @@ function tals_get_attendance_report_for_appointment($courseid, $appointmentid) {
 
     array_push($result, $tmp);
   }
+
+  // sort the result-list by lastname and attendance
+  usort($result, "tals_ sort_by_attendance"); 
 
   return $result;
 }
