@@ -1,6 +1,6 @@
 # TALS #
 
-The TALS-Plugin provides a attendance logging system by using smartphones. 
+The TALS-Plugin provides an attendance logging system by using smartphones. 
 
 The 'THM Attendance Logging System' activity module enables a teacher to take attendance during class and students to view their own attendance record.
 
