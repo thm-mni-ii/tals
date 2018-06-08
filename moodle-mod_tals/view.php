@@ -22,26 +22,26 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(__DIR__.'/../../config.php');
-require_once(__DIR__.'/lib.php');
-require_once(__DIR__.'/locallib.php');
-require_once($CFG->libdir.'/accesslib.php');
+require(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/locallib.php');
+require_once($CFG->libdir . '/accesslib.php');
 
-// Course_module ID, or
+// Course_module ID, or.
 $id = optional_param('id', 0, PARAM_INT);
-$userid  = optional_param('userid', null, PARAM_INT);
+$userid = optional_param('userid', null, PARAM_INT);
 
 // ... module instance id.
-$t  = optional_param('t', 0, PARAM_INT);
+$t = optional_param('t', 0, PARAM_INT);
 
 if ($id) {
-    $cm             = get_coursemodule_from_id('tals', $id, 0, false, MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('tals', array('id' => $cm->instance), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_id('tals', $id, 0, false, MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('tals', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($t) {
-    $moduleinstance = $DB->get_record('tals', array('id' => $n), '*', MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm             = get_coursemodule_from_instance('tals', $moduleinstance->id, $course->id, false, MUST_EXIST);
+    $moduleinstance = $DB->get_record('tals', ['id' => $n], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $moduleinstance->course], '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('tals', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
     print_error(get_string('missingidandcmid', 'tals'));
 }
@@ -52,19 +52,19 @@ $modulecontext = context_module::instance($cm->id);
 
 require_capability('mod/tals:view', $modulecontext);
 
-$capabilities = array(
+$capabilities = [
     'mod/tals:manage',
     'mod/tals:change',
     'mod/tals:viewreports'
-);
+];
 
 if (has_any_capability($capabilities, $modulecontext)) {
-  redirect(new moodle_url('/mod/tals/manage.php', array('id' => $id)));
+    redirect(new moodle_url('/mod/tals/manage.php', ['id' => $id]));
 } else {
-  redirect(new moodle_url('/mod/tals/profile.php', array('id' => $id)));
+    redirect(new moodle_url('/mod/tals/profile.php', ['id' => $id]));
 }
 
-$PAGE->set_url('/mod/tals/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/tals/view.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
