@@ -41,6 +41,7 @@ $usertoken = new stdClass;
 $usertoken->token = $token->token;
 $usertoken->userid = $token->userid;
 $usertoken->externalserviceid = $token->externalserviceid;
-$usertoken->validuntil = $token->validuntil; // 3 month hardcoded in lib/externallib.php@external_generate_token_for_current_user:1056
+// 3 month hardcoded in lib/externallib.php@external_generate_token_for_current_user:1056.
+$usertoken->validuntil = $token->validuntil;
 
 echo json_encode($usertoken);

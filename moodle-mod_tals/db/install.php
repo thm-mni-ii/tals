@@ -28,50 +28,32 @@ defined('MOODLE_INTERNAL') || die();
  * Custom code to be run on installing the plugin.
  */
 function xmldb_tals_install() {
-  global $DB;
+    global $DB;
 
-  $result = true;
+    $result = true;
 
-  // set the default attendance types
-  $arr = array('Present', 'Absent', 'Excused'); // Don't change this array unless you know what you do.
+    // Set the default attendance types.
+    $arr = ['Present', 'Absent', 'Excused']; // Don't change this array unless you know what you do.
 
-  foreach ($arr as $k) {
-    $record = new stdClass;
+    foreach ($arr as $k) {
+        $record = new stdClass;
 
-    $record->acronym = get_string($k.'_acronym', 'tals');
-    $record->description = get_string($k.'_full', 'tals');
+        $record->acronym = get_string($k . '_acronym', 'tals');
+        $record->description = get_string($k . '_full', 'tals');
 
-    $result = $result && $DB->insert_record('tals_type_attendance', $record);
-  }
+        $result = $result && $DB->insert_record('tals_type_attendance', $record);
+    }
 
-  // set the default appointment types
-  $arr = array('Lecture', 'Excercise', 'Seminar', 'Training', 'Other');
+    // Set the default appointment types.
+    $arr = ['Lecture', 'Excercise', 'Seminar', 'Training', 'Other'];
 
-  foreach ($arr as $k) {
-    $record = new stdClass;
+    foreach ($arr as $k) {
+        $record = new stdClass;
 
-    $record->title = get_string($k.'_full', 'tals');
-    $record->acronym = get_string($k.'_acronym', 'tals');
+        $record->title = get_string($k . '_full', 'tals');
+        $record->acronym = get_string($k . '_acronym', 'tals');
+        $result = $result && $DB->insert_record('tals_type_appointment', $record);
+    }
 
-    $result = $result && $DB->insert_record('tals_type_appointment', $record);
-  }
-
-  // @deprecated
-  // // set the default networks
-  // $arr =  array(
-  //           array('fh-giessen.de', 1), 
-  //           array('its.thm.de', 2),
-  //           array('vpn.thm.de', 2)
-  //         );
-
-  // foreach ($arr as $k) {
-  //   $record = new stdClass;
-
-  //   $record->host = $k[0];
-  //   $record->acceptance = $k[1];
-
-  //   $result = $result && $DB->insert_record('tals_type_net', $record);
-  // }
-
-  return $result;
+    return $result;
 }

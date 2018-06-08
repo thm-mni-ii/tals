@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// General identifiers
+// General identifiers.
 $string['talsname'] = 'THM Attendance Logging System';
 $string['talssettings'] = 'TALS Einstellungen';
 $string['talsfieldset'] = 'TALS Feldsatz';
@@ -36,18 +36,18 @@ $string['modulenamesimple'] = 'THM Attendance Logging System';
 $string['pluginname'] = 'THM Attendance Logging System';
 $string['pluginadministration'] = 'TALS Administration';
 
-// Help messages
+// Help messages.
 $string['talsname_help'] = 'Tals Hilfe';
-$string['modulename_help'] = 'Das \'THM Attendance Logging System\'- Modul ermöglicht es Lehrkräften die  Anwesenheit während Veranstaltungen festzustellen und Studierenden, ihre Anwesenheiten zu erfassen. 
+$string['modulename_help'] = 'Das \'THM Attendance Logging System\'- Modul ermöglicht es Lehrkräften die  Anwesenheit während Veranstaltungen festzustellen und Studierenden, ihre Anwesenheiten zu erfassen.
 
 Die Lehrkraft kann Termine verschiedener Art erstellen (z.B. \'Vorlesungen\', oder \'Übungen\'). Wenn die Lehrkraft die Anwesenheit abfragen will, kann sie_er eine PIN erstellt und den Studierenden mitgeteilt werden. Nachdem die PIN freigeschaltet wurde, kann jede_r Studierende die eigene Anwesenheit eintragen. Die Lehrkraft kann daraufhin die Anwesenheitsliste kontrollieren und den Status der Studierenden ändern.';
 
-// Text-list
+// Text-list.
 $string['acronym'] = 'Akronym';
 $string['nonewmodules'] = 'Keine neuen Module';
 $string['missingidandcmid'] = 'Fehlende ID und CM ID';
 
-// Acronyms and description for default tals_type_attendance
+// Acronyms and description for default tals_type_attendance.
 $string['Present_acronym'] = 'A';
 $string['Present_full'] = 'Anwesend';
 $string['Absent_acronym'] = 'F';
@@ -55,7 +55,7 @@ $string['Absent_full'] = 'Fehlend';
 $string['Excused_acronym'] = 'E';
 $string['Excused_full'] = 'Entschuldigt';
 
-//Acronyms and description for default tals_type_appointment
+// Acronyms and description for default tals_type_appointment.
 $string['Lecture_acronym'] = 'VRL';
 $string['Lecture_full'] = 'Vorlesungen';
 $string['Excercise_acronym'] = 'ÜBG';
@@ -67,7 +67,7 @@ $string['Training_full'] = 'Praktikum';
 $string['Other_acronym'] = 'DIV';
 $string['Other_full'] = 'Diverse';
 
-// Error messages and warnings
+// Error messages and warnings.
 $string['nopermission'] = 'Keine Zugangsberechtigung!';
 $string['alreadylogged'] = 'Die Anwesenheit des Users ist bereits bestätigt.';
 $string['noappointment'] = 'Keinen Termin gefunden.';
@@ -83,10 +83,10 @@ $string['logupdated'] = 'Anwesenheit wurde aktualisiert.';
 $string['lognotupdated'] = 'Anwesenheit wurde nicht aktualisiert.';
 $string['pinnotexist'] = 'Fehler: PIN nicht gefunden.';
 
-// Info messages
+// Info messages.
 $string['instance'] = 'Dieser Kurs hat bereits eine TALS Instanz. Es ist möglich eine weitere Instanz hinzuzufügen. Dies hat keinen Vorteil.';
 
-// Module UI
+// Module UI.
 $string['label_header_date'] = 'Termin';
 $string['label_header_add'] = 'Termin hinzufügen';
 $string['label_header_report'] = 'Bericht';

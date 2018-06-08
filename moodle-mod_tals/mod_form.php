@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
 
 /**
  * Module instance settings form.
@@ -43,15 +43,15 @@ class mod_tals_mod_form extends moodleform_mod {
 
         $mform =& $this->_form;
 
-        if ($DB->record_exists('tals', array('course' => $COURSE->id))) {
-            $mform->addElement('static', 'description', '', '<div class="alert-info">'.get_string('instance', 'tals').'</div>');
+        if ($DB->record_exists('tals', ['course' => $COURSE->id])) {
+            $mform->addElement('static', 'description', '', '<div class="alert-info">' . get_string('instance', 'tals') . '</div>');
         }
 
         // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field.
-        $mform->addElement('text', 'name', get_string('name'), array('size'=>'64'));
+        $mform->addElement('text', 'name', get_string('name'), ['size' => '64']);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->setDefault('name', get_string('talsname', 'tals'));

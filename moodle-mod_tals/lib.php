@@ -94,12 +94,12 @@ function tals_update_instance($moduleinstance, $mform = null) {
 function tals_delete_instance($id) {
     global $DB;
 
-    $exists = $DB->get_record('tals', array('id' => $id));
+    $exists = $DB->get_record('tals', ['id' => $id]);
     if (!$exists) {
         return false;
     }
 
-    $DB->delete_records('tals', array('id' => $id));
+    $DB->delete_records('tals', ['id' => $id]);
 
     return true;
 }

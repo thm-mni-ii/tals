@@ -28,6 +28,5 @@ defined('MOODLE_INTERNAL') || die();
  * Custom uninstallation procedure.
  */
 function xmldb_tals_uninstall() {
-
     return true;
 }

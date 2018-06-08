@@ -22,14 +22,14 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(__DIR__.'/../../config.php');
-require_once(__DIR__.'/lib.php');
-require_once(__DIR__.'/locallib.php');
-require_once($CFG->libdir.'/accesslib.php');
+require(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/locallib.php');
+require_once($CFG->libdir . '/accesslib.php');
 
-// Course_module ID, or
+// Course_module ID, or.
 $id = required_param('id', PARAM_INT);
-$appid  = required_param('appid', PARAM_INT);
+$appid = required_param('appid', PARAM_INT);
 $type = optional_param('ART_type', 0, PARAM_INT);
 $title = optional_param('ART_name', "", PARAM_TEXT);
 $description = optional_param('ART_description', "", PARAM_TEXT);
@@ -40,16 +40,16 @@ $pin = optional_param('PIN_true', false, PARAM_BOOL);
 $pindur = optional_param('PIN_duration', 0, PARAM_INT);
 
 // ... module instance id.
-$t  = optional_param('t', 0, PARAM_INT);
+$t = optional_param('t', 0, PARAM_INT);
 
 if ($id) {
-    $cm             = get_coursemodule_from_id('tals', $id, 0, false, MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('tals', array('id' => $cm->instance), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_id('tals', $id, 0, false, MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('tals', ['id' => $cm->instance], '*', MUST_EXIST);
 } else if ($t) {
-    $moduleinstance = $DB->get_record('tals', array('id' => $n), '*', MUST_EXIST);
-    $course         = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm             = get_coursemodule_from_instance('tals', $moduleinstance->id, $course->id, false, MUST_EXIST);
+    $moduleinstance = $DB->get_record('tals', ['id' => $n], '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $moduleinstance->course], '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('tals', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
     print_error(get_string('missingidandcmid', 'tals'));
 }
@@ -58,29 +58,30 @@ require_login($course, true, $cm);
 
 $modulecontext = context_module::instance($cm->id);
 
-// check manager capabilities
-$capabilities = array(
+// Check manager capabilities.
+$capabilities = [
     'mod/tals:manage',
     'mod/tals:change',
     'mod/tals:viewreports'
-);
+];
 
 if (!has_any_capability($capabilities, $modulecontext)) {
-  print_error(get_string('nopermission', 'tals'));
+    print_error(get_string('nopermission', 'tals'));
 }
 
-$PAGE->set_url('/mod/tals/changeappointment.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/tals/changeappointment.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-if (!$DB->record_exists('tals_appointment', array('id' => $appid))) {
+if (!$DB->record_exists('tals_appointment', ['id' => $appid])) {
     print_error(get_string('noappointment', 'tals'));
 }
 
-$appointment = $DB->get_record('tals_appointment', array('id' => $appid));
+$appointment = $DB->get_record('tals_appointment', ['id' => $appid]);
 
-tals_update_appointment($appointment->id, $title, strtotime($date.$start), strtotime($date.$end), $description, $appointment->courseid, $appointment->groupid, $type, $pin, $pindur);
+tals_update_appointment($appointment->id, $title, strtotime($date . $start),
+    strtotime($date . $end), $description, $appointment->courseid, $appointment->groupid, $type, $pin, $pindur);
 
-// After execution redirect to manage-view
-redirect(new moodle_url('/mod/tals/manage.php', array('id' => $id)));
+// After execution redirect to manage-view.
+redirect(new moodle_url('/mod/tals/manage.php', ['id' => $id]));

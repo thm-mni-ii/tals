@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// General identifiers
+// General identifiers.
 $string['talsname'] = 'THM Attendance Logging System';
 $string['talssettings'] = 'TALS Setting';
 $string['talsfieldset'] = 'TALS Field-Set';
@@ -36,18 +36,18 @@ $string['modulenamesimple'] = 'THM Attendance Logging System';
 $string['pluginname'] = 'THM Attendance Logging System';
 $string['pluginadministration'] = 'TALS administration';
 
-// Help messages
+// Help messages.
 $string['talsname_help'] = 'Tals Help';
 $string['modulename_help'] = 'The \'THM Attendance Logging System\' activity module enables a teacher to take attendance during class and students to view their own attendance record.
 
 The teacher can create multiple appointments of different types (e.g. \'Lecture\' or \'Excercise\'). If the teacher wants to take the attendance they can specify a PIN and provide it to the students. After the PIN is set active each student is able to commit their attendance by themself. The teacher then can check the list and is able to change their statuses.';
 
-// Text-list
+// Text-list.
 $string['acronym'] = 'Acronym';
 $string['nonewmodules'] = 'No New Modules';
 $string['missingidandcmid'] = 'Missing ID and CM ID';
 
-// Acronyms and description for default tals_type_attendance
+// Acronyms and description for default tals_type_attendance.
 $string['Present_acronym'] = 'P';
 $string['Present_full'] = 'Present';
 $string['Absent_acronym'] = 'A';
@@ -55,7 +55,7 @@ $string['Absent_full'] = 'Absent';
 $string['Excused_acronym'] = 'E';
 $string['Excused_full'] = 'Excused';
 
-//Acronyms and description for default tals_type_appointment
+// Acronyms and description for default tals_type_appointment.
 $string['Lecture_acronym'] = 'LCT';
 $string['Lecture_full'] = 'Lecture';
 $string['Excercise_acronym'] = 'EXC';
@@ -67,7 +67,7 @@ $string['Training_full'] = 'Training';
 $string['Other_acronym'] = 'OTH';
 $string['Other_full'] = 'Other';
 
-// Error messages and warnings
+// Error messages and warnings.
 $string['nopermission'] = 'No permission!';
 $string['alreadylogged'] = 'The Users attendance is already taken.';
 $string['noappointment'] = 'No appointment found.';
@@ -83,10 +83,10 @@ $string['logupdated'] = 'Attendance is updated.';
 $string['lognotupdated'] = 'Attendance is not updated.';
 $string['pinnotexist'] = 'Error: PIN not found.';
 
-// Info messages
+// Info messages.
 $string['instance'] = 'This course has a TALS instance already. Its possible to add another, but it has no effort.';
 
-// Module UI
+// Module UI.
 $string['label_header_date'] = 'Appointment';
 $string['label_header_add'] = 'Add Appointment';
 $string['label_header_report'] = 'Report';
