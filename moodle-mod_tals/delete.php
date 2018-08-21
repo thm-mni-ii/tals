@@ -76,37 +76,6 @@ if ($issure) {
 } else {
     echo $OUTPUT->header();
 
-    echo '<style type="text/css">
-
-    #alertBox{
-        background-color: #F78181;
-        margin:0 auto;
-        border: solid 1px #DF0101;
-        padding: 10px;
-        text-align: center;
-        height: -moz-fit-content;
-        width: -moz-fit-content;
-        border-radius: 5px;
-    }
-
-    #buttonBox {
-        text-align: right;
-    }
-
-    #buttonDelete {
-        width:49%;
-    }
-
-    #buttonCancel {
-        width: 49%;
-    }
-
-    .text {
-        font-family: arial;
-    }
-
-    </style>';
-
     global $DB;
 
     $appointment = tals_get_single_appointment($appid);
