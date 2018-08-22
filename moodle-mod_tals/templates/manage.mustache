@@ -16,18 +16,51 @@
     <p>
     <h3>{{# str }} label_date, tals {{/ str }}</h3>
     </p>
-    <table id="tabelle" class="table">
+    <table id="tabelle" class="table table-striped table-hover table-sm">
         <thead>
         <tr>
-            <th>{{# str }} label_id, tals {{/ str }}</th>
-            <th>{{# str }} label_name, tals {{/ str }}</th>
-            <th>{{# str }} label_description, tals {{/ str }}</th>
-            <th>{{# str }} label_start, tals {{/ str }}</th>
-            <th>{{# str }} label_end, tals {{/ str }}</th>
-            <th>{{# str }} label_duration, tals {{/ str }}</th>
-            <th>{{# str }} label_type, tals {{/ str }}</th>
-            <th>{{# str }} label_edit, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_id, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_name, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_description, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_start, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_end, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_duration, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_type, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_edit, tals {{/ str }}</th>
         </tr>
         </thead>
+
+        <tbody>
+        {{#entries}}
+            <tr>
+            <th scope="row">{{id}}</th>
+            <td>
+                <a href={{{reportdetailurl}}}>'{{title}}</a>
+            </td>
+            <td>{{description}}</td>
+            <td align="center">{{startdate}}</td>
+            <td align="center">{{enddate}}</td>
+            <td>{{duration}} {{# str}} label_minute, tals {{/str}}</td>
+            <td>{{type}}</td>
+            <td >
+                {{#haspin}}
+                    {{#pinactive}}
+                        <b>{{#str}}label_pin, tals{{/str}}</b> {{pin}} ({{#str}}label_until, tals{{/str}} {{pinuntildate}} {{#str}}label_hour, tals{{/str}})
+                        <img class="img" src="pix/show.png" alt="{{#str}}label_show, tals{{/str}}" height="15" width="15">
+                    {{/pinactive}}
+                    {{^pinactive}}
+                        <b>{{#str}}label_pin, tals{{/str}}</b> {{pin}} ({{pindur}} {{#str}}label_minute, tals{{/str}})
+                        <a href={{{enablepinurl}}}><img src="pix/hide.png" alt="{{#str}}label_hide, tals{{/str}}" height="15" width="15"></a>
+                    {{/pinactive}}
+                {{/haspin}}
+                <a href={{{changeurl}}}><img src="pix/edit.png" alt="{{#str}}label_edit, tals{{/str}}" height="15" width="15"></a>
+                <a href={{{deleteurl}}}><img src="pix/trash.png" alt="{{#str}}label_trash, tals{{/str}}" height="15" width="15"></a>
+             </td>
+        </tr>
+        {{/entries}}
+        </tbody>
+
+
+
     </table>
 </div>

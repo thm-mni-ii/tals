@@ -245,6 +245,8 @@ function tals_enable_pin($appid) {
 
     $pin = $DB->get_record('tals_pin', ['id' => $appointment->fk_pin_id]);
 
+
+
     $pin->until = strtotime('+' . $pin->duration . ' minutes', $now);
 
     $DB->update_record('tals_pin', $pin);
