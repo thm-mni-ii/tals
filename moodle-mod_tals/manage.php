@@ -67,7 +67,12 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
-echo $OUTPUT->render_from_template('tals/manage', 0);
+
+$data = new stdClass();
+$data->add =  new moodle_url('/mod/tals/add.php', ['id' => $id]);
+$data->report =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
+
+echo $OUTPUT->render_from_template('tals/manage', $data);
 /*
 
 // Header.

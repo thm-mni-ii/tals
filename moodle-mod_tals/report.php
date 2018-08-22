@@ -128,7 +128,7 @@ foreach ($list as $entry) {
         . $entry->title . '</a></td>
         <td>' . $entry->description . '</td>
         <td align="center">' . date('d.m.Y, H:i', $entry->start) . '</td>
-        <td align="center">' . date('d.m.Y, H:i', $entry->end) . '</td>
+        <td align="center">' . date('d.m.Y, H:i', $entry->ending) . '</td>
         <td>' . $entry->duration . ' ' . get_string('label_minute', 'tals') . '</td>
         <td>' . $entry->type . '</td>
         <td align="center">' . count($logs) . '</td>

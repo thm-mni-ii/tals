@@ -239,7 +239,7 @@ function tals_enable_pin($appid) {
 
     $now = strtotime(date('d-m-Y H:i:s', time()));
 
-    if (($now < $appointment->start) || ($now > $appointment->end)) {
+    if (($now < $appointment->start) || ($now > $appointment->ending)) {
         return ERROR;
     }
 
@@ -300,7 +300,7 @@ function tals_delete_appointment($appid) {
  * Inserts an appointment into the database.
  * @param title - title of the appointment
  * @param start - begin of appointment as timestamp (date and time)
- * @param end - end of the appointment as timestamp (date and time)
+ * @param ending - end of the appointment as timestamp (date and time)
  * @param description - description of the appointment
  * @param courseid - id of course the appointment belongs to
  * @param groupid - id of group which this appointment is associated with
@@ -309,7 +309,7 @@ function tals_delete_appointment($appid) {
  * @param pindur - duration for the pin
  * @return id of appointment
  */
-function tals_insert_appointment($title, $start, $end, $description, $courseid, $groupid, $apptype, $pinum = false, $pindur = 5) {
+function tals_insert_appointment($title, $start, $ending, $description, $courseid, $groupid, $apptype, $pinum = false, $pindur = 5) {
     global $DB;
 
     $pinid = null;
@@ -322,7 +322,7 @@ function tals_insert_appointment($title, $start, $end, $description, $courseid, 
 
     $appointment->title = $title;
     $appointment->start = $start;
-    $appointment->end = $end;
+    $appointment->ending = $ending;
     $appointment->description = $description;
     $appointment->courseid = $courseid;
     $appointment->groupid = $groupid;
@@ -339,7 +339,7 @@ function tals_insert_appointment($title, $start, $end, $description, $courseid, 
  * @param appid - id of the appointment
  * @param title - title of the appointment
  * @param start - begin of appointment as timestamp (date and time)
- * @param end - end of the appointment as timestamp (date and time)
+ * @param ending - end of the appointment as timestamp (date and time)
  * @param description - description of the appointment
  * @param courseid - id of course the appointment belongs to
  * @param groupid - id of group which this appointment is associated with
@@ -348,12 +348,12 @@ function tals_insert_appointment($title, $start, $end, $description, $courseid, 
  * @param pindur - duration for the pin
  * @return None
  */
-function tals_update_appointment($appid = null, $title, $start, $end, $description, $courseid,
+function tals_update_appointment($appid = null, $title, $start, $ending, $description, $courseid,
                                  $groupid, $apptype, $pinum = false, $pindur = 5) {
     global $DB;
 
     if (is_null($appid) || !$DB->record_exists('tals_appointment', ['id' => $appid])) {
-        return tals_insert_appointment($title, $start, $end, $description, $courseid, $groupid, $apptype, $pinum, $pindur);
+        return tals_insert_appointment($title, $start, $ending, $description, $courseid, $groupid, $apptype, $pinum, $pindur);
     }
 
     $appointment = $DB->get_record('tals_appointment', ['id' => $appid, 'courseid' => $courseid]);
@@ -369,7 +369,7 @@ function tals_update_appointment($appid = null, $title, $start, $end, $descripti
 
     $appointment->title = $title;
     $appointment->start = $start;
-    $appointment->end = $end;
+    $appointment->ending = $ending;
     $appointment->description = $description;
     $appointment->fk_type_appointment_id = $apptype;
     $appointment->fk_pin_id = $pinid;
@@ -484,8 +484,8 @@ function tals_format_appointment($appointment) {
     $result->title = $appointment->title;
     $result->description = $appointment->description;
     $result->start = $appointment->start;
-    $result->end = $appointment->end;
-    $result->duration = round(abs($appointment->end - $appointment->start) / 60, 2);
+    $result->ending = $appointment->ending;
+    $result->duration = round(abs($appointment->ending - $appointment->start) / 60, 2);
     $result->courseid = $appointment->courseid;
     $type = $DB->get_record('tals_type_appointment', ['id' => $appointment->fk_type_appointment_id], 'title');
     $result->type = $type->title;
@@ -533,7 +533,7 @@ function tals_get_appointments($courseid = null, $start, $end) {
     global $DB;
 
     $result = [];
-    $where = 'start >= ' . $start . ' AND end <=' . $end;
+    $where = 'start >= ' . $start . ' AND ending <=' . $end;
 
     if (!is_null($courseid)) {
         $where .= ' AND courseid = ' . $courseid;
@@ -559,7 +559,7 @@ function tals_get_current_appointments($courseid) {
     $now = strtotime(date('d-m-Y H:i', time()));
     $result = [];
 
-    $where = 'courseid = ' . $courseid . ' AND start <= ' . $now . ' AND end >= ' . $now;
+    $where = 'courseid = ' . $courseid . ' AND start <= ' . $now . ' AND ending >= ' . $now;
 
     $list = $DB->get_records_select('tals_appointment', $where);
 
@@ -624,7 +624,7 @@ function tals_get_attendance_count_for_user($userid, $courseid) {
     $status->excused = 0;
 
     $now = strtotime(date('d-m-Y H:i', time()));
-    $where = 'courseid = ' . $courseid . ' AND end < ' . $now;
+    $where = 'courseid = ' . $courseid . ' AND ending < ' . $now;
 
     // Step 0: Get a list of all logs for this user in this course.
     // Get a list of all appointments of this course which finished yet.
@@ -644,7 +644,7 @@ function tals_get_attendance_count_for_user($userid, $courseid) {
         $groupcount = $DB->count_records('tals_appointment', ['groupid' => $entry->groupid]);
 
         if ($groupcount > 1) {
-            $innerwhere = 'courseid = ' . $courseid . ' AND groupid = ' . $entry->groupid . ' AND end < ' . $now;
+            $innerwhere = 'courseid = ' . $courseid . ' AND groupid = ' . $entry->groupid . ' AND ending < ' . $now;
             $groupcountended = $DB->count_records_select('tals_appointment', $innerwhere);
 
             if ($groupcount == $groupcountended) {
@@ -824,7 +824,7 @@ function tals_get_attendance_report_for_appointment($courseid, $appointmentid) {
     }
 
     // Sort the result-list by lastname and attendance.
-    usort($result, "tals_ sort_by_attendance");
+    usort($result, "tals_sort_by_attendance");
 
     return $result;
 }
@@ -858,7 +858,7 @@ function tals_get_user_profile_for_course($userid, $courseid) {
     );
 
     $now = strtotime(date('d-m-Y H:i', time()));
-    $where = 'courseid = ' . $courseid . ' AND end < ' . $now;
+    $where = 'courseid = ' . $courseid . ' AND ending < ' . $now;
     $courseapps = $DB->get_records_select('tals_appointment', $where);
     $userapps = [];
 
@@ -875,8 +875,8 @@ function tals_get_user_profile_for_course($userid, $courseid) {
         $tmp->title = $entry->title;
         $tmp->description = $entry->description;
         $tmp->start = $entry->start;
-        $tmp->end = $entry->end;
-        $tmp->duration = round(abs($entry->end - $entry->start) / 60, 2);
+        $tmp->ending = $entry->ending;
+        $tmp->duration = round(abs($entry->ending - $entry->start) / 60, 2);
         $type = $DB->get_record('tals_type_appointment', ['id' => $entry->fk_type_appointment_id], 'title');
         $tmp->type = $type->title;
         $tmp->groupid = $entry->groupid;

@@ -67,7 +67,7 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-//echo $OUTPUT->header();
+echo $OUTPUT->header();
 
 
 // Header.
