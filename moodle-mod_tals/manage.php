@@ -66,10 +66,8 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-
+echo $OUTPUT->header();
 $list = tals_get_all_appointments_of_course($course->id);
-$iswhite = false;
-$lastgroup = 0;
 
 foreach ($list as $entry) {
     $entry->reportdetailurl = new moodle_url('/mod/tals/reportdetail.php', ['id' => $id, 'appid' => $entry->id]);
@@ -84,10 +82,9 @@ foreach ($list as $entry) {
 }
 
 $context = new stdClass();
-$context->add =  new moodle_url('/mod/tals/add.php', ['id' => $id]);
-$context->report =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
+$context->addurl =  new moodle_url('/mod/tals/add.php', ['id' => $id]);
+$context->reporturl =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
 $context->entries = $list;
 
-echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('tals/manage', $context);
 echo $OUTPUT->footer();

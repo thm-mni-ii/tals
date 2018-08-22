@@ -118,6 +118,7 @@ $string['label_attendance'] = 'Attendance';
 $string['label_excused'] = 'Excused';
 $string['label_minute'] = 'Min';
 $string['label_pin'] = 'PIN';
+$string['label_pin_not_enabled'] = 'PIN not enabled.';
 $string['label_show'] = 'Is visible';
 $string['label_hide'] = 'Is invisible';
 $string['label_trash'] = 'Delete';
@@ -131,7 +132,8 @@ $string['label_newdate'] = 'New Appointment';
 $string['label_occurrence'] = 'Occurrence';
 $string['label_at'] = 'at';
 $string['label_from'] = 'from';
-$string['label_until'] = 'until';
+$string['label_until'] = 'Active until';
+$string['label_show'] = 'Show';
 $string['label_more'] = 'more';
 $string['label_repeat'] = 'Repeat';
 $string['label_every'] = 'every';
@@ -148,6 +150,8 @@ $string['label_issure'] = 'Are you really sure you want to delete this appointme
 $string['label_reload'] = 'Reload';
 $string['label_download'] = 'Download';
 $string['label_hour'] = 'h';
+$string['label_close'] = 'Close';
+$string['label_activate'] = 'Enable';
 
 // Moodle UI - Capabilities and so on...
 $string['tals:addinstance'] = 'Add instance';
