@@ -67,10 +67,31 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
+$context = new stdClass();
+
+//nav bar urls
+$context->manageurl =  new moodle_url('/mod/tals/manage.php', ['id' => $id]);
+$context->reporturl =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
+
+$context->addappointmenturl = new moodle_url('/mod/tals/addappointment.php', ['id' => $id, 'courseid' => $course->id]);
+$context->appointmenttypes =  array();
+
+foreach ($DB->get_records('tals_type_appointment') as $entry) {
+    $type = new stdClass();
+    $type->type = $entry->title;
+    $context->appointmenttypes[] = $type;
+}
+
+$context->formaction = new moodle_url('/mod/tals/addappointment.php', ['id' => $id, 'courseid' => $course->id]);
+
+
+
 echo $OUTPUT->header();
+echo $OUTPUT->render_from_template('tals/add', $context);
+/*
 
 // JavaScript to disable PIN if not needed.
-?>
+*/?><!--
     <script type="text/javascript">
         function toggleDisabled_pin(_checked) {
             document.getElementById('duration').disabled = _checked ? false : true;
@@ -86,8 +107,8 @@ echo $OUTPUT->header();
             count = count + 1;
         }
     </script>
-<?php
-
+--><?php
+/*
 // Header.
 echo '<ul id="liste">
     <li class="element"><a href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id]) . '">'
@@ -263,6 +284,6 @@ echo '<div>
 
       </form>
   <p>* - ' . get_string('label_required', 'tals') . '</p>
-  </div>';
+  </div>';*/
 
 echo $OUTPUT->footer();

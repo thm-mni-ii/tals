@@ -1,0 +1,117 @@
+{{>tals/navigation}}
+
+<div class="container">
+    <br>
+    <h2><b>{{#str}}label_header_add, tals{{/str}}</b></h2>
+    <form action="{{{formaction}}}" method="post">
+        <div class="form-control" id="dateDiv">
+            <div class="form-row">
+            <div class="col-xs-4">
+                <label for="nameTextArea">{{#str}}label_name, tals{{/str}}</label>
+                <input type="text" class="form-control" id="nameTextArea">
+            </div>
+            <div class="col-xs-2">
+                <label for="typeSelect">{{#str}}label_type, tals{{/str}}</label>
+                <select class="form-control" id="typeSelect">
+                    {{#appointmenttypes}}
+                        <option>{{type}}</option>
+                    {{/appointmenttypes}}
+                </select>
+            </div>
+            </div>
+            <div class="form-group">
+                <label for="descriptionTextArea">{{#str}}label_description, tals{{/str}}</label>
+                <textarea class="form-control" id="descriptionTextArea" rows="4"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="form-control" id="dateDiv">
+            <div class="form-row">
+                <h3>{{#str}}label_newdate, tals{{/str}}</h3>
+                <button type="button" class="btn btn-default" onclick="test()" >+</button>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                <label for="datePicker">
+                    {{#str}}label_header_date, tals{{/str}}
+                    {{#str}}label_at, tals{{/str}}
+                </label>
+                <input type="date" class="form-control" id="datePicker">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="timeFrom">
+                        {{#str}}label_from, tals{{/str}}
+                    </label>
+                    <input type="time" class="form-control" id="timeFrom">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="timeUntil">
+                        {{#str}}label_until, tals{{/str}}
+                    </label>
+                    <input type="time" class="form-control" id="timeUntil">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="weekSelect">{{#str}}label_weeks, tals{{/str}}</label>
+                <select class="form-control" id="weekSelect">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="form-control">
+            <div class="form-control">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="pinCheckbox">
+                    <label class="custom-control-label" for="pinCheckbox">{{#str}}label_activatepin, tals{{/str}}</label>
+                </div>
+                <div class="form-group">
+                    <label for="durationSelect">{{#str}}label_duration, tals{{/str}} in {{#str}}label_minute, tals{{/str}}
+                    </label>
+                    <select class="form-control" id="durationSelect">
+                        <option>5</option>
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                        <option>25</option>
+                        <option>30</option>
+                        <option>35</option>
+                        <option>40</option>
+                        <option>45</option>
+                        <option>50</option>
+                        <option>55</option>
+                        <option>60</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <input class="btn btn-default" type="submit" value="{{#str}}label_safe, tals{{/str}}"><br>
+        </div>
+    </form>
+</div>
+
+<script>
+    function test() {
+        console.log("Hello, World!");
+    }
+</script>
