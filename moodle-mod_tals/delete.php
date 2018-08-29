@@ -30,6 +30,7 @@ require_once($CFG->libdir . '/accesslib.php');
 // Course_module ID, or.
 $id = required_param('id', PARAM_INT);
 $appid = required_param('appid', PARAM_INT);
+
 $issure = optional_param('issure', false, PARAM_BOOL);
 
 // ... module instance id.
@@ -67,38 +68,5 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-// Check if user has already confirmend deletion.
-if ($issure) {
-    tals_delete_appointment($appid);
-
-    // After execution redirect to manage-view.
-    redirect(new moodle_url('/mod/tals/manage.php', ['id' => $id]));
-} else {
-    echo $OUTPUT->header();
-
-    global $DB;
-
-    $appointment = tals_get_single_appointment($appid);
-
-    // Content.
-    echo '<div id="alertBox">
-            <p class="text">' . get_string('label_issure', 'tals') . '</p>
-            <p class="text">
-                <b>
-                    ' . $appointment->title . ' (' . $appointment->type . ')<br>
-                    ' . date('d.m.Y', $appointment->start) . '<br>
-                    ' . date('H:i', $appointment->start) . ' - ' . date('H:i', $appointment->end) . ' '
-        . get_string('label_hour', 'tals') . '<br>
-                </b>
-            </p>
-            <div id="buttonBox">
-                <a style="text-decoration: none;" href="'
-        . new moodle_url('/mod/tals/delete.php', ['id' => $id, 'appid' => $appid, 'issure' => true])
-        . '"><input type="button" id="buttonDelete" name="delete" value="' . get_string('label_trash', 'tals') . '"></a>
-                <a style="text-decoration: none;" href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id])
-        . '"><input type="submit" id="buttonCancel" name="cancel" value="' . get_string('label_cancel', 'tals') . '"></a>
-            </div>
-        </div>';
-
-    echo $OUTPUT->footer();
-}
+$result = tals_delete_appointment($appid);
+echo json_encode($result);

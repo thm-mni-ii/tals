@@ -22,7 +22,7 @@
 
         <tbody>
         {{#entries}}
-            <tr>
+            <tr id="row{{id}}">
             <th scope="row">{{id}}</th>
             <td>
                 <a href={{{reportdetailurl}}}>'{{title}}</a>
@@ -35,10 +35,10 @@
             <td >
                 {{#haspin}}
                     {{#pinactive}}
-                        <button type="button" class="btn  btn-default" data-toggle="modal" data-target="#pinModal">{{#str}}label_show, tals{{/str}}</button>
+                        <button type="button" class="btn  btn-default" data-toggle="modal" data-target="#pinModal{{id}}">{{#str}}label_show, tals{{/str}}</button>
 
                         <!-- Modal -->
-                        <div id="pinModal" class="modal fade" role="dialog">
+                        <div id="pinModal{{id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
@@ -75,12 +75,49 @@
                 {{/haspin}}
             </td>
             <td>
-            <a  href={{{changeurl}}}><img src="pix/edit.png" alt="{{#str}}label_edit, tals{{/str}}" height="15" width="15"></a>
-            <a  href={{{deleteurl}}}><img src="pix/trash.png" alt="{{#str}}label_trash, tals{{/str}}" height="15" width="15"></a>
-            </td>
+                <a  href={{{changeurl}}}><img src="pix/edit.png" alt="{{#str}}label_trash, tals{{/str}}" height="15" width="15"></a>
+                <a href="#deleteModal{{id}}" role="button" data-toggle="modal">
+                    <img src="pix/trash.png" alt="{{#str}}label_edit, tals{{/str}}" height="15" width="15">
+                </a>
+                <div id="deleteModal{{id}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1>{{title}}</h1>
+                            </div>
+                            <div class="modal-body text-center">
+                                {{#str}}delete_appointment_question{{/str}}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" onclick="deleteAppointment('{{{deleteurl}}}',{{id}})">{{#str}}label_trash, tals{{/str}}</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{{#str}}label_close, tals{{/str}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+            </td>
         </tr>
         {{/entries}}
         </tbody>
     </table>
 </div>
+
+<script>
+    function deleteAppointment(url, id) {
+        $.getJSON(url, function (data) {
+            if(data["deletedLog"] && data["deletedAppointment"]) {
+                if((data["hadPin"] && data["deletedPin"]) || !data["hadPin"]) {
+                    console.log("Deleted appointment " + id);
+                    $('#row'+id).remove();
+                }
+            } else {
+                console.log("Could not delete appointment " + id);
+                console.log(data);
+            }
+            $('#deleteModal'+id).modal('hide');
+            $(".modal-backdrop").remove();
+        });
+    }
+</script>

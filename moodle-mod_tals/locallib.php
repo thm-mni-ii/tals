@@ -173,7 +173,7 @@ function tals_get_courses($userid, $courseid = null) {
 function tals_delete_pin($pinid) {
     global $DB;
 
-    $DB->delete_records('tals_pin', ['id' => $pinid]);
+    return $DB->delete_records('tals_pin', ['id' => $pinid]);
 }
 
 /**
@@ -286,16 +286,22 @@ function tals_check_for_enabled_pin($appid) {
 function tals_delete_appointment($appid) {
     global $DB;
 
+    $retVal = new stdClass();
+    $retVal->deletedLog = false;
+    $retVal->deletedAppointment = false;
+    $retVal->hadPin = false;
+    $retVal->deletedPin = false;
     if ($DB->record_exists('tals_appointment', ['id' => $appid])) {
         $appointment = $DB->get_record('tals_appointment', ['id' => $appid]);
 
         if (!is_null($appointment->fk_pin_id)) {
-            tals_delete_pin($appointment->fk_pin_id);
+            $retVal->hadPin = true;
+            $retVal->deletedPin = tals_delete_pin($appointment->fk_pin_id);
         }
-
-        $DB->delete_records('tals_log', ['fk_appointment_id' => $appointment->id, 'courseid' => $appointment->courseid]);
-        $DB->delete_records('tals_appointment', ['id' => $appointment->id, 'courseid' => $appointment->courseid]);
+        $retVal->deletedLog = $DB->delete_records('tals_log', ['fk_appointment_id' => $appointment->id, 'courseid' => $appointment->courseid]);
+        $retVal->deletedAppointment = $DB->delete_records('tals_appointment', ['id' => $appointment->id, 'courseid' => $appointment->courseid]);
     }
+    return $retVal;
 }
 
 /**

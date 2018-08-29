@@ -42,6 +42,8 @@ $string['modulename_help'] = 'Das \'THM Attendance Logging System\'- Modul ermö
 
 Die Lehrkraft kann Termine verschiedener Art erstellen (z.B. \'Vorlesungen\', oder \'Übungen\'). Wenn die Lehrkraft die Anwesenheit abfragen will, kann sie_er eine PIN erstellt und den Studierenden mitgeteilt werden. Nachdem die PIN freigeschaltet wurde, kann jede_r Studierende die eigene Anwesenheit eintragen. Die Lehrkraft kann daraufhin die Anwesenheitsliste kontrollieren und den Status der Studierenden ändern.';
 
+$string['delete_appointment_question'] = 'Wollen sie den Termin endgültig löschen?';
+
 // Text-list.
 $string['acronym'] = 'Akronym';
 $string['nonewmodules'] = 'Keine neuen Module';
@@ -86,6 +88,7 @@ $string['pinnotexist'] = 'Fehler: PIN nicht gefunden.';
 // Info messages.
 $string['instance'] = 'Dieser Kurs hat bereits eine TALS Instanz. Es ist möglich eine weitere Instanz hinzuzufügen. Dies hat keinen Vorteil.';
 
+
 // Module UI.
 $string['label_header_date'] = 'Termin';
 $string['label_header_add'] = 'Termin hinzufügen';
@@ -121,8 +124,8 @@ $string['label_pin'] = 'PIN';
 $string['label_pin_not_enabled'] = 'PIN nicht freigeschaltet.';
 $string['label_show'] = 'ist sichtbar';
 $string['label_hide'] = 'ist unsichtbar';
-$string['label_trash'] = 'löschen';
-$string['label_cancel'] = 'abbrechen';
+$string['label_trash'] = 'Löschen';
+$string['label_cancel'] = 'Abbrechen';
 $string['label_attendance_in'] = 'Anwesenheit in';
 $string['label_arecompulsory'] = 'sind verpflichtend';
 $string['label_iscompulsory'] = 'ist verplichtend';

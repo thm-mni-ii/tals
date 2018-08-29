@@ -42,6 +42,8 @@ $string['modulename_help'] = 'The \'THM Attendance Logging System\' activity mod
 
 The teacher can create multiple appointments of different types (e.g. \'Lecture\' or \'Excercise\'). If the teacher wants to take the attendance they can specify a PIN and provide it to the students. After the PIN is set active each student is able to commit their attendance by themself. The teacher then can check the list and is able to change their statuses.';
 
+$string['delete_appointment_question'] = 'Are you sure you want to delete the appointment?';
+
 // Text-list.
 $string['acronym'] = 'Acronym';
 $string['nonewmodules'] = 'No New Modules';
