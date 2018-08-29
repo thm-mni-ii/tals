@@ -66,77 +66,35 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-echo $OUTPUT->header();
-
-
-// Header.
-echo '<ul id="liste">
-  <li class="element"><a href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id]) . '">'
-    . get_string('label_header_date', 'tals') . '</a></li>
-  <li class="element"><a href="' . new moodle_url('/mod/tals/add.php', ['id' => $id]) . '">'
-    . get_string('label_header_add', 'tals') . '</a></li>
-  <li class="element" id="li_active"><a>' . get_string('label_header_report', 'tals') . '</a></li>
-</ul>';
-
-// Content.
-echo '<div id="Bericht" class="tabcontent">
-
-    <div style="overflow: hidden;">
-          <p style="display:inline; float: left; font-size:2em;"><i>' . get_string('label_report', 'tals') . '</i></p>
-          <p style="display:inline; float: right; font-size:1.25em;"><a href="'
-    . new moodle_url('/mod/tals/reportdownload.php', ['id' => $id])
-    . '" target=_blank><img src="pix/download_all.png" alt="' . get_string('label_download', 'tals')
-    . '" height="20" width="20"></a></p>
-    </div>
-
-    <table id="tabelle">
-    <tbody>
-    <tr>
-      <th>' . get_string('label_id', 'tals') . '</th>
-      <th>' . get_string('label_name', 'tals') . '</th>
-      <th>' . get_string('label_description', 'tals') . '</th>
-      <th>' . get_string('label_start', 'tals') . '</th>
-      <th>' . get_string('label_end', 'tals') . '</th>
-      <th>' . get_string('label_duration', 'tals') . '</th>
-      <th>' . get_string('label_type', 'tals') . '</th>
-      <th>' . get_string('label_count', 'tals') . '</th>
-    </tr>';
-
-// 2018-01-01 00:00:00, because we needed a start and there can't be appointments before this point.
 $start = 1514764800;
 $end = strtotime(date('d-m-Y H:i', time()));
 $list = tals_get_appointments($course->id, $start, $end);
-$iswhite = false;
-$lastgroup = 0;
 
-foreach ($list as $entry) {
-    if ($lastgroup != $entry->groupid) {
-        $iswhite = !$iswhite;
-        $lastgroup = $entry->groupid;
-    }
+$context = new stdClass();
 
-    $logs = tals_get_logs_for_course($course->id, $entry->id, PRESENT);
+$context->addurl =  new moodle_url('/mod/tals/add.php', ['id' => $id]);
+$context->manageurl =  new moodle_url('/mod/tals/manage.php', ['id' => $id]);
 
-    if ($iswhite) {
-        echo '<tr bgcolor="#E8E8E8">';
-    } else {
-        echo '<tr>';
-    }
+$context->downloadurl = new moodle_url('/mod/tals/reportdownload.php', ['id' => $id]);
+$context->entries = array();
 
-    echo '<td>' . $entry->id . '</td>
-        <td><a href="' . new moodle_url('/mod/tals/reportdetail.php', ['id' => $id, 'appid' => $entry->id]) . '">'
-        . $entry->title . '</a></td>
-        <td>' . $entry->description . '</td>
-        <td align="center">' . date('d.m.Y, H:i', $entry->start) . '</td>
-        <td align="center">' . date('d.m.Y, H:i', $entry->ending) . '</td>
-        <td>' . $entry->duration . ' ' . get_string('label_minute', 'tals') . '</td>
-        <td>' . $entry->type . '</td>
-        <td align="center">' . count($logs) . '</td>
-      </tr>';
+foreach($list as $val) {
+    $entry = new stdClass();
+    $entry->id = $val->id;
+    $entry->title = $val->title;
+    $entry->description = $val->description;
+    $entry->type = $val->type;
+    $entry->detailurl = new moodle_url('/mod/tals/reportdetail.php', ['id' => $id, 'appid' => $val->id]);
+
+    $entry->startdate = date('d.m.Y, H:i', $val->start);
+    $entry->enddate = date('d.m.Y, H:i', $val->ending);
+    $entry->duration = $val->duration;
+
+    $entry->logcount = count(tals_get_logs_for_course($course->id, $val->id, PRESENT));
+
+    $context->entries[] = $entry;
 }
 
-echo '</tbody>
-    </table>
-    </div>';
-
+echo $OUTPUT->header();
+echo $OUTPUT->render_from_template('tals/report', $context);
 echo $OUTPUT->footer();
