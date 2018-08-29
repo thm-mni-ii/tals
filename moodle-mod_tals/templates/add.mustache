@@ -4,57 +4,61 @@
     <br>
     <h2><b>{{#str}}label_header_add, tals{{/str}}</b></h2>
     <form action="{{{formaction}}}" method="post">
-        <div class="form-control" id="dateDiv">
+        <div class="form-control">
             <div class="form-row">
             <div class="col-xs-4">
                 <label for="nameTextArea">{{#str}}label_name, tals{{/str}}</label>
-                <input type="text" class="form-control" id="nameTextArea">
+                <input type="text" class="form-control" id="nameTextArea" name="ART_name" required>
             </div>
             <div class="col-xs-2">
                 <label for="typeSelect">{{#str}}label_type, tals{{/str}}</label>
-                <select class="form-control" id="typeSelect">
+                <select class="form-control" id="typeSelect" name="ART_type" required>
                     {{#appointmenttypes}}
-                        <option>{{type}}</option>
+                        <option value="{{id}}">{{title}}</option>
                     {{/appointmenttypes}}
                 </select>
             </div>
             </div>
             <div class="form-group">
                 <label for="descriptionTextArea">{{#str}}label_description, tals{{/str}}</label>
-                <textarea class="form-control" id="descriptionTextArea" rows="4"></textarea>
+                <textarea class="form-control" id="descriptionTextArea" rows="4" name="ART_description"></textarea>
             </div>
         </div>
         <br>
-        <div class="form-control" id="dateDiv">
+        <div class="form-control">
             <div class="form-row">
                 <h3>{{#str}}label_newdate, tals{{/str}}</h3>
-                <button type="button" class="btn btn-default" onclick="test()" >+</button>
+                <button type="button" class="btn btn-default" onclick="addDate()" >+</button>
             </div>
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                <label for="datePicker">
-                    {{#str}}label_header_date, tals{{/str}}
-                    {{#str}}label_at, tals{{/str}}
-                </label>
-                <input type="date" class="form-control" id="datePicker">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="timeFrom">
-                        {{#str}}label_from, tals{{/str}}
-                    </label>
-                    <input type="time" class="form-control" id="timeFrom">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="timeUntil">
-                        {{#str}}label_until, tals{{/str}}
-                    </label>
-                    <input type="time" class="form-control" id="timeUntil">
+
+            <div id="dateDiv">
+                <b>{{#str}}label_header_date, tals{{/str}} 1</b>
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+
+                        <label for="datePicker">
+                            {{#str}}label_at, tals{{/str}}
+                        </label>
+                        <input type="date" class="form-control" id="datePicker" name="GROUP_date_0" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="timeFrom">
+                            {{#str}}label_from, tals{{/str}}
+                        </label>
+                        <input type="time" class="form-control" id="timeFrom" name="GROUP_time_begin_0" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="timeUntil">
+                            {{#str}}label_until, tals{{/str}}
+                        </label>
+                        <input type="time" class="form-control" id="timeUntil" name="GROUP_time_end_0" required>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="weekSelect">{{#str}}label_weeks, tals{{/str}}</label>
-                <select class="form-control" id="weekSelect">
+                <select class="form-control" id="weekSelect" name="REPEAT_week">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -82,13 +86,13 @@
         <div class="form-control">
             <div class="form-control">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="pinCheckbox">
+                    <input type="checkbox" class="custom-control-input" id="pinCheckbox" name="PIN_true">
                     <label class="custom-control-label" for="pinCheckbox">{{#str}}label_activatepin, tals{{/str}}</label>
                 </div>
                 <div class="form-group">
                     <label for="durationSelect">{{#str}}label_duration, tals{{/str}} in {{#str}}label_minute, tals{{/str}}
                     </label>
-                    <select class="form-control" id="durationSelect">
+                    <select class="form-control" id="durationSelect" name="PIN_duration">
                         <option>5</option>
                         <option>10</option>
                         <option>15</option>
@@ -111,7 +115,35 @@
 </div>
 
 <script>
-    function test() {
-        console.log("Hello, World!");
+    var cnt = 1;
+    function addDate() {
+        if (cnt > 9) return;
+
+        var date =
+                "<b>{{#str}}label_header_date, tals{{/str}} " + (cnt + 1) + "</b>\n" +
+                "                <div class=\"form-row\">\n" +
+                "                    <div class=\"col-md-4 mb-3\">\n" +
+                "\n" +
+                "                        <label for=\"datePicker\">\n" +
+                "                            {{#str}}label_at, tals{{/str}}\n" +
+                "                        </label>\n" +
+                "                        <input type=\"date\" class=\"form-control\" id=\"datePicker\" name=\"GROUP_date_" + cnt + "\">\n" +
+                "                    </div>\n" +
+                "                    <div class=\"col-md-4 mb-3\">\n" +
+                "                        <label for=\"timeFrom\">\n" +
+                "                            {{#str}}label_from, tals{{/str}}\n" +
+                "                        </label>\n" +
+                "                        <input type=\"time\" class=\"form-control\" id=\"timeFrom\" name=\"GROUP_time_begin_" + cnt + "\">\n" +
+                "                    </div>\n" +
+                "                    <div class=\"col-md-4 mb-3\">\n" +
+                "                        <label for=\"timeUntil\">\n" +
+                "                            {{#str}}label_until, tals{{/str}}\n" +
+                "                        </label>\n" +
+                "                        <input type=\"time\" class=\"form-control\" id=\"timeUntil\" name=\"GROUP_time_end_" + cnt + "\">\n" +
+                "                    </div>\n" +
+                "                </div>"
+
+        document.getElementById('dateDiv').innerHTML += date;
+        cnt++;
     }
 </script>

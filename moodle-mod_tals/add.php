@@ -76,10 +76,10 @@ $context->reporturl =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
 $context->addappointmenturl = new moodle_url('/mod/tals/addappointment.php', ['id' => $id, 'courseid' => $course->id]);
 $context->appointmenttypes =  array();
 
+$types = $DB->get_records('tals_type_appointment');
+
 foreach ($DB->get_records('tals_type_appointment') as $entry) {
-    $type = new stdClass();
-    $type->type = $entry->title;
-    $context->appointmenttypes[] = $type;
+    $context->appointmenttypes[] = $entry;
 }
 
 $context->formaction = new moodle_url('/mod/tals/addappointment.php', ['id' => $id, 'courseid' => $course->id]);
