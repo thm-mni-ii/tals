@@ -31,8 +31,6 @@ require_once($CFG->libdir . '/accesslib.php');
 $id = required_param('id', PARAM_INT);
 $appid = required_param('appid', PARAM_INT);
 
-$issure = optional_param('issure', false, PARAM_BOOL);
-
 // ... module instance id.
 $t = optional_param('t', 0, PARAM_INT);
 
@@ -62,11 +60,6 @@ $capabilities = [
 if (!has_any_capability($capabilities, $modulecontext)) {
     print_error(get_string('nopermission', 'tals'));
 }
-
-$PAGE->set_url('/mod/tals/delete.php', ['id' => $cm->id]);
-$PAGE->set_title(format_string($moduleinstance->name));
-$PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($modulecontext);
 
 $result = tals_delete_appointment($appid);
 echo json_encode($result);

@@ -160,7 +160,7 @@ foreach ($appointments as $entry) {
     echo '<td>' . $entry->title . '</td>
         <td>' . $entry->description . '</td>
         <td>' . date('d.m.Y, H:i', $entry->start) . '</td>
-        <td>' . date('d.m.Y, H:i', $entry->end) . '</td>
+        <td>' . date('d.m.Y, H:i', $entry->ending) . '</td>
         <td>' . $entry->duration . ' ' . get_string('label_minute', 'tals') . '</td>
         <td>' . $entry->type . '</td>';
 

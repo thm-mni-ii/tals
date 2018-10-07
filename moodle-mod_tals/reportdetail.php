@@ -70,98 +70,49 @@ $PAGE->set_context($modulecontext);
 echo $OUTPUT->header();
 
 
-// Header.
-echo '<ul id="liste">
-    <li class="element"><a href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id]) . '">'
-    . get_string('label_header_date', 'tals') . '</a></li>
-    <li class="element"><a href="' . new moodle_url('/mod/tals/add.php', ['id' => $id]) . '">'
-    . get_string('label_header_add', 'tals') . '</a></li>
-    <li class="element"><a href="' . new moodle_url('/mod/tals/report.php', ['id' => $id]) . '">'
-    . get_string('label_header_report', 'tals') . '</a></li>
-  </ul>';
-
 $appointment = $DB->get_record('tals_appointment', ['id' => $appid]);
 
-echo '<div id="Bericht" class="tabcontent">
-      <p><h3>' . get_string('label_reportdetail', 'tals') . '</h3></p>
-
-      <div style="overflow: hidden;">
-          <p style="display:inline; float: left; font-size:2em;"><i>' . $appointment->title . '</i></p>
-          <p style="display:inline; float: right; font-size:1.25em;">' . get_string('label_count', 'tals') . ': '
-    . count(tals_get_logs_for_course($course->id, $appointment->id, PRESENT))
-    . ' <a href="' . new moodle_url('/mod/tals/reportdetail.php', ['id' => $id, 'appid' => $appointment->id])
-    . '"><img src="pix/reload.png" alt="' . get_string('label_reload', 'tals') . '" height="15" width="15"></a></p>
-      </div>
-
-      <table id="tabelle">
-          <tbody>
-          <tr>
-              <th>' . get_string('label_name', 'tals') . '</th>
-              <th>' . get_string('label_email', 'tals') . '</th>
-              <th>' . get_string('label_status', 'tals') . '</th>
-              <th>' . get_string('label_net', 'tals') . '</th>
-              <th>' . get_string('label_comment', 'tals') . '</th>
-              <th>' . get_string('label_edit', 'tals') . '</th>
-          </tr>';
 
 $list = tals_get_attendance_report_for_appointment($course->id, $appid);
-$iswhite = true;
-
 foreach ($list as $entry) {
-    if ($iswhite) {
-        echo '<tr bgcolor="#E8E8E8">';
-        $iswhite = !$iswhite;
-    } else {
-        echo '<tr>';
-        $iswhite = !$iswhite;
-    }
-
-    echo '<td><a href="' . new moodle_url('/mod/tals/profile.php', ['id' => $id, 'student' => $entry->userid]) . '">'
-        . $entry->firstname . ' ' . $entry->lastname . '</a></td>
-        <td>' . $entry->email . '</td>';
-
-    echo '<td class="signlight">';
-
-    if ($entry->attendance == PRESENT) {
-        echo '<img class="light" src="pix/gruen.png" alt="' . get_string('label_green', 'tals') . '">';
+    $entry->profileurl = new moodle_url('/mod/tals/profile.php', ['id' => $id, 'student' => $entry->userid]);
+    if($entry->attendance == PRESENT) {
+        $entry->present = true;
+        $entry->excused = false;
     } else if ($entry->attendance == EXCUSED) {
-        echo '<img class="light" src="pix/gelb.png" alt="' . get_string('label_yellow', 'tals') . '">';
-    } else if ($entry->attendance == ABSENT) {
-        echo '<img class="light" src="pix/rot.png" alt="' . get_string('label_red', 'tals') . '">';
+        $entry->present = false;
+        $entry->excused = true;
+    } else {
+        $entry->present = false;
+        $entry->excused = false;
     }
-
-    echo '</td>
-        <td class="signlight">';
 
     if ($entry->acceptance == INTERNAL) {
-        echo '<img src="pix/mnethost-internal.png" alt="' . get_string('label_green', 'tals') . '" height="15" width="15">';
+        $entry->internal = true;
+        $entry->vpn = false;
     } else if ($entry->acceptance == VPN) {
-        echo '<img src="pix/mnethost-vpn.png" alt="' . get_string('label_yellow', 'tals') . '" height="15" width="15">';
+        $entry->internal = false;
+        $entry->vpn = true;
     } else {
-        echo '<img src="pix/mnethost-external.png" alt="' . get_string('label_red', 'tals') . '" height="15" width="15">';
+        $entry->internal = false;
+        $entry->vpn = false;
     }
+    $entry->editurl = new moodle_url('/mod/tals/edit.php', [
+        'id' => $id,
+        'userid' => $entry->userid,
+        'courseid' => $course->id,
+        'appid' => $appid
+    ]);
 
-    echo '</td>
-        <td>' . $entry->comment . '</td>
-        <td><a href="' . new moodle_url('/mod/tals/edit.php', [
-            'id' => $id,
-            'userid' => $entry->userid,
-            'appid' => $appid,
-            'courseid' => $course->id
-        ])
-        . '"><img src="pix/edit.png" alt="' . get_string('label_edit', 'tals') . '" height="12" width="12"></a></td>
-        </tr>';
 }
+$context = new stdClass();
+$context->addurl = new moodle_url('/mod/tals/add.php', ['id' => $id]);
+$context->reporturl =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
+$context->manageurl =  new moodle_url('/mod/tals/manage.php', ['id' => $id]);
+$context->reportdetailurl = new moodle_url('/mod/tals/reportdetail.php', ['id' => $id, 'appid' => $appid]);
+$context->count = count(tals_get_logs_for_course($course->id, $appid, PRESENT));
+$context->entries = $list;
 
-echo '</tbody>
-    </table>
-    <p>' . get_string('label_legend', 'tals') . ':<br>
-      <img class="light" src="pix/gruen.png" alt="green"> ' . get_string('Present_full', 'tals') . '<br>
-      <img class="light" src="pix/gelb.png" alt="yellow"> ' . get_string('Excused_full', 'tals') . '<br>
-      <img class="light" src="pix/rot.png" alt="red"> ' . get_string('Absent_full', 'tals') . '<br>
-      <img src="pix/mnethost-internal.png" alt="yellow" height="15" width="15"> ' . get_string('label_net_green', 'tals') . '<br>
-      <img src="pix/mnethost-vpn.png" alt="yellow" height="15" width="15"> ' . get_string('label_net_blue', 'tals') . '<br>
-      <img src="pix/mnethost-external.png" alt="yellow" height="15" width="15"> ' . get_string('label_net_grey', 'tals') . '</p>
-    </div>';
+echo $OUTPUT->render_from_template('tals/reportdetail', $context);
 
 echo $OUTPUT->footer();

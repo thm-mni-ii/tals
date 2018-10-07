@@ -56,10 +56,11 @@
 
                             </div>
                         </div>
-
                     {{/pinactive}}
                     {{^pinactive}}
-                        <a class="btn btn-default" href={{{enablepinurl}}}>{{#str}}label_activate, tals{{/str}}</a>
+                        <a class="btn btn-default {{#notnow}}disabled{{/notnow}}" href={{{enablepinurl}}} {{#notnow}}aria-disabled="true"{{/notnow}}>
+                            {{#str}}label_activate, tals{{/str}}
+                        </a>
                     {{/pinactive}}
                 {{/haspin}}
             </td>
@@ -68,10 +69,22 @@
                     {{#pinactive}}
                         {{#str}}label_until, tals{{/str}} {{pinuntildate}} {{#str}}label_hour, tals{{/str}}
                     {{/pinactive}}
-
                     {{^pinactive}}
-                        {{#str}}label_pin_not_enabled, tals{{/str}}
+                        {{#futuredate}}
+                            {{#str}}label_future_appointment, tals{{/str}}
+                        {{/futuredate}}
+                        {{^futuredate}}
+                            {{#pastdate}}
+                                {{#str}}label_past_appointment, tals{{/str}}
+                            {{/pastdate}}
+                            {{^pastdate}}
+                                {{#str}}label_pin_not_enabled, tals{{/str}}
+                            {{/pastdate}}
+                        {{/futuredate}}
                     {{/pinactive}}
+                {{/haspin}}
+                {{^haspin}}
+                    {{#str}}label_has_no_pin, tals{{/str}}
                 {{/haspin}}
             </td>
             <td>
@@ -87,7 +100,7 @@
                                 <h1>{{title}}</h1>
                             </div>
                             <div class="modal-body text-center">
-                                {{#str}}delete_appointment_question{{/str}}
+                                {{#str}}delete_appointment_question, tals{{/str}}
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" onclick="deleteAppointment('{{{deleteurl}}}',{{id}})">{{#str}}label_trash, tals{{/str}}</button>

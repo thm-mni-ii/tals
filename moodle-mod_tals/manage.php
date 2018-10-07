@@ -67,6 +67,7 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
+
 $list = tals_get_all_appointments_of_course($course->id);
 
 foreach ($list as $entry) {
@@ -79,6 +80,20 @@ foreach ($list as $entry) {
     $entry->enablepinurl = new moodle_url('/mod/tals/enablepin.php', ['id' => $id, 'appid' => $entry->id]);
     $entry->changeurl = new moodle_url('/mod/tals/change.php', ['id' => $id, 'appid' => $entry->id]);
     $entry->deleteurl = new moodle_url('/mod/tals/delete.php', ['id' => $id, 'appid' => $entry->id]);
+    $entry->futuredate = false;
+    $entry->pastdate = false;
+    $entry->notnow = false;
+
+    if($entry->haspin) {
+        $now = strtotime(date('d-m-Y H:i:s', time()));
+        if ($now < $entry->start) {
+            $entry->futuredate = true;
+            $entry->notnow = true;
+        } else if ($now > $entry->ending) {
+            $entry->pastdate = true;
+            $entry->notnow = true;
+        }
+    }
 }
 
 $context = new stdClass();

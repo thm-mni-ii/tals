@@ -1,0 +1,51 @@
+<div class="container">
+    <h2><a href="{{profileurl}}">{{firstname}} {{lastname}}</a></h2>
+    <p><a href="mailto:{{email}}">{{email}}</a></p>
+    <table class="table table-sm">
+        <tr>
+            <td>{{#str}}label_countappointments, tals{{/str}}</td>
+            <td>{{countappointments}} ({{countcompulsory}} {{#str}}label_arecompulsory, tals{{/str}})</td>
+        </tr>
+        <tr>
+            <td>{{#str}}label_attendance, tals{{/str}}</td>
+            <td>{{present}}</td>
+        </tr>
+        <tr>
+            <td>{{#str}}label_daysabsent, tals{{/str}}</td>
+            <td>{{absent}}</td>
+        </tr>
+        <tr>
+            <td>{{#str}}label_excused, tals{{/str}}</td>
+            <td>{{excused}}</td>
+        </tr>
+    </table>
+</div>
+
+{{>tals/usernav}}
+
+<div class="container">
+    <table id="tabelle" class="table table-striped table-hover table-sm">
+        <thead>
+        <tr>
+            <th scope="col">{{# str }} label_name, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_description, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_start, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_end, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_duration, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_type, tals {{/ str }}</th>
+            <th scope="col">{{# str }} label_status, tals {{/ str }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#appointments}}
+            <td>{{title}}</td>
+            <td>{{description}}</td>
+            <td>{{start}}</td>
+            <td>{{ending}}</td>
+            <td>{{duration}}</td>
+            <td>{{type}}</td>
+            <td>{{attendance}}</td>
+        {{/appointments}}
+        </tbody>
+    </table>
+</div>

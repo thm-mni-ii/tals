@@ -75,7 +75,9 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
-echo $OUTPUT->header();
+$user = tals_get_user_profile_for_course($userid, $course->id);
+
+$context = new stdClass();
 
 if ($sudo) {
     // Sudo-Header.
@@ -91,83 +93,33 @@ if ($sudo) {
 
 $user = tals_get_user_profile_for_course($userid, $course->id);
 
-$status = $user->status;
+$context->firstname = $user->firstname;
+$context->lastname = $user->lastname;
+$context->email = $user->email;
+$context->countappointments =  $user->countappointments;
+$context->countcompulsory = $user->countcompulsory;
+$context->present = $user->status->present;
+$context->absent = $user->status->absent;
+$context->excused = $user->status->excused;
 
-echo '<div class="rahmen">
-        <h2><a href="' . new moodle_url('/user/profile.php', ['id' => $user->id]) . '">'
-    . $user->firstname . ' ' . $user->lastname . '</a></h2>
-        <p style="font-size: 0.8em;"><a href="mailto:' . $user->email . '">' . $user->email . '</a></p>
-        <table>
-            <tr>
-                <td style="width: 100px;"><p>' . get_string('label_countappointments', 'tals') . ': </p></td>
-                <td><p>' . $user->countappointments . ' (' . $user->countcompulsory . ' '
-    . get_string('label_arecompulsory', 'tals') . ')</p></td>
-            </tr>
-            <tr>
-                <td style="width: 100px;"><p>' . get_string('label_attendance', 'tals') . ': </p></td>
-                <td><p>' . $status->present . '</p></td>
-            </tr>
-            <tr>
-                <td style="width: 100px;"><p>' . get_string('label_daysabsent', 'tals') . ': </p></td>
-                <td><p>' . $status->absent . '</p></td>
-            </tr>
-            <tr>
-                <td style="width: 100px;"><p>' . get_string('label_excused', 'tals') . ': </p></td>
-                <td><p>' . $status->excused . '</p></td>
-            </tr>
-        </table>
-    </div>';
+$context->profileurl = new moodle_url('/user/profile.php', ['id' => $user->id]);
+$context->profileoverviewurl = new moodle_url('/mod/tals/profileoverview.php', ['id' => $id]);
 
-if (!$sudo) {
-    // User-Header.
-    echo '<ul id="liste">
-      <li class="element" id="li_active"><a>' . get_string('label_myattendance', 'tals') . '</a></li>
-      <li class="element"><a href="' . new moodle_url('/mod/tals/profileoverview.php', ['id' => $id]) . '">'
-        . get_string('label_courseoverview', 'tals') . '</a></li>
-    </ul>';
-}
-
-echo '<div id="Bericht" class="tabcontent">
-        <table id="tabelle">
-            <tbody>
-            <tr>
-                <tr>
-                <th>' . get_string('label_name', 'tals') . '</th>
-                <th>' . get_string('label_description', 'tals') . '</th>
-                <th>' . get_string('label_start', 'tals') . '</th>
-                <th>' . get_string('label_end', 'tals') . '</th>
-                <th>' . get_string('label_duration', 'tals') . '</th>
-                <th>' . get_string('label_type', 'tals') . '</th>
-                <th>' . get_string('label_status', 'tals') . '</th>
-            </tr>';
-
-$iswhite = false;
-$lastgroup = 0;
+$context->appointments = array();
 
 foreach ($user->userapps as $entry) {
-    if ($lastgroup != $entry->groupid) {
-        $iswhite = !$iswhite;
-        $lastgroup = $entry->groupid;
-    }
+    $appointment = new stdClass();
+    $appointment->title = $entry->title;
+    $appointment->description = $entry->description;
+    $appointment->start = date('d.m.Y, H:i', $entry->start);
+    $appointment->ending = date('d.m.Y, H:i', $entry->ending);
+    $appointment->duration = $entry->title;
+    $appointment->type = $entry->type;
+    $appointment->attendance = $entry->attendance;
 
-    if ($iswhite) {
-        echo '<tr bgcolor="#E8E8E8">';
-    } else {
-        echo '<tr>';
-    }
-
-    echo '<td>' . $entry->title . '</td>
-          <td>' . $entry->description . '</td>
-          <td>' . date('d.m.Y, H:i', $entry->start) . '</td>
-          <td>' . date('d.m.Y, H:i', $entry->end) . '</td>
-          <td>' . $entry->duration . ' ' . get_string('label_minute', 'tals') . '</td>
-          <td>' . $entry->type . '</td>
-          <td>' . $entry->attendance . '</td>';
-    echo '</tr>';
+    $context->appointments[] = $appointment;
 }
 
-echo '</tbody>
-      </table>
-      </div>';
-
+echo $OUTPUT->header();
+echo $OUTPUT->render_from_template('tals/profile', $context);
 echo $OUTPUT->footer();
