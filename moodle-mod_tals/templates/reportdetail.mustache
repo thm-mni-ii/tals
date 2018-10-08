@@ -2,17 +2,7 @@
 <div class="container">
     <h3 class="float-left">{{#str}}label_reportdetail, tals{{/str}}</h3>
     <div class="row float-right">
-        <div class="col-md-10">
             <h3>{{#str}}label_count, tals{{/str}}: {{count}}</h3>
-        </div>
-        <div class="col-md-2">
-            <a href="{{reportdetailurl}}" target=_blank>
-                <img src="pix/reload.png"
-                     alt="{{#str}}label_reload, tals{{/str}}"
-                     height="16"
-                     width="16">
-            </a>
-        </div>
     </div>
     <table class="table table-striped table-hover table-sm">
         <thead>
@@ -73,5 +63,12 @@
         {{/entries}}
         </tbody>
     </table>
-
+    <p>{{#str}}label_legend, tals{{/str}}<br>
+        <img class="light" src="pix/gruen.png" alt="green"> {{#str}}Present_full, tals{{/str}}<br>
+        <img class="light" src="pix/gelb.png" alt="yellow"> {{#str}}Excused_full, tals{{/str}}<br>
+        <img class="light" src="pix/rot.png" alt="red"> {{#str}}Absent_full, tals{{/str}}<br>
+        <img src="pix/mnethost-internal.png" alt="yellow" height="15" width="15"> {{#str}}label_net_green, tals{{/str}}<br>
+        <img src="pix/mnethost-vpn.png" alt="yellow" height="15" width="15"> {{#str}}label_net_blue, tals{{/str}}<br>
+        <img src="pix/mnethost-external.png" alt="yellow" height="15" width="15"> {{#str}}label_net_grey, tals{{/str}}
+    </p>
 </div>

@@ -1,0 +1,35 @@
+{{>tals/navigation}}
+
+<div class="container">
+    <form action="{{{editurl}}}" method="post">
+        <div class="form-control">
+            <p><h3>{{#str}}label_attendance_in, tals{{/str}}<b> {{title}}</b></h3></p>
+            <p>{{firstname}} {{lastname}}</p>
+        </div>
+        <div class="form-control">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td></td>
+                    <th>{{#str}}Present_full, tals{{/str}}</th>
+                    <th>{{#str}}Absent_full, tals{{/str}}</th>
+                    <th>{{#str}}Excused_full, tals{{/str}}</th>
+                </tr>
+                <tr>
+                    <td><b>{{#str}}label_status, tals{{/str}}</b></td>
+                    <td class="cell"><input type="radio" value="1" name="attendance" id="P"{{#present}}checked="checked"{{/present}}></td>
+                    <td class="cell"><input type="radio" value="2" name="attendance" id="A"{{#absent}}checked="checked"{{/absent}}></td>
+                    <td class="cell"><input type="radio" value="3" name="attendance" id="E"{{#excused}}checked="checked"{{/excused}}></td>
+                </tr>
+                </tbody>
+            </table>
+            <table style="margin-top: 1em;">
+                <tr>
+                    <td><p>{{#str}}label_comment, tals{{/str}}</p></td>
+                </tr>
+                    <td><textarea id="comment" name="comment" style="width: 350px; height: 100px;">{{comment}}</textarea></td>
+            </table>
+        </div>
+        <input type="submit" name="submit" value="{{#str}}label_safe, tals{{/str}}">
+    </form>
+</div>

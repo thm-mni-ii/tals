@@ -77,78 +77,29 @@ $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
 
-// CSS.
-
-// Header.
-echo '<ul id="liste">
-    <li class="element"><a href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id]) . '">'
-    . get_string('label_header_date', 'tals') . '</a></li>
-    <li class="element"><a href="' . new moodle_url('/mod/tals/add.php', ['id' => $id]) . '">'
-    . get_string('label_header_add', 'tals') . '</a></li>
-    <li class="element"><a href="' . new moodle_url('/mod/tals/report.php', ['id' => $id]) . '">'
-    . get_string('label_header_report', 'tals') . '</a></li>
-  </ul>';
-
-echo '<div id="edit" class="tabcontent">
-        <form action="' . new moodle_url('/mod/tals/editstudent.php',
-        ['id' => $id, 'userid' => $userid, 'appid' => $appid, 'courseid' => $courseid]) . '" method="post" id="formular">
-        <div class="rahmen" style="margin-bottom: 1em;">
-            <p><h3>' . get_string('label_attendance_in', 'tals') . ' <b>' . $appointment->title . '</b></h3></p>
-            <p>' . $user->firstname . ' ' . $user->lastname . '</p>
-        </div>
-          <table id="tabelle">
-            <tbody>';
-
-echo '<tr><th></th>';
-
-echo '<th style="text-align: center;">' . get_string('Present_full', 'tals') . '</th>
-      <th style="text-align: center;">' . get_string('Absent_full', 'tals') . '</th>
-      <th style="text-align: center;">' . get_string('Excused_full', 'tals') . '</th>
-    </tr>
-      <tr>
-      <td><b>' . get_string('label_status', 'tals') . '</b></td>';
-
-// Default value absent.
+$context = new stdClass();
+$context->addurl = new moodle_url('/mod/tals/add.php', ['id' => $id]);
+$context->reporturl =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
+$context->manageurl =  new moodle_url('/mod/tals/manage.php', ['id' => $id]);
+$context->editurl = new moodle_url('/mod/tals/editstudent.php', ['id' => $id, 'userid' => $userid, 'appid' => $appid, 'courseid' => $courseid]);
+$context->title = $appointment->title;
+$context->firstname = $user->firstname;
+$context->lastname = $user->lastname;
 $check = 2;
-$comment = "";
-$out = "";
-
-if ($userlog) {
+$context->comment = "ASDASDASD";
+if($userlog) {
+    $context->comment = $userlog->comment;
     $check = $userlog->fk_type_attendance_id;
-    $comment = $userlog->comment;
 }
 
-if ($check == 1) {
-    echo '<td class="cell"><input type="radio" value="1" name="attendance" id="P" checked="checked"></td>
-            <td class="cell"><input type="radio" value="2" name="attendance" id="A"></td>
-            <td class="cell"><input type="radio" value="3" name="attendance" id="E"></td>';
-} else if ($check == 2) {
-    echo '<td class="cell"><input type="radio" value="1" name="attendance" id="P"></td>
-            <td class="cell"><input type="radio" value="2" name="attendance" id="A" checked="checked"></td>
-            <td class="cell"><input type="radio" value="3" name="attendance" id="E"></td>';
-} else if ($check == 3) {
-    echo '<td class="cell"><input type="radio" value="1" name="attendance" id="P"></td>
-            <td class="cell"><input type="radio" value="2" name="attendance" id="A"></td>
-            <td class="cell"><input type="radio" value="3" name="attendance" id="E" checked="checked"></td>';
+if($check == 1) {
+    $context->present = true;
+} else if($check == 2) {
+    $context->absent = true;
+} else if($check == 3) {
+    $context->excused = true;
 }
 
-echo '</tr>
-      </tbody>
-      </table>
-
-      <table style="margin-top: 1em;">
-        <tr>
-            <td><p class="description">' . get_string('label_comment', 'tals') . '</p></td>
-        </tr>
-        <tr>
-            <td><textarea id="comment" name="comment" style="width: 250px; height: 100px;">' . $comment . '</textarea></td>
-        </tr>
-      </table>
-
-
-      <input type="submit" name="submit" value="' . get_string('label_safe', 'tals') . '" style="border-radius: 0.4em;">
-    </form>
-
-</div>';
+echo $OUTPUT->render_from_template('tals/edit', $context);
 
 echo $OUTPUT->footer();

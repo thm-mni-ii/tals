@@ -69,183 +69,31 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
-
-// JavaScript to disable PIN if not needed.
-?>
-    <script type="text/javascript">
-        function toggleDisabled_pin(_checked) {
-            document.getElementById('duration').disabled = _checked ? false : true;
-        }
-    </script>
-<?php
-
-// Header.
-echo '<ul id="liste">
-    <li class="element"><a href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id]) . '">'
-    . get_string('label_header_date', 'tals') . '</a></li>
-    <li class="element"><a href="' . new moodle_url('/mod/tals/add.php', ['id' => $id]) . '">'
-    . get_string('label_header_add', 'tals') . '</a></li>
-    <li class="element"><a href="' . new moodle_url('/mod/tals/report.php', ['id' => $id]) . '">'
-    . get_string('label_header_report', 'tals') . '</a></li>
-  </ul>';
-
-if (!$DB->record_exists('tals_appointment', ['id' => $appid])) {
-    print_error(get_string('noappointment', 'tals'));
-}
-
 $appointment = $DB->get_record('tals_appointment', ['id' => $appid]);
 
-// Content.
-echo '<div id="TerminHinzu" class="tabcontent">
-    <p><h3>' . get_string('label_edit', 'tals') . ' ' . get_string('label_header_date', 'tals') . '</h3></p>
-    <form action="' . new moodle_url('/mod/tals/changeappointment.php', ['id' => $id, 'appid' => $appid])
-    . '" method="post" id="formular">
+$context = new stdClass();
+$context->addurl = new moodle_url('/mod/tals/add.php', ['id' => $id]);
+$context->reporturl =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
+$context->manageurl =  new moodle_url('/mod/tals/manage.php', ['id' => $id]);
+$context->changeurl = new moodle_url('/mod/tals/changeappointment.php', ['id' => $id, 'appid' => $appid]);
 
-      <!-- Overview -->
-      <div class="rahmen">
-        <b>' . get_string('label_header_date', 'tals') . '</b>
-          <table>
-
-            <!-- Row 1-->
-            <tr>
-              <td class="description_cell">
-                <p class="description">' . get_string('label_type', 'tals') . '</p>
-              </td>
-              <td>
-              <select name="ART_type">';
-
-// Get all types of appointment to list them.
+$context->appointmenttypes =  array();
 $types = $DB->get_records('tals_type_appointment');
-
 foreach ($types as $entry) {
     if ($entry->id == $appointment->fk_type_appointment_id) {
-        echo '<option value="' . $entry->id . '" selected>' . $entry->title . '</option>';
-    } else {
-        echo '<option value="' . $entry->id . '">' . $entry->title . '</option>';
+        $entry->selected = true;
     }
+    $context->appointmenttypes[] = $entry;
 }
 
-echo '</select>
-            </td>
-            </tr>
+$context->datetitle = $appointment->title;
+$context->description = $appointment->description;
+$context->startdate = '' .  date('Y-m-d', $appointment->start);
+$context->starttime = '' . date('H:i', $appointment->start);
+$context->endtime = '' . date('H:i', $appointment->ending);
 
-            <!-- Row 2-->
-            <tr>
-              <td class="description_cell">
-                <p class="description">' . get_string('label_name', 'tals') . ' *</p>
-              </td>
-              <td>
-                <input type="text" id="terminName" name="ART_name" value="' . $appointment->title . '" required>
-              </td>
-            </tr>
-
-            <!-- Row 3-->
-            <tr>
-              <td class="description_cell">
-                <p class="description">' . get_string('label_description', 'tals') . '</p>
-              </td>
-              <td>
-                <textarea id="textfeld" name="ART_description" form="formular">' . $appointment->description . '</textarea>
-              </td>
-            </tr>
-          <tr>
-          <td class="description_cell">
-            <p class="description">' . get_string('label_period', 'tals') . ' *</p>
-          </td>
-          <td>
-            <p class="description">' . get_string('label_at', 'tals') . ' </p>
-              <input type="date" id="groupDate" name="GROUP_date" value="' . date('Y-m-d', $appointment->start) . '" required>
-            <p class="description"> ' . get_string('label_from', 'tals') . ' </p>
-              <input type="time" id="groupTimeBegin" name="GROUP_time_begin" value="'
-    . date('H:i', $appointment->start) . '" required>
-            <p class="description"> ' . get_string('label_until', 'tals') . ' </p>
-              <input type="time" id="groupTimeEnd" name="GROUP_time_end" value="' . date('H:i', $appointment->end) . '" required>
-          </td>
-        </tr>
-        </table>
-      </div>';
-
-// PIN-Section.
-echo '<div class="rahmen">
-        <b>' . get_string('label_pin', 'tals') . '</b>
-        <table>
-          <!-- Row 1 -->
-          <tr>
-            <td class="description_cell">
-            </td>
-            <td>';
-
-// Check if appointment has PIN and print matching HTML.
-if (is_null($appointment->fk_pin_id)) {
-    $duration = true;
-    echo '<input type="checkbox" name="PIN_true" value="true" onchange="toggleDisabled_pin(this.checked)"> '
-        . get_string('label_iscompulsory', 'tals') . ' (' . get_string('label_pininfo', 'tals') . ')';
-} else {
-    $duration = false;
-    $pin = $DB->get_record('tals_pin', ['id' => $appointment->fk_pin_id]);
-    echo '<input type="checkbox" name="PIN_true" value="true" onchange="toggleDisabled_pin(this.checked)" checked> '
-        . get_string('label_iscompulsory', 'tals') . ' (' . get_string('label_pininfo', 'tals') . ')';
+if(!is_null($appointment->fk_pin_id)) {
+    $context->haspin = true;
 }
-
-echo '</td>
-  </tr>
-
-  <!-- Row 2 -->
-  <tr>
-    <td class="description_cell">
-      <p class="description">' . get_string('label_duration', 'tals') . '</p>
-    </td>
-    <td>';
-
-if ($duration) {
-    echo '<select id="duration" name="PIN_duration" disabled="true">';
-} else {
-    echo '<select id="duration" name="PIN_duration">';
-}
-
-// Generate list of possible durations for PIN.
-$begin = 1;
-$stop = 60;
-$width = 5;
-
-if ($duration) {
-    $selected = 15;
-} else {
-    $selected = $pin->duration;
-}
-
-// Part-list with 1-min-steps.
-for ($i = $begin; $i < $width; $i++) {
-    if ($i != $selected) {
-        echo '<option value="' . $i . '">' . $i . '</option>';
-    } else {
-        echo '<option value="' . $i . '" selected>' . $i . '</option>';
-    }
-}
-
-// Part-list with $width-steps.
-for ($j = $width; $j <= $stop; $j = $j + $width) {
-    if ($j != $selected) {
-        echo '<option value="' . $j . '">' . $j . '</option>';
-    } else {
-        echo '<option value="' . $j . '" selected>' . $j . '</option>';
-    }
-}
-
-echo '</select>
-      <p class="description"> ' . get_string('label_minute', 'tals') . '</p>
-      </td>
-    </tr>
-  </table>
-</div>';
-
-// End.
-echo '<div>
-        <input type="submit" id="setpin" value="' . get_string('label_safe', 'tals') . '" style="border-radius: 0.4em;">
-      </div>
-
-      </form>
-  <p>* - ' . get_string('label_required', 'tals') . '</p>
-  </div>';
-
+echo $OUTPUT->render_from_template('tals/change', $context);
 echo $OUTPUT->footer();

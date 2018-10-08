@@ -1,0 +1,108 @@
+{{>tals/navigation}}
+
+<div class="container">
+    <p>
+    <h3>{{#str}}label_edit, tals{{/str}} {{#str}}label_header_date, tals{{/str}}</h3></p>
+    <form action="{{{changeurl}}}" method="post" id="formular">
+        <div>
+            <b>{{#str}}label_header_date, tals{{/str}}</b>
+            <table>
+                <!-- Row 1-->
+                <tr>
+                    <td>
+                        <p>{{#str}}label_type, tals{{/str}}</p>
+                    </td>
+                    <td>
+                        <select class="form-control" id="typeSelect" name="ART_type" required>
+                            {{#appointmenttypes}}
+                                <option value="{{id}}" {{#selected}}selected{{/selected}}>{{title}}</option>
+                            {{/appointmenttypes}}
+                        </select>
+                    </td>
+                </tr>
+                <!-- Row 2-->
+                <tr>
+                    <td>
+                        <p>{{#str}}label_name, tals{{/str}}</p>
+                    </td>
+                    <td>
+                        <input type="text" id="terminName" name="ART_name" value="{{datetitle}}" required>
+                    </td>
+                </tr>
+
+                <!-- Row 3-->
+                <tr>
+                    <td>
+                        <p>{{#str}}label_description, tals{{/str}}</p>
+                    </td>
+                    <td>
+                        <textarea name="ART_description" form="formular">{{description}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>{{#str}}label_period, tals{{/str}}</p>
+                    </td>
+                    <td>
+                        <p>{{#str}}label_at, tals{{/str}}</p>
+                        <input type="date" id="groupDate" name="GROUP_date" value="{{startdate}}" required>
+                    </td>
+                    <td>
+                        <p class="description">{{#str}}label_from, tals{{/str}}</p>
+                        <input type="time" id="groupTimeBegin" name="GROUP_time_begin" value="{{starttime}}" required>
+                    </td>
+                    <td>
+                        <p class="description">{{#str}}label_until, tals{{/str}}</p>
+                        <input type="time" id="groupTimeEnd" name="GROUP_time_end" value="{{endtime}}" required>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="container">
+
+            <table>
+                <!-- Row 1 -->
+                <tr>
+                    <td>
+                        <b>{{#str}}label_pin, tals{{/str}}</b>
+                    </td>
+                    <td class="description_cell">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="PIN_true" value="true" {{#haspin}}checked{{/haspin}}>{{#str}}
+                        label_iscompulsory, tals{{/str}}
+                    </td>
+                </tr>
+
+                <!-- Row 2 -->
+                <tr>
+                    <td class="description_cell">
+                        <p class="description">{{#str}}label_duration, tals{{/str}}</p>
+                    </td>
+                    <td>
+                        <select id="duration" name="PIN_duration">'
+                            <option>5</option>
+                            <option>10</option>
+                            <option>15</option>
+                            <option>20</option>
+                            <option>25</option>
+                            <option>30</option>
+                            <option>35</option>
+                            <option>40</option>
+                            <option>45</option>
+                            <option>50</option>
+                            <option>55</option>
+                            <option>60</option>
+                        </select>
+                        <p class="description"> {{#str}}label_minute, tals{{/str}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <input type="submit" id="setpin" value="{{#str}}label_safe, tals{{/str}}">
+        </div>
+    </form>
+    <p>* - {{#str}}label_required, tals{{/str}}</p>
+</div>
