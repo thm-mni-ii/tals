@@ -38,12 +38,6 @@ define("ERROR_PIN_WRONG", -7);
 define("ERROR_PIN_DISABLED", -8);
 define("ERROR_NO_PIN", -9);
 
-/**
- * Path to file that holds definitions for networks
- * with IP-Adresses and acceptance count
- */
-define("NETWORK_DEF", "db/thmnet.json");
-
 define("PRESENT", 1);
 define("ABSENT", 2);
 define("EXCUSED", 3);
@@ -107,8 +101,21 @@ function tals_get_type_net() {
     $ipaddress = $_SERVER['REMOTE_ADDR'];
     $defaultacceptance = 3;
 
-    $netdeffile = file_get_contents(NETWORK_DEF);
-    $netdefjson = json_decode($netdeffile, true);
+    $netdefstring = '{"wlan-gi": {
+                        "10.192.0.0/16":1
+                      },
+                      "vpn-gi": {
+                        "10.196.48.0/24":2,
+                        "10.196.49.0/24":2
+                      },
+                      "vpn-fb": {
+                        "212.201.31.80/32":2
+                      },
+                      "eduroam-gi": {
+                        "10.192.0.0/16":1
+                      }
+                    }';
+    $netdefjson = json_decode($netdefstring, true);
 
     foreach ($netdefjson as $entry) {
         foreach ($entry as $iprange => $acceptance) {

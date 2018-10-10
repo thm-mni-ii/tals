@@ -89,9 +89,8 @@ foreach($list as $val) {
     $entry->startdate = date('d.m.Y, H:i', $val->start);
     $entry->enddate = date('d.m.Y, H:i', $val->ending);
     $entry->duration = $val->duration;
-
-    $entry->logcount = count(tals_get_logs_for_course($course->id, $val->id, PRESENT));
-
+    $entry->presentcount = count(tals_get_logs_for_course($course->id, $val->id, PRESENT));
+    $entry->logcount = $entry->presentcount + count(tals_get_logs_for_course($course->id, $val->id, EXCUSED)) + count(tals_get_logs_for_course($course->id, $val->id, ABSENT));
     $context->entries[] = $entry;
 }
 
