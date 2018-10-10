@@ -138,7 +138,7 @@ class block_tals extends block_base {
                       <p id="infoText">'.get_string('label_noapp', 'block_tals').'</p>
                       <p id="infoTextSmall"><b>'.get_string('label_nextapp', 'block_tals').':</b><br>
                       '.$next->title.' ('.$next->type.')<br>
-                      '.date('d.m.Y', $next->start).', '.date('H:i', $next->start).' - '.date('H:i', $next->end).'</p>
+                      '.date('d.m.Y', $next->start).', '.date('H:i', $next->start).' - '.date('H:i', $next->ending).'</p>
                     </div>';
       } else {
         $content .= '<div class="rahmen">
@@ -151,7 +151,7 @@ class block_tals extends block_base {
           $content .= '<div class="rahmen">
                           <p id="infoText">'.$entry->title.'</p>
                           <p id="infoTextSmall">'.$entry->type.'<br>
-                          '.date('H:i', $entry->start).' - '.date('H:i', $entry->end).'</p>';
+                          '.date('H:i', $entry->start).' - '.date('H:i', $entry->ending).'</p>';
 
           if (!is_null($entry->pin)) {
             if (tals_check_for_enabled_pin($entry->id)) {
@@ -171,7 +171,7 @@ class block_tals extends block_base {
           $content .= '<div class="rahmen">
                           <p id="infoText">'.$entry->title.'</p>
                           <p id="infoTextSmall">'.$entry->type.'<br>
-                          '.date('H:i', $entry->start).' - '.date('H:i', $entry->end).'</p>';
+                          '.date('H:i', $entry->start).' - '.date('H:i', $entry->ending).'</p>';
 
           if (tals_is_user_already_attending($entry->id, $USER->id)) {
             $content .= '<p id="infoTextSmall"><img src="/moodle/blocks/tals/pix/success.png" alt="'.get_string('label_alreadyattending', 'block_tals').'" height="60" width="60"><br>
