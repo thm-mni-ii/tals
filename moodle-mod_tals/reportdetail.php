@@ -81,7 +81,6 @@ foreach ($list as $entry) {
     } else if ($entry->attendance == EXCUSED) {
         $entry->excused = true;
     }
-    echo $entry->attendance . 'ASDDDDDDDDDDDDDDD';
 
     if ($entry->acceptance == INTERNAL) {
         $entry->internal = true;
