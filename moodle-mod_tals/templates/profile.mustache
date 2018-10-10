@@ -1,3 +1,7 @@
+{{#sudo}}
+    {{>tals/navigation}}
+{{/sudo}}
+
 <div class="container">
     <h2><a href="{{profileurl}}">{{firstname}} {{lastname}}</a></h2>
     <p><a href="mailto:{{email}}">{{email}}</a></p>
@@ -21,7 +25,9 @@
     </table>
 </div>
 
-{{>tals/usernav}}
+{{^sudo}}
+    {{>tals/usernav}}
+{{/sudo}}
 
 <div class="container">
     <table id="tabelle" class="table table-striped table-hover table-sm">

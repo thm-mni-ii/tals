@@ -1,0 +1,74 @@
+{{#sudo}}
+    {{>tals/navigation}}
+{{/sudo}}
+
+<div class="container">
+    <h2><a href="{{{profileurl}}}">{{firstname}} {{lastname}}</a></h2>
+    <p><a href="mailto:{{email}}">{{email}}</a></p>
+    <table class="table">
+        <tr>
+            <td><p>{{#str}}label_countappointments, tals{{/str}}</p></td>
+            <td><p>{{countappointments}} ({{countcompulsory}} {{#str}}label_arecompulsory, tals{{/str}})</p></td>
+        </tr>
+        <tr>
+            <td><p>{{#str}}label_attendance, tals{{/str}} : </p></td>
+            <td><p>{{present}}</p></td>
+        </tr>
+        <tr>
+            <td><p>{{#str}}label_daysabsent, tals{{/str}} : </p></td>
+            <td><p>{{absent}}</p></td>
+        </tr>
+        <tr>
+            <td><p>{{#str}}label_excused, tals{{/str}} : </p></td>
+            <td><p>{{excused}}</p></td>
+        </tr>
+    </table>
+</div>
+
+{{^sudo}}
+    {{>tals/usernav}}
+{{/sudo}}
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{#str}}label_name, tals{{/str}}</th>
+            <th>{{#str}}label_description, tals{{/str}}</th>
+            <th>{{#str}}label_start, tals{{/str}}</th>
+            <th>{{#str}}label_end, tals{{/str}}</th>
+            <th>{{#str}}label_duration, tals{{/str}}</th>
+            <th>{{#str}}label_type, tals{{/str}}</th>
+            <th>{{#str}}label_compulsory, tals{{/str}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#entries}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{description}}</td>
+                <td>{{startdate}}</td>
+                <td>{{endingdate}}</td>
+                <td>{{duration}}</td>
+                <td>{{type}}</td>
+                {{#haspin}}
+                <td class="signlight">
+                    <img src="pix/compulsory.png" alt="{{#str}}label_iscompulsory, tals{{/str}}" height="20" width="30">
+                </td>
+                {{/haspin}}
+                {{^haspin}}
+                    <td></td>
+                {{/haspin}}
+            </tr>
+        {{/entries}}
+        </tbody>
+    </table>
+</div>
+
+<p>
+    <br>
+    <img src="pix/compulsory.png" alt="{{#str}}label_iscompulsory, tals{{/str}}" height="20" width="30">
+    {{#str}}label_iscompulsory, tals{{/str}}
+</p>
+
+

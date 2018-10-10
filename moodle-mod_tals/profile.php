@@ -79,18 +79,6 @@ $user = tals_get_user_profile_for_course($userid, $course->id);
 
 $context = new stdClass();
 
-if ($sudo) {
-    // Sudo-Header.
-    echo '<ul id="liste">
-      <li class="element"><a href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id]) . '">'
-        . get_string('label_header_date', 'tals') . '</a></li>
-      <li class="element"><a href="' . new moodle_url('/mod/tals/add.php', ['id' => $id]) . '">'
-        . get_string('label_header_add', 'tals') . '</a></li>
-      <li class="element"><a href="' . new moodle_url('/mod/tals/report.php', ['id' => $id]) . '">'
-        . get_string('label_header_report', 'tals') . '</a></li>
-    </ul>';
-}
-
 $user = tals_get_user_profile_for_course($userid, $course->id);
 
 $context->firstname = $user->firstname;
@@ -101,8 +89,10 @@ $context->countcompulsory = $user->countcompulsory;
 $context->present = $user->status->present;
 $context->absent = $user->status->absent;
 $context->excused = $user->status->excused;
-
-$context->profileurl = new moodle_url('/user/profile.php', ['id' => $user->id]);
+$context->sudo = $sudo;
+$context->manageurl = new moodle_url('/mod/tals/manage.php', ['id' => $id]);
+$context->reporturl = new moodle_url('/mod/tals/report.php', ['id' => $id]);
+$context->addurl = new moodle_url('/mod/tals/add.php', ['id' => $id]);
 $context->profileoverviewurl = new moodle_url('/mod/tals/profileoverview.php', ['id' => $id]);
 
 $context->appointments = array();

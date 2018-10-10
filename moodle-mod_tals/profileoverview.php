@@ -77,107 +77,41 @@ $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
 
-if ($sudo) {
-    // Sudo-Header.
-    echo '<ul id="liste">
-      <li class="element"><a href="' . new moodle_url('/mod/tals/manage.php', ['id' => $id]) . '">'
-        . get_string('label_header_date', 'tals') . '</a></li>
-      <li class="element"><a href="' . new moodle_url('/mod/tals/add.php', ['id' => $id]) . '">'
-        . get_string('label_header_add', 'tals') . '</a></li>
-      <li class="element"><a href="' . new moodle_url('/mod/tals/report.php', ['id' => $id]) . '">'
-        . get_string('label_header_report', 'tals') . '</a></li>
-    </ul>';
-}
-
 $user = tals_get_user_profile_for_course($userid, $course->id);
 $appointments = tals_get_all_appointments_of_course($course->id);
 
 $status = $user->status;
 
-echo '<div class="rahmen">
-      <h2><a href="' . new moodle_url('/user/profile.php', ['id' => $user->id]) . '">' . $user->firstname
-    . ' ' . $user->lastname . '</a></h2>
-      <p style="font-size: 0.8em;"><a href="mailto:' . $user->email . '">' . $user->email . '</a></p>
-      <table>
-          <tr>
-              <td style="width: 100px;"><p>' . get_string('label_countappointments', 'tals') . ': </p></td>
-              <td><p>' . $user->countappointments . ' (' . $user->countcompulsory . ' '
-    . get_string('label_arecompulsory', 'tals') . ')</p></td>
-          </tr>
-          <tr>
-              <td style="width: 100px;"><p>' . get_string('label_attendance', 'tals') . ': </p></td>
-              <td><p>' . $status->present . '</p></td>
-          </tr>
-          <tr>
-              <td style="width: 100px;"><p>' . get_string('label_daysabsent', 'tals') . ': </p></td>
-              <td><p>' . $status->absent . '</p></td>
-          </tr>
-          <tr>
-              <td style="width: 100px;"><p>' . get_string('label_excused', 'tals') . ': </p></td>
-              <td><p>' . $status->excused . '</p></td>
-          </tr>
-      </table>
-  </div>';
+$context = new stdClass();
 
-if (!$sudo) {
-    // User-Header.
-    echo '<ul id="liste">
-        <li class="element"><a href="' . new moodle_url('/mod/tals/profile.php', ['id' => $id]) . '">'
-        . get_string('label_myattendance', 'tals') . '</a></li>
-        <li class="element" id="li_active"><a>' . get_string('label_courseoverview', 'tals') . '</a></li>
-      </ul>';
+//nav bar urls
+$context->manageurl = new moodle_url('/mod/tals/manage.php', ['id' => $id]);
+$context->reporturl = new moodle_url('/mod/tals/report.php', ['id' => $id]);
+$context->addurl = new moodle_url('/mod/tals/add.php', ['id' => $id]);
+$context->profileurl = new moodle_url('/user/profile.php', ['id' => $user->id]);
+$context->attendanceurl = new moodle_url('/mod/tals/profile.php', ['id' => $id]);
+$context->sudo = $sudo;
+$context->firstname = $user->firstname;
+$context->lastname = $user->lastname;
+$context->email = $user->email;
+$context->countappointments = $user->countappointments;
+$context->countcompulsory = $user->countcompulsory;
+$context->present = $status->present;
+$context->absent = $status->absent;
+$context->excused = $status->excused;
+$context->entries = array();
+
+
+foreach ($appointments as $val) {
+    $entry = new stdClass();
+    $entry->title = $val->title;
+    $entry->startdate = '' . date('d.m.Y, H:i', $val->start);
+    $entry->endingdate = '' . date('d.m.Y, H:i', $val->ending);
+    $entry->duration = $val->duration;
+    $entry->type = $val->type;
+    $entry->haspin = !is_null($val->pin);
+    $context->entries[] = $entry;
 }
 
-echo '<div id="Bericht" class="tabcontent">
-      <table id="tabelle">
-          <tbody>
-          <tr>
-              <tr>
-              <th>' . get_string('label_name', 'tals') . '</th>
-              <th>' . get_string('label_description', 'tals') . '</th>
-              <th>' . get_string('label_start', 'tals') . '</th>
-              <th>' . get_string('label_end', 'tals') . '</th>
-              <th>' . get_string('label_duration', 'tals') . '</th>
-              <th>' . get_string('label_type', 'tals') . '</th>
-              <th>' . get_string('label_compulsory', 'tals') . '</th>
-          </tr>';
-
-$iswhite = false;
-$lastgroup = 0;
-
-foreach ($appointments as $entry) {
-    if ($lastgroup != $entry->groupid) {
-        $iswhite = !$iswhite;
-        $lastgroup = $entry->groupid;
-    }
-
-    if ($iswhite) {
-        echo '<tr bgcolor="#E8E8E8">';
-    } else {
-        echo '<tr>';
-    }
-
-    echo '<td>' . $entry->title . '</td>
-        <td>' . $entry->description . '</td>
-        <td>' . date('d.m.Y, H:i', $entry->start) . '</td>
-        <td>' . date('d.m.Y, H:i', $entry->ending) . '</td>
-        <td>' . $entry->duration . ' ' . get_string('label_minute', 'tals') . '</td>
-        <td>' . $entry->type . '</td>';
-
-    if (!is_null($entry->pin)) {
-        echo '<td class="signlight"><img src="pix/compulsory.png" alt="'
-            . get_string('label_iscompulsory', 'tals') . '" height="20" width="30"></td>';
-    } else {
-        echo '<td></td>';
-    }
-
-    echo '</tr>';
-}
-
-echo '</tbody>
-    </table>
-    </div>
-    <p><br><img src="pix/compulsory.png" alt="' . get_string('label_iscompulsory', 'tals')
-    . '" height="20" width="30"> ' . get_string('label_iscompulsory', 'tals') . '</p>';
-
+echo $OUTPUT->render_from_template('tals/profileoverview', $context);
 echo $OUTPUT->footer();
