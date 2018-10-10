@@ -78,24 +78,15 @@ foreach ($list as $entry) {
     $entry->profileurl = new moodle_url('/mod/tals/profile.php', ['id' => $id, 'student' => $entry->userid]);
     if($entry->attendance == PRESENT) {
         $entry->present = true;
-        $entry->excused = false;
     } else if ($entry->attendance == EXCUSED) {
-        $entry->present = false;
         $entry->excused = true;
-    } else {
-        $entry->present = false;
-        $entry->excused = false;
     }
+    echo $entry->attendance . 'ASDDDDDDDDDDDDDDD';
 
     if ($entry->acceptance == INTERNAL) {
         $entry->internal = true;
-        $entry->vpn = false;
     } else if ($entry->acceptance == VPN) {
-        $entry->internal = false;
         $entry->vpn = true;
-    } else {
-        $entry->internal = false;
-        $entry->vpn = false;
     }
     $entry->editurl = new moodle_url('/mod/tals/edit.php', [
         'id' => $id,
@@ -111,6 +102,9 @@ $context->reporturl =  new moodle_url('/mod/tals/report.php', ['id' => $id]);
 $context->manageurl =  new moodle_url('/mod/tals/manage.php', ['id' => $id]);
 $context->reportdetailurl = new moodle_url('/mod/tals/reportdetail.php', ['id' => $id, 'appid' => $appid]);
 $context->count = count(tals_get_logs_for_course($course->id, $appid, PRESENT));
+$context->overall = $context->count +
+                    count(tals_get_logs_for_course($course->id, $appid, ABSENT)) +
+                    count(tals_get_logs_for_course($course->id, $appid, EXCUSED));
 $context->entries = $list;
 
 echo $OUTPUT->render_from_template('tals/reportdetail', $context);

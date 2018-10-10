@@ -3,7 +3,7 @@
 <div class="container">
     <div>
         <h3 class="float-left inline">{{#str}}label_report, tals{{/str}}</h3>
-        <p class="float-right inline"><a href="{{downloadurl}}" target=_blank><img src="pix/download_all.png" alt="{{#str}}label_download, tals{{/str}}" height="20" width="20" title="{{#str}}label_download_title, tals{{/str}}"></a></p>
+        <p class="float-right inline"><a href="{{{downloadurl}}}" target=_blank><img src="pix/download_all.png" alt="{{#str}}label_download, tals{{/str}}" height="20" width="20" title="{{#str}}label_download_title, tals{{/str}}"></a></p>
     </div>
 
     <table class="table table-striped table-hover table-sm">
@@ -24,7 +24,7 @@
         <tr>
             <th scope="row">{{id}}</th>
             <td>
-                <a href="{{detailurl}}">
+                <a href="{{{detailurl}}}">
                     {{title}}
                 </a>
             </td>
