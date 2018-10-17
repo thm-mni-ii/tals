@@ -81,7 +81,7 @@ class mod_wstals_external extends external_api {
                 $tmp->id = $appointment->id;
                 $tmp->title = $appointment->title;
                 $tmp->start = date('H:i', $appointment->start);
-                $tmp->end = date('H:i', $appointment->end);
+                $tmp->end = date('H:i', $appointment->ending);
                 $tmp->description = $appointment->description;
                 $tmp->courseid = $appointment->courseid;
                 $tmp->type = $appointment->type;
