@@ -86,7 +86,7 @@ $context->title = $appointment->title;
 $context->firstname = $user->firstname;
 $context->lastname = $user->lastname;
 $check = 2;
-$context->comment = "ASDASDASD";
+$context->comment = "";
 if($userlog) {
     $context->comment = $userlog->comment;
     $check = $userlog->fk_type_attendance_id;
