@@ -6,8 +6,8 @@ android {
         applicationId 'com.thm.mni.tals'
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.03"
+        versionCode 7
+        versionName "1.07"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

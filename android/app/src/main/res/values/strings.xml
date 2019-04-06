@@ -38,7 +38,7 @@
     <string name="pin_not_confirmed">Confirmation failed - wrong pin?</string>
     <string name="pin_enabled">Pin enabled</string>
     <string name="pin_disabled">Pin not enabled</string>
-    <string name="generic_error">Error :(</string>
+    <string name="generic_error">Network Error :(</string>
     <string name="cas_protocol_error">CAS protocol error - maybe the connection failed?</string>
     <string name="already_attending">You successfully confirmed your attendance! </string>
     <string name="no_courses">You don\'t have any appointments today - maybe you should just go home? ¯\\_(ツ)_/¯</string>

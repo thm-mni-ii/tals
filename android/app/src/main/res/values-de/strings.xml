@@ -38,7 +38,7 @@
     <string name="pin_not_confirmed">Bestätigung fehlgeschlagen - falscher Pin?</string>
     <string name="pin_enabled">Pin freigeschaltet</string>
     <string name="pin_disabled">Pin nicht freigeschaltet</string>
-    <string name="generic_error">Fehler :(</string>
+    <string name="generic_error">Netzwerkfehler :(</string>
     <string name="cas_protocol_error">CAS Protokollfehler - vielleicht ist die Verbindung fehlgeschlagen?</string>
     <string name="already_attending" >Du hast deine Anwesenheit erfolgreich bestätigt!</string>
     <string name="no_courses">Du hast heute keine Termine - vielleicht gehst du lieber nach Hause?  ¯\\_(ツ)_/¯</string>
